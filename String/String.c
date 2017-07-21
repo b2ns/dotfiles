@@ -327,7 +327,7 @@ char* strReplace(char* main,char* tar,char* rep)//将匹配项全部替换
   return result;
 }
 
-char* subString(char* str,int left,int right)
+char* strSub(char* str,int left,int right)
 {
   int len=strLen(str);
   left=(left<0)?0:left;
@@ -445,7 +445,7 @@ int main(void)
   printf("%d\n",strCmp("ab","abc"));
   printf("%d\n",strFind("ababaaaba","aaba"));
   printf("%s\n",strReplace("   a  b a a c      da     aa      ","  ","###"));
-  printf("%s\n",subString("abcdefg",1,5));
+  printf("%s\n",strSub("abcdefg",1,5));
   char** array=strSplit(" xxx a xx b cxx d  xxx   e  xxxxx  ","xx");
   while(*array)
   {
