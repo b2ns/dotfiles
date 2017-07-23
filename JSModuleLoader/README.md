@@ -4,7 +4,7 @@
 
     <script src="include.js"></script>
 
-2.to import a module:
+2.to import modules:
 
     include([
     "mod1",
