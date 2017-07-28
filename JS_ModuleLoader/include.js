@@ -1,6 +1,6 @@
 /*
  *Description: a javascript module loader
- *Authour: b2ns
+ *Author: b2ns
  */
 
 (function (host) {

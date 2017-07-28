@@ -4,7 +4,7 @@
  */
 
 #include <stdio.h>
-#include "String.c"
+#include "../String/String.c"
 
 int main(int argc,char** argv)
 {

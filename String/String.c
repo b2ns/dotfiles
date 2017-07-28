@@ -1,5 +1,5 @@
 /*
- *Description: 字符串操作函数,所有函数将返回新的字符串,原字符串不被改变
+ *Description: string lib for C,all function return a new string and the original string wiil not be changed
  *Author: b2ns
  */
 
@@ -419,9 +419,7 @@ char** strSplit(char* str,char* pat)
   return array;
 }
 
-
-
-
+/*
 int main(void)
 {
   char str[50]="235What Is Goning On?";
@@ -457,6 +455,9 @@ int main(void)
   getchar();
   return 0;
 }
+*/
+
+
 /*
 //查看二进制位
 void foo(int num,int size,int j)

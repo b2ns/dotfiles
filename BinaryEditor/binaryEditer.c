@@ -1,6 +1,6 @@
 /*
  *Description: write binary(hex) into a file instead of ascii
- *Authour: b2ns
+ *Author: b2ns
  */
 
 #include <stdio.h>
