@@ -1,0 +1,219 @@
+/* 
+*Description: overwrite the default sort method of Array prototype
+*Author: b2ns 
+ */
+
+(function (host) {
+
+  //default comparator
+  var defCmp = function (a,b) {
+    if(typeof a === "string" && typeof b === "string"){
+      if(a.length>b.length) return 1;
+      if(a.length<b.length) return -1;
+    }
+
+    if(a>b) return 1;
+    if(a<b) return -1;
+    return 0;
+  };
+  
+  //swap function
+  var swap=function (arr,i,j) {
+    var tmp=arr[i];
+    arr[i]=arr[j];
+    arr[j]=tmp;
+  };
+
+  //BucketSort
+  var bucket = function (cmp) {
+    var arr=this;
+    var len=arr.length;
+
+    for(var i=0,max=arr[i++];i<len;i++)
+      if(cmp(max,arr[i])===-1) max=arr[i];
+
+    var bucketLen=max+1;
+    var bucketArr=new Array(bucketLen);
+
+    for(var i=0;i<bucketLen;i++)
+      bucketArr[i]=0;
+
+    for(var i=0;i<len;i++)
+      bucketArr[arr[i]]++;
+
+    for(var i=0,j=0;i<bucketLen;){
+      if(bucketArr[i]!=0){
+        arr[j++]=i;
+        bucketArr[i]--;
+      }
+      else{
+        i++;
+      }
+    }
+  };
+
+  //BubbleSort
+  var bubble = function (cmp) {
+    var arr=this;
+    var len = arr.length;
+
+    for(var i=0;i<len-1;i++)
+      for(var j=len-1;j>i;j--)
+        if(cmp(arr[j-1],arr[j])===1)
+          swap(arr,j-1,j);
+  };
+  
+  //SelectSort
+  var select = function (cmp) {
+    var arr=this;
+    var len = arr.length;
+
+    for(var i=0;i<len-1;swap(arr,mini,i),i++)
+      for(var mini=i,j=i+1;j<len;j++)
+        if(cmp(arr[mini],arr[j])===1)
+          mini=j;
+  };
+
+  //InsertSort
+  var insert = function (cmp) {
+    var arr=this;
+    var len = arr.length;
+
+    for(var i=1;i<len;arr[j+1]=tmp,i++)
+      for(var tmp=arr[i],j=i-1;j>=0 && cmp(tmp,arr[j])===-1;j--)
+        arr[j+1]=arr[j];
+  };
+
+  //ShellSort
+  var shell = function (cmp) {
+    var arr=this;
+    var len = arr.length;
+
+    for(var k=Math.floor(len/2);k>=1;k=Math.floor(k/2)){
+      for(var i=k;i<len;arr[j+k]=tmp,i++)
+        for(var tmp=arr[i],j=i-k;j>=0 && cmp(tmp,arr[j])===-1;j-=k)
+          arr[j+k]=arr[j];
+    }
+  };
+
+  //HeapSort
+  var heap = function (cmp) {
+    var arr=this;
+    var len = arr.length;
+
+    var floatDown=function (i,size) {
+      var tmp=arr[i];
+      for(j=2*i+1;j<size;i=j,j=2*i+1){
+        if(j!=size-1 && cmp(arr[j],arr[j+1])===-1)
+          j++;
+        if(cmp(tmp,arr[j])===-1)
+          arr[i]=arr[j];
+        else
+          break;
+      }
+      arr[i]=tmp;
+    };
+
+    for(var i=Math.floor(len/2)-1;i>=0;i--)
+      floatDown(i,len);
+    for(var i=len-1;i>0;i--){
+      swap(arr,0,i);
+      floatDown(0,i);
+    }
+  };
+
+  //MergeSort
+  var merge = function (cmp) {
+    var arr=this;
+    var len = arr.length;
+    var tmparr = new Array(len);
+
+    var merger = function (arr,left,right,cmp) {
+      if(right-left>=10){
+        var mid=Math.floor((left+right)/2);
+        merger(arr,left,mid,cmp);
+        merger(arr,mid+1,right,cmp);
+
+        for(var i=left,j=mid+1,k=left;i<=mid && j<=right;){
+          if(cmp(arr[i],arr[j])===-1)
+            tmparr[k++]=arr[i++];
+          else
+            tmparr[k++]=arr[j++];
+        }
+        while(i<=mid)
+            tmparr[k++]=arr[i++];
+        while(j<=right)
+            tmparr[k++]=arr[j++];
+        for(var i=left;i<=right;i++)
+          arr[i]=tmparr[i];
+        }
+        else{
+          for(var i=left+1;i<=right;arr[j+1]=tmp,i++)
+            for(var tmp=arr[i],j=i-1;j>=left && cmp(tmp,arr[j])===-1;j--)
+              arr[j+1]=arr[j];
+        }
+    };
+
+    merger(arr,0,len-1,cmp);
+  };
+
+  //QuickSort
+  var quick = function (cmp) {
+    var arr=this;
+    var len=arr.length;
+
+    var choicePivot=function (arr,left,right,swap) {
+      var mid=Math.floor((left+right)/2);
+      if(cmp(arr[left],arr[right])===1) swap(arr,left,right);
+      if(cmp(arr[left],arr[mid])===1) swap(arr,left,mid);
+      if(cmp(arr[mid],arr[right])===1) swap(arr,mid,right);
+
+      swap(arr,mid,right-1);
+      return arr[right-1];
+    };
+    var sortPivot=function (arr,left,right,cmp,swap) {
+      if(right-left>=10){
+        var pivot=choicePivot(arr,left,right,swap);
+        for(var i=left,j=right-1;;){
+          while(cmp(arr[++i],pivot)===-1) ;
+          while(cmp(arr[--j],pivot)===1) ;
+
+          if(i>j) break;
+
+          swap(arr,i,j);
+        }
+        swap(arr,i,right-1);
+        sortPivot(arr,left,i-1,cmp,swap);
+        sortPivot(arr,i+1,right,cmp,swap);
+      }
+      else{
+        for(var i=left+1;i<=right;arr[j+1]=tmp,i++)
+          for(var tmp=arr[i],j=i-1;j>=left && cmp(tmp,arr[j])===-1;j--)
+            arr[j+1]=arr[j];
+      }
+    };
+
+    sortPivot(arr,0,len-1,cmp,swap);
+  };
+
+  //overwrite the sort method of Array's prototype
+  host.sort = function (cmp,method) {
+    if(typeof cmp != "function") {
+      method=cmp;
+      cmp=defCmp;
+    }
+
+    switch(method){
+      case "bucket": bucket.call(this,cmp);break;
+      case "bubble": bubble.call(this,cmp);break;
+      case "select": select.call(this,cmp);break;
+      case "insert": insert.call(this,cmp);break;
+      case "shell": shell.call(this,cmp);break;
+      case "heap": heap.call(this,cmp);break;
+      case "merge": merge.call(this,cmp);break;
+      case "quick": 
+      default: quick.call(this,cmp);break;
+    }
+  };
+
+})(Array.prototype);

@@ -3,7 +3,7 @@
  *Authour: b2ns
  */
 
-var include = (function () {
+(function (host) {
   var CALLBACK = [];
   var CURMOD = document.getElementsByTagName("script");
 
@@ -13,7 +13,7 @@ var include = (function () {
     }
   });
 
-  return function (relyonModArr, func) {
+  host.include = function (relyonModArr, func) {
     for (var i = relyonModArr.length - 1; i >= 0; i--) {
       var src = relyonModArr[i];
 
@@ -30,4 +30,4 @@ var include = (function () {
     }
     CALLBACK.push(func);
   };
-})();
+})(window);
