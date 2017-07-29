@@ -242,7 +242,7 @@ int strCmp(char* str1,char* str2)
   return 0;
 }
 
-int strFind(char* main,char* sub)//KMP算法
+int strFind(char* main,char* sub)//KMP algorithm
 {
   int i,j;
   int* next=(int*)malloc(sizeof(int)*strLen(sub));
@@ -284,7 +284,7 @@ int strFind(char* main,char* sub)//KMP算法
 
 }
 
-char* strReplace(char* main,char* tar,char* rep)//将匹配项全部替换
+char* strReplace(char* main,char* tar,char* rep,char opt)//opt:'g' for global,'f' for first,'l' for last
 {
   int mainlen=strLen(main);
   int tarlen=strLen(tar);
@@ -292,16 +292,25 @@ char* strReplace(char* main,char* tar,char* rep)//将匹配项全部替换
 
   int replen=strLen(rep);
   int* findindex=(int*)malloc(sizeof(int)*mainlen);
-  int find;
+  int find,lastfind;
   int i,j,k;
   for(i=0;i<mainlen;i++)
 	findindex[i]=0;
 
-  for(i=0,j=0;i<mainlen && (find=strFind(main+i,tar))>=0;)
+  for(i=0,j=0;(find=strFind(main+i,tar))>=0;i+=find+tarlen)
   {
-	findindex[find+i]=1;j++;
-	i+=find+tarlen;
+	if(opt=='l')
+	{
+	  lastfind=find+i;
+	  j=1;
+	}
+	else
+	{
+	  findindex[find+i]=1;j++;
+	  if(opt=='f') break;
+	}
   }
+  if(opt=='l') findindex[lastfind]=1;
 
   int size=mainlen+j*(replen-tarlen)+1;
   char* result=(char*)malloc(sizeof(char)*(size));
@@ -418,7 +427,6 @@ char** strSplit(char* str,char* pat)
 
   return array;
 }
-
 /*
 int main(void)
 {
@@ -442,7 +450,8 @@ int main(void)
   printf("%s\n",strCopy("abcde fghijk"));
   printf("%d\n",strCmp("ab","abc"));
   printf("%d\n",strFind("ababaaaba","aaba"));
-  printf("%s\n",strReplace("   a  b a a c      da     aa      ","  ","###"));
+  printf("%s\n",strReplace("   a  b a a c      da     aa      ","  ","###",'g'));
+  printf("%s\n",strReplace("abc.def.hijk.js",".",".min.",'l'));
   printf("%s\n",strSub("abcdefg",1,5));
   char** array=strSplit(" xxx a xx b cxx d  xxx   e  xxxxx  ","xx");
   while(*array)
@@ -456,7 +465,6 @@ int main(void)
   return 0;
 }
 */
-
 
 /*
 //查看二进制位
