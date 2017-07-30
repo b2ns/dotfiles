@@ -1,5 +1,5 @@
 /*
- *Description: minimize html, css, js, json and other type files
+ *Description: minimize html, css, js, json and other similar files
  *Author: b2ns
  */
 
@@ -8,6 +8,7 @@
 
 #include "../String/String.c"
 
+//define func pointer
 typedef int (*FACTORYOUT)(char);
 
 //global
@@ -75,6 +76,10 @@ char preNextChar(int n)
 int htmlName(char ch)
 {
   return (ch!=' '&& ch!='>');
+}
+int cssName(char ch)
+{
+  return ((ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9')||(ch=='$')||(ch=='_')||(ch=='#')||(ch=='.')||(ch=='+')||(ch=='-')||(ch=='%')||(ch=='*'));
 }
 int name(char ch)
 {
@@ -182,7 +187,7 @@ FACTORYOUT* funcFactory()
   }
   else
   {
-	arr[0]=name;
+	arr[0]=(!strCmp("css",toLower(postfix)))?cssName:name;
 	arr[1]=(!strCmp("json",toLower(postfix)))?jsonQuote:quote;
 	arr[2]=comment;
   }
@@ -210,12 +215,11 @@ void minimize()
 	{
 	  if(isInComment(ch) || ch=='\n' || ch=='	') continue;
 	  if(ch!=' ') nonspace=ch;
-	  else if(ch==' ' && (!isName(preNextChar(1)) || !isName(nonspace))) continue;
+	  else if((!isName(preNextChar(1)) || !isName(nonspace))) continue;
 
 	  fputc(ch,outfile);
 	}
   }
-
 }
 
 
