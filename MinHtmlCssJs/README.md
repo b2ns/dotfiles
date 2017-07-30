@@ -15,7 +15,7 @@ befoe:
     <!DOCTYPE  html >
 
     <!-- you can't see me  -->
-    <html lang = "en">
+    <html lang="en">
     <head>
       <meta charset="utf-8">
       <title>MinHtmlCssJs     </title>
@@ -30,7 +30,7 @@ befoe:
     </html>
 after:
     
-    <!DOCTYPE html><html lang = "en"><head><meta charset="utf-8"><title>MinHtmlCssJs </title><meta name="description" content="space       will not be deleted !  that's what I want !"><meta name='keywords' content=' "minimize" '></head><body><p class="button playing hide">L o r e m </p><pre> this  will   not  be  
+    <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>MinHtmlCssJs </title><meta name="description" content="space       will not be deleted !  that's what I want !"><meta name='keywords' content=' "minimize" '></head><body><p class="button playing hide">L o r e m </p><pre> this  will   not  be  
       minimized !  </pre></body></html>
 2.css
 
