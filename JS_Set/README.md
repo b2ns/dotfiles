@@ -1,1 +1,1 @@
-# a set of basic data structures for javascript
+# A set of basic data structures for javascript

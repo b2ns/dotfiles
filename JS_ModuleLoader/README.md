@@ -1,5 +1,5 @@
-# a JavaScript module loader
-## usage:
+# A JavaScript module loader
+## Usage:
 1.insert this in html:
 
     <script src="include.js"></script>

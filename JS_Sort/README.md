@@ -1,5 +1,5 @@
-# overwrite the default sort method of Array's prototype
-## usage:
+# Overwrite the default sort method of Array's prototype
+## Usage:
 1.insert this in html:
 
     <script src="sort.js"></script>
