@@ -32,11 +32,7 @@
 (defmacro trans-notation (pre-or-post &body body)
   (let ((brt-l :]) (brt-r :[) (opt '<) (tmp 'num-stack))
     (if (string= pre-or-post "post")
-        (progn
-          (setf brt-l :[)
-          (setf brt-r :])
-          (setf opt '<=)
-          (setf tmp '(reverse num-stack)))
+        (setf brt-l :[ brt-r :] opt '<= tmp '(reverse num-stack))
         (setf body (reverse body)))
   `(let ((num-stack nil) (opt-stack nil))
     (loop for ch in ',body do
