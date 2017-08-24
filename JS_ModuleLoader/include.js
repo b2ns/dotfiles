@@ -24,7 +24,7 @@
       }
       if (j == CURMOD.length) {
         var relyonMod = document.createElement("script");
-        relyonMod.src = src + ".js";
+        relyonMod.src = src;
         document.body.appendChild(relyonMod);
       }
     }
