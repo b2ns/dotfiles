@@ -1,88 +1,78 @@
-;;;;Description: simple database using common-lisp
+;;;;Description: a simple database using common-lisp
 ;;;;Author: b2ns
 
 (defpackage :b2ns.github.simple-db
   (:use :cl)
-  (:export :where :get-fields :set-fileds :show-db :insert-db :select-db :update-db :delete-db :clear-db :save-db :load-db))
+  (:export :insert-db :select-db :update-db :delete-db :remove-duplicates-db :clear-db :save-db :load-db :where))
 (in-package :b2ns.github.simple-db)
 
 ;;;dynamic var
-(defparameter *fields* (list :name :age :sex))
-(defparameter *db* (list *fields*))
-(defparameter *filename* "newfile.db")
+(defparameter *filename* "newdb.db")
+(defun make-dynamic-array (&optional (size 100))
+  (make-array size :fill-pointer 0 :adjustable t))
+(defparameter *db* (make-dynamic-array))
 
 ;;;utils
-(defun my-push (obj place)
-  (nconc place (list obj)))
-
-(defun parse-string (x)
-  (if (numberp x)
-      x
-      (format nil "~a" x)))
-
-(defun get-fields ()
-  *fields*)
-(defun set-fileds (&rest body)
-  (setf *fields* body)
-  (setf (car *db*) *fields*))
-
+;;substr test
+(defun has (str substr)
+  (search substr str :test #'string-equal))
+;;selector
 (defmacro where (&body body)
   `#'(lambda (item)
        (and
-         ,@(loop while body collect 
-                 `(equal (getf item ,(pop body)) ,(parse-string (pop body)))))))
+         ,@(loop for i in body for k = (pop i)
+                 if (<= (length i) 1) collect
+                   `(equal (getf item ,k) ,(pop i))
+                 else collect
+                   `(and
+                      (getf item ,k)
+                      ,@(loop while i collect
+                     `(,(pop i) (getf item ,k) ,(pop i))))))))
 
 ;;;main
-(defmacro insert-db (&body body)
-  `(if (some (where ,@(loop for k in *fields* for v in body with tmp do
-                            (push k tmp)
-                            (push (parse-string v) tmp)
-                            finally (return (reverse tmp)))) *db*)
-      "Already exist!"
-      (progn
-         (my-push (list ,@(loop for k in *fields* for v in body with tmp2 do 
-                            (push k tmp2)
-                            (push (parse-string v) tmp2)
-                            finally (return (reverse tmp2)))) *db*)
-         "Done!")))
+(defun insert-db (&rest body)
+  (progn
+     (vector-push-extend body *db*)
+     "Done!"))
 
-(defun select-db (selector-fn)
-  (remove-if-not selector-fn *db*))
+(defun select-db (&optional (selector-fn nil supplied-p))
+  (let ((tmp *db*))
+    (if supplied-p
+        (setf tmp (remove-if-not selector-fn *db*)))
+    (loop for i across tmp do
+      (format t "~{~a:~a | ~}" i)
+      (format t "~%"))))
 
-(defmacro update-db (selector-fn &body body)
-  `(progn
-    (setf *db*
-        (mapcar
-          #'(lambda (item)
-              (when (funcall ,selector-fn item)
-                ,@(loop while body collect
-                        `(setf (getf item ,(pop body)) ,(parse-string (pop body))))) item) *db*))
+(defun update-db (selector-fn &rest body)
+  (progn
+     (loop for i across *db*
+           if (funcall selector-fn i) do
+             (loop for j on body by #'cddr do
+                   (setf (getf i (first j)) (second j))))
     "Done!"))
 
 (defun delete-db (selector-fn)
-  (setf *db* (remove-if selector-fn *db*))
+  (setf *db* (delete-if selector-fn *db*))
+  "Done!")
+
+(defun remove-duplicates-db ()
+  (setf *db* (delete-duplicates *db* :test #'equal))
   "Done!")
 
 (defun clear-db ()
-  (setf *db* (list *fields*)))
+  (setf *db* (make-dynamic-array))
+  "Done!")
 
-(defun show-db ()
-  (dolist (item (cdr *db*))
-    (format t "~{~a: ~a  ~}" item)
-    (format t "~%")))
+(defun save-db (&optional (filename *filename*))
+   (setf *filename* filename)
+   (with-open-file (out *filename* :direction :output :if-exists :supersede)
+    (print *db* out)
+    "Done!"))
 
-(defmacro save-db (&optional (filename *filename*))
-  `(progn 
-     (setf *filename* ,(parse-string filename))
-     (with-open-file (out *filename* :direction :output :if-exists :supersede)
-      (print *db* out)
-      "Done!")))
-
-(defmacro load-db (filename)
-  `(progn 
-     (setf *filename* ,(parse-string filename))
-     (with-open-file (in *filename*)
-      (setf *db* (read in))
-      (setf *fields* (car *db*))
-      "Done!")))
-
+(defun load-db (filename)
+  (setf *filename* filename)
+  (setf *db* (make-dynamic-array)) 
+   (with-open-file (in *filename*)
+     (loop for i across (read in) do
+           (apply #'insert-db i)))
+   "Done!")
