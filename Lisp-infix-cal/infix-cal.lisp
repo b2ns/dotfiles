@@ -42,8 +42,9 @@
                 ((equal ,brt-l ch) (push ch opt-stack))
                 ((equal ,brt-r ch) (loop until (or (equal ,brt-l (setf ch (pop opt-stack))) (equal nil ch)) do
                                      (push ch num-stack)))
-                ((,opt (priority-p ch (car opt-stack)) 0) (push (pop opt-stack) num-stack) (push ch opt-stack))
-                (t (push ch opt-stack)))))
+                (t (loop while (,opt (priority-p ch (car opt-stack)) 0) do
+                         (push (pop opt-stack) num-stack))
+                   (push ch opt-stack)))))
     (loop for ch in opt-stack do (push ch num-stack))
     ,tmp)))
 
