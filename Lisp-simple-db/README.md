@@ -1,43 +1,68 @@
 # Simple database using common-lisp
 ## Usage:
-1.to get and set the fields:
+A.Table:
 
-    (get-fields)
-    (set-fields :name :age :sex)
+1.to create a table:
 
-2.to show all item:
+    (create-table 'student :id :name :age :sex :class)
 
-    (show-db)
+2.to see more about the tables created:
 
-3.to insert item:
+    (about-table)
 
-    (insert-db "b2ns" "100" "male")
-    (insert-db b2ns 100 male)
+3.to remove a table:
 
-4.to select item:
+    (remove-table 'student)
 
-    (select-db (where :name "b2ns"))
-    (select-db (where :age 100 :sex male))
+B.Column:
 
-5.to update item:
+1.to add columns:
 
-    (update-db (where :name "b2ns") :age 1000)
-    (update-db (where :age 100 :sex male) :name "Dovahkiin" :age 10)
+    (add-column 'student :score :tel)
 
-6.to delete item:
+2.to remove columns:
 
-    (delete-db (where :name "b2ns"))
-    (delete-db (where :age 100 :sex male))
+    (remove-column 'student :score :tel)
 
-7.to clear the whole database:
+C.Rows:
+
+1.to insert a row:
+
+    (insert-into 'student 007 "b2ns" 100 "male" 5)
+
+2.to select rows:
+
+    (select-from 'student "all" (where "all"))
+    (select-from 'student (:name :age) (where (:name "b2ns")) (orderby :age <))
+    (select-from 'student (:name :age :class) (where (:name has "ns") (:age > 5 <= 50 /= 22) (:class 10)) (orderby :id <))
+
+3.to update rows:
+
+    (update 'student (where (:name "b2ns")) :age 1 :class 12 :id 008)
+
+4.to delete rows:
+
+    (delete-from 'student (where (:age < 18)))
+
+D.Database
+
+1.to save the whole dateabase:
+
+    (save-db "filename.db")
+
+2.to load a dateabase:
+
+    (load-db "filename.db")
+
+3.to clear the whole dateabase:
 
     (clear-db)
 
-8.to save the whole database:
+E.Math function
 
-    (save-db "file-name.db")
-
-9.to load a database:
-
-    (load-db "file-name.db")
+    (count-tb 'student (where (:name has "ing")))
+    (max-tb 'student (where "all") :age)
+    (min-tb 'student (where (:sex "female")) :age)
+    (sum-tb 'student (where "all") :age)
+    (avg-tb 'student (where "all") :age)
 
