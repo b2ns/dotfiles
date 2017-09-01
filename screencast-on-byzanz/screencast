@@ -1,0 +1,75 @@
+#!/bin/bash
+
+#DESCRIPTION:simplify the operation of byzanz(a screencast app)
+#AUTHOR:b2ns
+
+#set default folder
+[ "$#" = "0" ] && DEFDIR=~/Pictures || DEFDIR="$1"
+cd "$DEFDIR"
+
+#set default value
+DEFDUR="10"
+DEFLAY="5"
+DEFCUR=""
+DEFAUD=""
+DEFPOSTFIX="gif"
+
+#read user set
+echo -e "set the duration (10s): \c"
+read -r input
+[ "$input" -gt 0 ] 2>/dev/null && dur=$input || dur=$DEFDUR
+
+echo -e "set the delay (5s): \c"
+read -r input
+[ "$input" -gt 0 ] 2>/dev/null && lay=$input || lay=$DEFLAY
+
+echo -e "record the cursor (no) ? (y/n): \c"
+read -r input
+[ "$input" = "y" ] && cur="--cursor" || cur="$DEFCUR"
+
+echo -e "record the audio (no) ? (y/n): \c"
+read -r input
+if [ "$input" = "y" ];then
+  aud="--audio"
+  postfix="flv"
+else
+  aud="$DEFAUD"
+  postfix="$DEFPOSTFIX"
+fi
+
+#get the coordinates of the window
+echo "select the window to record."
+wininfo=$(xwininfo)
+
+str=$(echo $wininfo | grep -E -o "Absolute upper-left X: [-]?[0-9]+")
+X=$(echo $str | grep -E -o "[0-9]+")
+
+str=$(echo $wininfo | grep -E -o "Absolute upper-left Y: [-]?[0-9]+")
+Y=$(echo $str | grep -E -o "[0-9]+")
+
+str=$(echo $wininfo | grep -E -o "Width: [0-9]+")
+W=$(echo $str | grep -E -o "[0-9]+")
+
+str=$(echo $wininfo | grep -E -o "Height: [0-9]+")
+H=$(echo $str | grep -E -o "[0-9]+")
+
+echo $X $Y $W $H
+
+#delay
+for((i=$lay;i>0;i--))
+do
+  echo -e "\033[1;31m$i \033[0ms before start !"
+  sleep 1
+done
+
+echo -e "\033[1;32mstart !\033[0m"
+
+#exec byzanz
+timemark=$(date +"%Y%m%d%H%M%S")
+
+echo -e "\033[1;33mrecording ...\033[0m"
+
+byzanz-record $cur $aud --duration=$dur --delay=0 --x=$X --y=$Y --width=$W --height=$H $DEFDIR/screencast_$timemark.$postfix
+
+#complete
+echo -e "\033[1;32mthe file was saved to $PWD/screencast_$timemark.$postfix !\033[0m"
