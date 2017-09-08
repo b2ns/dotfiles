@@ -1,5 +1,5 @@
 /* 
-*Description: overwrite the default sort method of Array prototype
+*Description: add new sort method for Array in JavaScript
 *Author: b2ns 
  */
 
@@ -228,7 +228,7 @@
   };
 
   //overwrite the sort method of Array's prototype
-  host.sort = function (cmp, method) {
+  host.sortBy = function (cmp, method) {
     if (typeof cmp != "function") {
       method = cmp;
       cmp = defCmp;
