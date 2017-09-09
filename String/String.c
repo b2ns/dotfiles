@@ -465,26 +465,3 @@ int main(void)
   return 0;
 }
 */
-
-/*
-//查看二进制位
-void foo(int num,int size,int j)
-{
-  if(size)
-  {
-  foo(num>>1,size-1,j+1);
-  int n=num&1;
-  printf("%d",n);
-  if(j%4==0) printf(" ");
-  }
-}
-void foobar(long long num,int size,int j)
-{
-  if(size)
-  {
-  foobar(num>>1,size-1,j+1);
-  int n=num&1;
-  printf("%d",n);
-  if(j%4==0) printf(" ");
-  }
-}*/
