@@ -8,10 +8,14 @@
 
   //make it easier to define a new class
   var Class = function (attr,method,parent) {
-    var $class=function () {
+    var $class=function (obj) {
       for(var i in attr){
         this[i]=attr[i];
       }
+      for(var i in obj){
+        this[i]=obj[i];
+      }
+      if(typeof this.init === "function") this.init();
     };
 
     if(typeof parent === "function"){
@@ -26,6 +30,7 @@
     }
     return $class;
   };
+  ds.Class=Class;
 
   //Bag
   ds.Bag=Class(
@@ -41,6 +46,6 @@
 
 
   
-  //expose the set
+  //expose the ds
   exports.ds=ds;
 })(window);
