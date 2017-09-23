@@ -159,7 +159,7 @@ int htmlComment(char ch)
 
 
 }
-int comment(char ch)
+int comment(char ch)  // /*this is not a right form "*/" for comment*/
 {
   /*static int commentFlag=0;*/
   if(ch=='/' && preNextChar(1)=='*' && commentFlag==0)
