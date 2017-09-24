@@ -3,7 +3,7 @@
 *Author: b2ns 
  */
 
-(function (host) {
+(function (exports) {
 
   //default comparator
   var defCmp = function (a, b) {
@@ -93,9 +93,9 @@
   var shell = function (cmp) {
     var arr = this;
     var len = arr.length;
-    var index=Math.floor(Math.log2(len));
+    var index = Math.floor(Math.log2(len));
 
-    for (var k = Math.pow(2,index)-1; k >= 1; k = Math.pow(2,--index)-1) {
+    for (var k = Math.pow(2, index) - 1; k >= 1; k = Math.pow(2, --index) - 1) {
       for (var i = k; i < len; arr[j + k] = tmp, i++)
         for (var tmp = arr[i], j = i - k; j >= 0 && cmp(tmp, arr[j]) === -1; j -= k)
           arr[j + k] = arr[j];
@@ -228,7 +228,7 @@
   };
 
   //overwrite the sort method of Array's prototype
-  host.sortBy = function (cmp, method) {
+  exports.sortBy = function (cmp, method) {
     if (typeof cmp != "function") {
       method = cmp;
       cmp = defCmp;
