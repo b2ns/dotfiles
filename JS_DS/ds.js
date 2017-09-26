@@ -28,8 +28,8 @@
   };
   ds.Class=Class;
 
-  //hashTable
-  ds.hashTable=Class(
+  //HashTable
+  ds.HashTable=Class(
     {
       _init:function () {
         this._table = new Object();
@@ -114,19 +114,20 @@
     {
       _init:function () {
         this._head=new ListNode();
+        this._tail=new ListNode();
+        this._head.next=this._tail;
+        this._tail.pre=this._head;
         this._length=0;
       },
       length:function () {
         return this._length;
       },
       insert:function (val,nodeVal) {
-        var node=(nodeVal)?this.find(nodeVal):this._head;
-        node=(node)?node:this._head;
+        var node=(nodeVal)?this.find(nodeVal):this._tail.pre;
+        node=(node)?node:this._tail.pre;
 
         var newNode=new ListNode(val,node,node.next);
-        if(node.next){
-          node.next.pre=newNode;
-        }
+        node.next.pre=newNode;
         node.next=newNode;
 
         this._length++;
@@ -142,25 +143,34 @@
       },
       find:function (val) {
         var node=this._head.next;
-        while(node){
+        while(node!==this._tail){
           if(node.val === val) break;
           node=node.next;
         }
-        return node;
+        return (node===this._tail)?undefined:node;
       },
       clear:function () {
-        this._head=new ListNode();
-        this._length=0;
+        this._init();
       },
       forEach:function (func) {
         var node=this._head.next;
-        while(node){
+        while(node!==this._tail){
           func.call(this,node.val);
           node=node.next;
         }
       },
     }
   );
+
+  //BinarySearchTree
+
+
+  //PriorityQueue
+
+  //Graph
+
+  //Digraph
+
 
   
   //expose the ds
