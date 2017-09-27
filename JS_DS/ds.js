@@ -33,21 +33,31 @@
     {
       _init:function () {
         this._table = new Object();
+        this._length=0;
+      },
+      length:function () {
+        return this._length;
       },
       value:function (key) {
         return this._table[key];
       },
       insert:function (key,val) {
-        this._table[key]=val;
+        if(val!==undefined){
+          this._table[key]=val;
+          this._length++;
+        }
       },
       delete:function (key) {
-        delete this._table[key];
+        if(this._table[key]!==undefined){
+          delete this._table[key];
+          this._length--;
+        }
       },
       find:function (key) {
         return this.value(key) !== undefined;
       },
       clear:function () {
-        this._table=new Object();
+        this._init();
       },
       forEach:function (func) {
         for(var key in this._table){
@@ -63,6 +73,9 @@
       _init:function () {
         this._array = new Array();
       },
+      length:function () {
+        return this._array.length;
+      },
       push:function (item) {
         this._array.push(item);
       },
@@ -74,6 +87,9 @@
       },
       bottom:function () {
         return this._array[0];
+      },
+      clear:function () {
+        this._init();
       }
     }
   );
@@ -83,6 +99,9 @@
     {
       _init:function (size) {
         this._array = new Array();
+      },
+      length:function () {
+        return this._array.length;
       },
       enqueue:function (item) {
         this._array.push(item);
@@ -95,6 +114,9 @@
       },
       last:function () {
         return this._array[this._array.length-1];
+      },
+      clear:function () {
+        this._init();
       }
     }
   );
@@ -163,6 +185,151 @@
   );
 
   //BinarySearchTree
+  var TreeNode=Class(
+    {
+      _init:function (val,height,parent,left,right) {
+        this.val=val;
+        this.height=height;
+        this.parent=parent;
+        this.left=left;
+        this.right=right;
+      },
+    }
+  );
+
+  ds.BST=Class(
+    {
+      _init:function () {
+        // this._root=new TreeNode(undefined,0);
+        this._root=undefined;
+        this._length=0;
+      },
+      length:function () {
+        return this._length;
+      },
+      insert:function (val) {
+        if(this._root){
+          var node=this._root,parent;
+          while(node){
+            parent=node;
+            if(val<node.val){
+              node=node.left;
+            }
+            else if(val>node.val){
+              node=node.right;
+            }
+            else
+              return undefined;
+          }
+          var newNode=new TreeNode(val,0,parent);
+          if(val<parent.val)
+            parent.left=newNode;
+          else
+            parent.right=newNode;
+        }else{
+          this._root=new TreeNode(val,0,undefined);
+        }
+      },
+      find:function (val) {
+        var node=this._root;
+        while(node){
+          if(val<node.val)
+            node=node.left;
+          else if(val>node.val)
+            node=node.right;
+          else
+            return true;
+        }
+        return false;
+      },
+      _minmax:function (root,lr) {
+        var node=root;
+        if(node){
+          for(;node[lr];node=node[lr]) ;
+        }
+        return node;
+      },
+      min:function () {
+        var node=this._minmax(this._root,"left");
+        return node&&node.val;
+      },
+      max:function () {
+        var node=this._minmax(this._root,"right");
+        return node&&node.val;
+      },
+      delete:function (val) {
+        var node=this._root;
+        if(node){
+          while(node){
+            if(val<node.val)
+              node=node.left;
+            else if(val>node.val)
+              node=node.right;
+            else{
+              if(node.left){
+                var maxNode=this._minmax(node.left,"right");
+                node.val=maxNode.val;
+                if(maxNode===node.left)
+                  node.left=maxNode.left;
+                else
+                  maxNode.parent.right=maxNode.left;
+              }else if(node.right){
+                var minNode=this._minmax(node.right,"left");
+                node.val=minNode.val;
+                if(minNode===node.right)
+                  node.right=minNode.right;
+                else
+                  minNode.parent.left=minNode.right;
+              }else{
+                if(node.parent){
+                  if(node.val<node.parent.val)
+                    node.parent.left=undefined;
+                  else
+                    node.parent.right=undefined;
+                }else{
+                  this._root=undefined;
+                }
+              }
+              break;
+            }
+          }
+        }
+      },
+      clear:function () {
+        this._init();
+      },
+      forEachPre:function (func) {
+        this._forEachPre(this._root,func);
+      },
+      _forEachPre:function (node,func) {
+        if(node){
+          func.call(this,node.val);
+          this._forEachPre(node.left,func);
+          this._forEachPre(node.right,func);
+        }
+      },
+      forEachMid:function (func) {
+        this._forEachMid(this._root,func);
+      },
+      _forEachMid:function (node,func) {
+        if(node){
+          this._forEachMid(node.left,func);
+          func.call(this,node.val);
+          this._forEachMid(node.right,func);
+        }
+      },
+      forEachPost:function (func) {
+        this._forEachPost(this._root,func);
+      },
+      _forEachPost:function (node,func) {
+        if(node){
+          this._forEachPost(node.left,func);
+          this._forEachPost(node.right,func);
+          func.call(this,node.val);
+        }
+      },
+    }
+  );
 
 
   //PriorityQueue
