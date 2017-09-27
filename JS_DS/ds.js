@@ -199,43 +199,119 @@
 
   ds.BST=Class(
     {
-      _init:function () {
+      _init:function (cmp) {
         // this._root=new TreeNode(undefined,0);
         this._root=undefined;
         this._length=0;
+        this.cmp=cmp||function (a,b){return (a>b)?1:((a<b)?-1:0);};
       },
       length:function () {
         return this._length;
+      },
+      _height:function (node) {
+        return (node)?node.height:-1;
+      },
+      _maxHeight:function (left,right) {
+        var lh=this._height(left);
+        var rh=this._height(right);
+        return (lh>rh)?lh:rh;
+      },
+      _rotate:function (lr,sd,node) {
+        var topNode,tmp;
+        if(lr==="left"&&sd==="single"){
+          topNode=node.left;
+          topNode.parent=node.parent;
+          node.left=topNode.right;if(topNode.right) topNode.right.parent=node;
+          topNode.right=node;node.parent=topNode;
+        }else if(lr==="right"&&sd==="single"){
+          topNode=node.right;
+          topNode.parent=node.parent;
+          node.right=topNode.left;if(topNode.left) topNode.left.parent=node;
+          topNode.left=node;node.parent=topNode;
+        }else if(lr==="left"&&sd==="double"){
+          topNode=node.left.right;
+          tmp=node.left;
+          topNode.parent=node.parent;
+          node.left=topNode.right;if(topNode.right) topNode.right.parent=node;
+          tmp.right=topNode.left;if(topNode.left) topNode.left.parent=tmp;
+          topNode.right=node;node.parent=topNode;
+          topNode.left=tmp;tmp.parent=topNode;
+        }else if(lr==="right"&&sd==="double"){
+          topNode=node.right.left;
+          tmp=node.right;
+          topNode.parent=node.parent;
+          node.right=topNode.left;if(topNode.left) topNode.left.parent=node;
+          tmp.left=topNode.right;if(topNode.right) topNode.right.parent=tmp;
+          topNode.left=node;node.parent=topNode;
+          topNode.right=tmp;tmp.parent=topNode;
+        }
+        node.height=1+this._maxHeight(node.left,node.right);
+        if(tmp) tmp.height=1+this._maxHeight(tmp.left,tmp.right);
+        topNode.height=1+this._maxHeight(topNode.left,topNode.right);
+        return topNode;
+      },
+      _AVL:function (newNode) {
+        for(var node=newNode.parent,topNode;node;node=node.parent,topNode=undefined){
+          if(this._height(node.left)-this._height(node.right)>=2){
+            if(this._height(node.left.left)>=this._height(node.left.right)){
+              topNode=this._rotate("left","single",node);
+            }else{
+              topNode=this._rotate("left","double",node);
+            }
+          }else if(this._height(node.right)-this._height(node.left)>=2){
+            if(this._height(node.right.left)>this._height(node.right.right)){
+              topNode=this._rotate("right","double",node);
+            }else{
+              topNode=this._rotate("right","single",node);
+            }
+          }else{
+            node.height=1+this._maxHeight(node.left,node.right);
+          }
+          if(topNode){
+            if(topNode.parent){
+              if(this.cmp(topNode.val,topNode.parent.val)===-1){
+                topNode.parent.left=topNode;
+              }else{
+                topNode.parent.right=topNode;
+              }
+            }else{
+              this._root=topNode;
+            }
+          }
+        }
       },
       insert:function (val) {
         if(this._root){
           var node=this._root,parent;
           while(node){
             parent=node;
-            if(val<node.val){
+            if(this.cmp(val,node.val)===-1){
               node=node.left;
             }
-            else if(val>node.val){
+            else if(this.cmp(val,node.val)===1){
               node=node.right;
             }
             else
               return undefined;
           }
           var newNode=new TreeNode(val,0,parent);
-          if(val<parent.val)
+          if(this.cmp(val,parent.val)===-1)
             parent.left=newNode;
           else
             parent.right=newNode;
+          
+          this._AVL(newNode);
         }else{
           this._root=new TreeNode(val,0,undefined);
         }
+        this._length++;
       },
       find:function (val) {
         var node=this._root;
         while(node){
-          if(val<node.val)
+          if(this.cmp(val,node.val)===-1)
             node=node.left;
-          else if(val>node.val)
+          else if(this.cmp(val,node.val)===1)
             node=node.right;
           else
             return true;
@@ -259,39 +335,43 @@
       },
       delete:function (val) {
         var node=this._root;
-        if(node){
-          while(node){
-            if(val<node.val)
-              node=node.left;
-            else if(val>node.val)
-              node=node.right;
-            else{
-              if(node.left){
-                var maxNode=this._minmax(node.left,"right");
-                node.val=maxNode.val;
-                if(maxNode===node.left)
-                  node.left=maxNode.left;
+        while(node){
+          if(this.cmp(val,node.val)===-1)
+            node=node.left;
+          else if(this.cmp(val,node.val)===1)
+            node=node.right;
+          else{
+            if(node.left){
+              var maxNode=this._minmax(node.left,"right");
+              node.val=maxNode.val;
+              if(maxNode===node.left)
+                node.left=maxNode.left;
+              else
+                maxNode.parent.right=maxNode.left;
+              if(maxNode.left) maxNode.left.parent=maxNode.parent;
+              this._AVL(maxNode);
+            }else if(node.right){
+              var minNode=this._minmax(node.right,"left");
+              node.val=minNode.val;
+              if(minNode===node.right)
+                node.right=minNode.right;
+              else
+                minNode.parent.left=minNode.right;
+              if(minNode.right) minNode.right.parent=maxNode.parent;
+              this._AVL(minNode);
+            }else{
+              if(node.parent){
+                if(this.cmp(node.val,node.parent.val)===-1)
+                  node.parent.left=undefined;
                 else
-                  maxNode.parent.right=maxNode.left;
-              }else if(node.right){
-                var minNode=this._minmax(node.right,"left");
-                node.val=minNode.val;
-                if(minNode===node.right)
-                  node.right=minNode.right;
-                else
-                  minNode.parent.left=minNode.right;
+                  node.parent.right=undefined;
               }else{
-                if(node.parent){
-                  if(node.val<node.parent.val)
-                    node.parent.left=undefined;
-                  else
-                    node.parent.right=undefined;
-                }else{
-                  this._root=undefined;
-                }
+                this._root=undefined;
               }
-              break;
+              this._AVL(node);
             }
+            this._length--;
+            break;
           }
         }
       },
@@ -326,6 +406,20 @@
           this._forEachPost(node.left,func);
           this._forEachPost(node.right,func);
           func.call(this,node.val);
+        }
+      },
+      forEachLevel:function (func) {
+        var q=new ds.Queue;
+        var node=this._root;
+        if(node)
+          q.enqueue(node);
+        while(q.length()>0){
+          node=q.dequeue();
+          func.call(this,node.val);
+          if(node.left)
+            q.enqueue(node.left);
+          if(node.right)
+            q.enqueue(node.right);
         }
       },
     }
