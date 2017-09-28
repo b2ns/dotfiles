@@ -134,18 +134,19 @@
 
   ds.List=Class(
     {
-      _init:function () {
+      _init:function (_cmp) {
         this._head=new ListNode();
         this._tail=new ListNode();
         this._head.next=this._tail;
         this._tail.pre=this._head;
         this._length=0;
+        this._cmp=_cmp||function (a,b) {return (a===b)?0:1;};
       },
       length:function () {
         return this._length;
       },
       insert:function (val,nodeVal) {
-        var node=(nodeVal)?this.find(nodeVal):this._tail.pre;
+        var node=(nodeVal)?this._find(nodeVal):this._tail.pre;
         node=(node)?node:this._tail.pre;
 
         var newNode=new ListNode(val,node,node.next);
@@ -155,24 +156,27 @@
         this._length++;
       },
       delete:function (val) {
-        var node=this.find(val);
+        var node=this._find(val);
         if(node){
           node.pre.next=node.next;
           node.next.pre=node.pre;
+          this._length--;
         }
-
-        this._length--;
       },
       find:function (val) {
+        var node=this._find(val);
+        return node&&node.val;
+      },
+      _find:function (val) {
         var node=this._head.next;
         while(node!==this._tail){
-          if(node.val === val) break;
+          if(this._cmp(val,node.val)===0) break;
           node=node.next;
         }
         return (node===this._tail)?undefined:node;
       },
       clear:function () {
-        this._init();
+        this._init(this._cmp);
       },
       forEach:function (func) {
         var node=this._head.next;
@@ -199,11 +203,10 @@
 
   ds.BST=Class(
     {
-      _init:function (cmp) {
-        // this._root=new TreeNode(undefined,0);
+      _init:function (_cmp) {
         this._root=undefined;
         this._length=0;
-        this.cmp=cmp||function (a,b){return (a>b)?1:((a<b)?-1:0);};
+        this._cmp=_cmp||function (a,b){return (a>b)?1:((a<b)?-1:0);};
       },
       length:function () {
         return this._length;
@@ -269,7 +272,7 @@
           }
           if(topNode){
             if(topNode.parent){
-              if(this.cmp(topNode.val,topNode.parent.val)===-1){
+              if(this._cmp(topNode.val,topNode.parent.val)===-1){
                 topNode.parent.left=topNode;
               }else{
                 topNode.parent.right=topNode;
@@ -285,17 +288,17 @@
           var node=this._root,parent;
           while(node){
             parent=node;
-            if(this.cmp(val,node.val)===-1){
+            if(this._cmp(val,node.val)===-1){
               node=node.left;
             }
-            else if(this.cmp(val,node.val)===1){
+            else if(this._cmp(val,node.val)===1){
               node=node.right;
             }
             else
               return undefined;
           }
           var newNode=new TreeNode(val,0,parent);
-          if(this.cmp(val,parent.val)===-1)
+          if(this._cmp(val,parent.val)===-1)
             parent.left=newNode;
           else
             parent.right=newNode;
@@ -309,14 +312,14 @@
       find:function (val) {
         var node=this._root;
         while(node){
-          if(this.cmp(val,node.val)===-1)
+          if(this._cmp(val,node.val)===-1)
             node=node.left;
-          else if(this.cmp(val,node.val)===1)
+          else if(this._cmp(val,node.val)===1)
             node=node.right;
           else
-            return true;
+            return node.val;
         }
-        return false;
+        return undefined;
       },
       _minmax:function (root,lr) {
         var node=root;
@@ -336,9 +339,9 @@
       delete:function (val) {
         var node=this._root;
         while(node){
-          if(this.cmp(val,node.val)===-1)
+          if(this._cmp(val,node.val)===-1)
             node=node.left;
-          else if(this.cmp(val,node.val)===1)
+          else if(this._cmp(val,node.val)===1)
             node=node.right;
           else{
             if(node.left){
@@ -361,7 +364,7 @@
               this._AVL(minNode);
             }else{
               if(node.parent){
-                if(this.cmp(node.val,node.parent.val)===-1)
+                if(this._cmp(node.val,node.parent.val)===-1)
                   node.parent.left=undefined;
                 else
                   node.parent.right=undefined;
@@ -376,7 +379,7 @@
         }
       },
       clear:function () {
-        this._init();
+        this._init(this._cmp);
       },
       forEachPre:function (func) {
         this._forEachPre(this._root,func);
