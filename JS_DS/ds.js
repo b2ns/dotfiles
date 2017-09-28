@@ -97,7 +97,7 @@
   //Queue
   ds.Queue=Class(
     {
-      _init:function (size) {
+      _init:function () {
         this._array = new Array();
       },
       length:function () {
@@ -428,8 +428,54 @@
     }
   );
 
-
   //PriorityQueue
+  ds.PQ=Class(
+    {
+      _init:function (_cmp) {
+        this._array=new Array(1);
+        this._cmp=_cmp||function (a,b){return (a>b)?1:((a<b)?-1:0);};
+      },
+      length:function () {
+        return this._array.length-1;
+      },
+      insert:function (val) {
+        var len=this._array.length;
+        this._array.push(val);
+        for(var j=len,i=Math.floor(len/2);i>0 && this._cmp(val,this._array[i])===-1;j=i,i=Math.floor(i/2)){
+          this._array[j]=this._array[i];
+        }
+        if(j!==len)
+          this._array[j]=val;
+      },
+      delete:function () {
+        var len=this.length();
+        if(len<=0) return undefined
+        
+        var top=this._array[1],
+            last=this._array[len--];
+        for(var j=1,i=2;i<=len;j=i,i*=2){
+          if(this._cmp(this._array[i],this._array[i+1])===1){
+            i++;
+          }
+          if(this._cmp(last,this._array[i])===1)
+            this._array[j]=this._array[i];
+          else
+            break;
+        }
+        this._array[j]=last;
+        this._array.pop();
+        return top;
+      },
+      clear:function () {
+        this._init(this._cmp);
+      },
+      forEach:function (func) {
+        for(var i=1,len=this.length();i<=len;i++){
+          func.call(this,this._array[i]);
+        }
+      },
+    }
+  );
 
   //Graph
 
