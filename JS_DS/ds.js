@@ -45,16 +45,16 @@
         if(val!==undefined){
           this._table[key]=val;
           this._length++;
+          return val;
         }
       },
       delete:function (key) {
         if(this._table[key]!==undefined){
+          var tmp=this._table[key];
           delete this._table[key];
           this._length--;
+          return tmp;
         }
-      },
-      find:function (key) {
-        return this.value(key) !== undefined;
       },
       clear:function () {
         this._init();
@@ -78,6 +78,7 @@
       },
       push:function (item) {
         this._array.push(item);
+        return item;
       },
       pop:function () {
         return this._array.pop();
@@ -105,6 +106,7 @@
       },
       enqueue:function (item) {
         this._array.push(item);
+        return item;
       },
       dequeue:function () {
         return this._array.shift();
@@ -154,6 +156,7 @@
         node.next=newNode;
 
         this._length++;
+        return val;
       },
       delete:function (val) {
         var node=this._find(val);
@@ -161,6 +164,7 @@
           node.pre.next=node.next;
           node.next.pre=node.pre;
           this._length--;
+          return val;
         }
       },
       find:function (val) {
@@ -308,6 +312,7 @@
           this._root=new TreeNode(val,0,undefined);
         }
         this._length++;
+        return val;
       },
       find:function (val) {
         var node=this._root;
@@ -337,6 +342,7 @@
         return node&&node.val;
       },
       delete:function (val) {
+        if(val === undefined) return undefined;
         var node=this._root;
         while(node){
           if(this._cmp(val,node.val)===-1)
@@ -344,6 +350,7 @@
           else if(this._cmp(val,node.val)===1)
             node=node.right;
           else{
+            var tmp=node.val;
             if(node.left){
               var maxNode=this._minmax(node.left,"right");
               node.val=maxNode.val;
@@ -374,7 +381,7 @@
               this._AVL(node);
             }
             this._length--;
-            break;
+            return tmp;
           }
         }
       },
@@ -446,6 +453,10 @@
         }
         if(j!==len)
           this._array[j]=val;
+        return val;
+      },
+      top:function () {
+        return this._array[1];
       },
       delete:function () {
         var len=this.length();
@@ -454,9 +465,8 @@
         var top=this._array[1],
             last=this._array[len--];
         for(var j=1,i=2;i<=len;j=i,i*=2){
-          if(this._cmp(this._array[i],this._array[i+1])===1){
+          if(this._cmp(this._array[i],this._array[i+1])===1)
             i++;
-          }
           if(this._cmp(last,this._array[i])===1)
             this._array[j]=this._array[i];
           else
