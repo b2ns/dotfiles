@@ -4,8 +4,6 @@
 */
 
 (function (exports) {
-  var ds=function(){};
-
   //make it easier to define a new class
   var Class = function (method,parent) {
     var _class=function () {
@@ -26,6 +24,22 @@
     }
     return _class;
   };
+
+  //ds
+  var ds=Class(
+    {
+      foo:function () {
+        console.log("foo from ds");
+        console.log(this);
+      },
+      length:function () {
+        return this._length;
+      },
+      clear:function () {
+        this._init(this._cmp);
+      },
+    }
+  );
   ds.Class=Class;
 
   //HashTable
@@ -38,7 +52,7 @@
       length:function () {
         return this._length;
       },
-      value:function (key) {
+      find:function (key) {
         return this._table[key];
       },
       insert:function (key,val) {
@@ -56,15 +70,68 @@
           return tmp;
         }
       },
-      clear:function () {
-        this._init();
-      },
+      // clear:function () {
+      //   this._init();
+      // },
       forEach:function (func) {
         for(var key in this._table){
-          func.call(this,key,this._table[key]);
+          func.call(this,this._table[key],key);
         }
       },
-    }
+    },ds
+  );
+
+  //Set
+  ds.Set=Class(
+    {
+      _init:function () {
+        this._ht=new ds.HashTable();
+      },
+      length:function () {
+        return this._ht.length();
+      },
+      insert:function (val) {
+        return this._ht.insert(val,val);
+      },
+      delete:function (val) {
+        return this._ht.delete(val);
+      },
+      find:function (val) {
+        return this._ht.find(val);
+      },
+      // clear:function () {
+      //   this._init();
+      // },
+      forEach:function (func) {
+        this._ht.forEach(func);
+      },
+      intersection:function (set) {
+        var result=new ds.Set();
+        this.forEach(function (val) {
+          if(set.find(val))
+            result.insert(val);
+        });
+        return result;
+      },
+      union:function (set) {
+        var result=new ds.Set();
+        this.forEach(function (val) {
+          result.insert(val);
+        });
+        set.forEach(function (val) {
+          result.insert(val);
+        });
+        return result;
+      },
+      complement:function (set) {
+        var result=new ds.Set();
+        this.forEach(function (val) {
+          if(set.find(val)===undefined)
+            result.insert(val);
+        });
+        return result;
+      },
+    },ds
   );
 
   //Stack
@@ -315,6 +382,7 @@
         return val;
       },
       find:function (val) {
+        if(val === undefined) return undefined;
         var node=this._root;
         while(node){
           if(this._cmp(val,node.val)===-1)
