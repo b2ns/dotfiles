@@ -33,7 +33,10 @@
         console.log(this);
       },
       length:function () {
-        return this._length;
+        if(this._length!==undefined)
+          return this._length;
+        if(this._body!==undefined)
+          return this._body.length;
       },
       clear:function () {
         this._init(this._cmp);
@@ -46,36 +49,30 @@
   ds.HashTable=Class(
     {
       _init:function () {
-        this._table = new Object();
+        this._body = new Object();
         this._length=0;
       },
-      length:function () {
-        return this._length;
-      },
       find:function (key) {
-        return this._table[key];
+        return this._body[key];
       },
       insert:function (key,val) {
         if(val!==undefined){
-          this._table[key]=val;
+          this._body[key]=val;
           this._length++;
           return val;
         }
       },
       delete:function (key) {
-        if(this._table[key]!==undefined){
-          var tmp=this._table[key];
-          delete this._table[key];
+        if(this._body[key]!==undefined){
+          var tmp=this._body[key];
+          delete this._body[key];
           this._length--;
           return tmp;
         }
       },
-      // clear:function () {
-      //   this._init();
-      // },
       forEach:function (func) {
-        for(var key in this._table){
-          func.call(this,this._table[key],key);
+        for(var key in this._body){
+          func.call(this,this._body[key],key);
         }
       },
     },ds
@@ -85,25 +82,22 @@
   ds.Set=Class(
     {
       _init:function () {
-        this._ht=new ds.HashTable();
+        this._body=new ds.HashTable();
       },
       length:function () {
-        return this._ht.length();
+        return this._body.length();
       },
       insert:function (val) {
-        return this._ht.insert(val,val);
+        return this._body.insert(val,val);
       },
       delete:function (val) {
-        return this._ht.delete(val);
+        return this._body.delete(val);
       },
       find:function (val) {
-        return this._ht.find(val);
+        return this._body.find(val);
       },
-      // clear:function () {
-      //   this._init();
-      // },
       forEach:function (func) {
-        this._ht.forEach(func);
+        this._body.forEach(func);
       },
       intersection:function (set) {
         var result=new ds.Set();
@@ -138,56 +132,44 @@
   ds.Stack=Class(
     {
       _init:function () {
-        this._array = new Array();
-      },
-      length:function () {
-        return this._array.length;
+        this._body = new Array();
       },
       push:function (item) {
-        this._array.push(item);
+        this._body.push(item);
         return item;
       },
       pop:function () {
-        return this._array.pop();
+        return this._body.pop();
       },
       top:function () {
-        return this._array[this._array.length-1];
+        return this._body[this._body.length-1];
       },
       bottom:function () {
-        return this._array[0];
+        return this._body[0];
       },
-      clear:function () {
-        this._init();
-      }
-    }
+    },ds
   );
 
   //Queue
   ds.Queue=Class(
     {
       _init:function () {
-        this._array = new Array();
-      },
-      length:function () {
-        return this._array.length;
+        this._body = new Array();
       },
       enqueue:function (item) {
-        this._array.push(item);
+        this._body.push(item);
         return item;
       },
       dequeue:function () {
-        return this._array.shift();
+        return this._body.shift();
       },
       first:function () {
-        return this._array[0];
+        return this._body[0];
       },
       last:function () {
-        return this._array[this._array.length-1];
+        return this._body[this._body.length-1];
       },
-      clear:function () {
-        this._init();
-      }
-    }
+    },ds
   );
 
   //List
@@ -203,16 +185,13 @@
 
   ds.List=Class(
     {
-      _init:function (_cmp) {
+      _init:function (cmp) {
         this._head=new ListNode();
         this._tail=new ListNode();
         this._head.next=this._tail;
         this._tail.pre=this._head;
         this._length=0;
-        this._cmp=_cmp||function (a,b) {return (a===b)?0:1;};
-      },
-      length:function () {
-        return this._length;
+        this._cmp=cmp||function (a,b) {return (a===b)?0:1;};
       },
       insert:function (val,nodeVal) {
         var node=(nodeVal)?this._find(nodeVal):this._tail.pre;
@@ -246,9 +225,6 @@
         }
         return (node===this._tail)?undefined:node;
       },
-      clear:function () {
-        this._init(this._cmp);
-      },
       forEach:function (func) {
         var node=this._head.next;
         while(node!==this._tail){
@@ -256,7 +232,7 @@
           node=node.next;
         }
       },
-    }
+    },ds
   );
 
   //BinarySearchTree
@@ -274,13 +250,10 @@
 
   ds.BST=Class(
     {
-      _init:function (_cmp) {
+      _init:function (cmp) {
         this._root=undefined;
         this._length=0;
-        this._cmp=_cmp||function (a,b){return (a>b)?1:((a<b)?-1:0);};
-      },
-      length:function () {
-        return this._length;
+        this._cmp=cmp||function (a,b){return (a>b)?1:((a<b)?-1:0);};
       },
       _height:function (node) {
         return (node)?node.height:-1;
@@ -453,9 +426,6 @@
           }
         }
       },
-      clear:function () {
-        this._init(this._cmp);
-      },
       forEachPre:function (func) {
         this._forEachPre(this._root,func);
       },
@@ -487,7 +457,7 @@
         }
       },
       forEachLevel:function (func) {
-        var q=new ds.Queue;
+        var q=new ds.Queue();
         var node=this._root;
         if(node)
           q.enqueue(node);
@@ -500,59 +470,56 @@
             q.enqueue(node.right);
         }
       },
-    }
+    },ds
   );
 
   //PriorityQueue
   ds.PQ=Class(
     {
-      _init:function (_cmp) {
-        this._array=new Array(1);
-        this._cmp=_cmp||function (a,b){return (a>b)?1:((a<b)?-1:0);};
+      _init:function (cmp) {
+        this._body=new Array(1);
+        this._cmp=cmp||function (a,b){return (a>b)?1:((a<b)?-1:0);};
       },
       length:function () {
-        return this._array.length-1;
+        return this._body.length-1;
       },
       insert:function (val) {
-        var len=this._array.length;
-        this._array.push(val);
-        for(var j=len,i=Math.floor(len/2);i>0 && this._cmp(val,this._array[i])===-1;j=i,i=Math.floor(i/2)){
-          this._array[j]=this._array[i];
+        var len=this._body.length;
+        this._body.push(val);
+        for(var j=len,i=Math.floor(len/2);i>0 && this._cmp(val,this._body[i])===-1;j=i,i=Math.floor(i/2)){
+          this._body[j]=this._body[i];
         }
         if(j!==len)
-          this._array[j]=val;
+          this._body[j]=val;
         return val;
       },
       top:function () {
-        return this._array[1];
+        return this._body[1];
       },
       delete:function () {
         var len=this.length();
         if(len<=0) return undefined
         
-        var top=this._array[1],
-            last=this._array[len--];
+        var top=this._body[1],
+            last=this._body[len--];
         for(var j=1,i=2;i<=len;j=i,i*=2){
-          if(this._cmp(this._array[i],this._array[i+1])===1)
+          if(this._cmp(this._body[i],this._body[i+1])===1)
             i++;
-          if(this._cmp(last,this._array[i])===1)
-            this._array[j]=this._array[i];
+          if(this._cmp(last,this._body[i])===1)
+            this._body[j]=this._body[i];
           else
             break;
         }
-        this._array[j]=last;
-        this._array.pop();
+        this._body[j]=last;
+        this._body.pop();
         return top;
-      },
-      clear:function () {
-        this._init(this._cmp);
       },
       forEach:function (func) {
         for(var i=1,len=this.length();i<=len;i++){
-          func.call(this,this._array[i]);
+          func.call(this,this._body[i]);
         }
       },
-    }
+    },ds
   );
 
   //Graph
