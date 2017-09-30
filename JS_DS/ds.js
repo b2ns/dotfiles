@@ -101,10 +101,12 @@
       },
       intersection:function (set) {
         var result=new ds.Set();
-        this.forEach(function (val) {
-          if(set.find(val))
-            result.insert(val);
-        });
+        if(set){
+          this.forEach(function (val) {
+            if(set.find(val))
+              result.insert(val);
+          });
+        }
         return result;
       },
       union:function (set) {
@@ -112,17 +114,25 @@
         this.forEach(function (val) {
           result.insert(val);
         });
-        set.forEach(function (val) {
-          result.insert(val);
-        });
+        if(set){
+          set.forEach(function (val) {
+            result.insert(val);
+          });
+        }
         return result;
       },
       complement:function (set) {
         var result=new ds.Set();
-        this.forEach(function (val) {
-          if(set.find(val)===undefined)
+        if(set){
+          this.forEach(function (val) {
+            if(set.find(val)===undefined)
+              result.insert(val);
+          });
+        }else{
+          this.forEach(function (val) {
             result.insert(val);
-        });
+          });
+        }
         return result;
       },
     },ds
