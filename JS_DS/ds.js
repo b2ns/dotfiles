@@ -442,8 +442,8 @@
       _forEachPre:function (node,func) {
         if(node){
           func.call(this,node.val);
-          this._forEachPre(node.left,func);
-          this._forEachPre(node.right,func);
+          arguments.callee(node.left,func);
+          arguments.callee(node.right,func);
         }
       },
       forEachMid:function (func) {
@@ -451,9 +451,9 @@
       },
       _forEachMid:function (node,func) {
         if(node){
-          this._forEachMid(node.left,func);
+          arguments.callee(node.left,func);
           func.call(this,node.val);
-          this._forEachMid(node.right,func);
+          arguments.callee(node.right,func);
         }
       },
       forEachPost:function (func) {
@@ -461,8 +461,8 @@
       },
       _forEachPost:function (node,func) {
         if(node){
-          this._forEachPost(node.left,func);
-          this._forEachPost(node.right,func);
+          arguments.callee(node.left,func);
+          arguments.callee(node.right,func);
           func.call(this,node.val);
         }
       },
