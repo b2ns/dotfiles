@@ -7,10 +7,9 @@
   //make it easier to define a new class
   var Class = function (method,parent) {
     var _class=function () {
-      (function _init() {
-        this._super.apply(this,arguments);
-      }).apply(this,arguments);
-
+      // (function _init() {
+      //   this._super.apply(this,arguments);
+      // }).apply(this,arguments);
       this._init.apply(this,arguments);
     };
 
@@ -27,10 +26,9 @@
     }
 
     _class.fn=_class.prototype;
-    if(typeof _class.fn._init !== "function")
-      _class.fn._init=function (){};
     if(typeof _class.fn._super !== "function")
       _class.fn._super=function (){};
+    _class.fn._init=function (){};
 
     for(var i in method){
       _class.fn[i]=method[i];
