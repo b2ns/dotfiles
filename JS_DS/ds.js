@@ -7,6 +7,10 @@
   //make it easier to define a new class
   var Class = function (method,parent) {
     var _class=function () {
+      (function _init() {
+        this._super.apply(this,arguments);
+      }).apply(this,arguments);
+
       this._init.apply(this,arguments);
     };
 
@@ -14,11 +18,20 @@
       var tmp = function(){};
       tmp.prototype=parent.prototype;
       _class.prototype=new tmp;
+
       _class.prototype.constructor=_class;
+      _class.prototype._super=function () {
+        if(typeof parent.prototype[arguments.callee.caller.name]==="function")
+          parent.prototype[arguments.callee.caller.name].apply(this,arguments);
+      };
     }
 
     _class.fn=_class.prototype;
-    _class.fn._init=function (){};
+    if(typeof _class.fn._init !== "function")
+      _class.fn._init=function (){};
+    if(typeof _class.fn._super !== "function")
+      _class.fn._super=function (){};
+
     for(var i in method){
       _class.fn[i]=method[i];
     }
