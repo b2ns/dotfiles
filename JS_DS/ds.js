@@ -43,6 +43,7 @@
       },
     }
   );
+  exports.ds=ds; //expose the ds
   ds.Class=Class;
 
   //HashTable
@@ -538,6 +539,4 @@
 
 
   
-  //expose the ds
-  exports.ds=ds;
 })(window);
