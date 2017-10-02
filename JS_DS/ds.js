@@ -7,25 +7,34 @@
   //make it easier to define a new class
   var Class = function (method,parent) {
     var _class=function () {
-      // (function _init() {
-      //   this._super.apply(this,arguments);
-      // }).apply(this,arguments);
       this._init.apply(this,arguments);
     };
 
     if(typeof parent === "function"){
       var tmp = function(){};
+      var arr=new Array();
+
       for(var i=arguments.length-1;i>0;i--){
         for(var j in arguments[i].prototype){
-          tmp.prototype[j]=arguments[i].prototype[j];
+          if(j.search(/^_[a-z0-9_$]*$/gi)===-1)
+            tmp.prototype[j]=arguments[i].prototype[j];
+          else if(j==="_init"){
+            arr.push(arguments[i].prototype[j]);
+          }
         }
       }
+      tmp.prototype._init=function () {
+        while(arr.length>0){
+          arr.shift().apply(this,arguments);
+        }
+      }
+
       _class.prototype=new tmp;
 
       _class.prototype.constructor=_class;
       _class.prototype._super=function () {
-        if(typeof parent.prototype[arguments.callee.caller.name]==="function")
-          parent.prototype[arguments.callee.caller.name].apply(this,arguments);
+        if(typeof tmp.prototype[arguments.callee.caller.name]==="function")
+          tmp.prototype[arguments.callee.caller.name].apply(this,arguments);
       };
     }
 
