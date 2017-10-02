@@ -15,7 +15,11 @@
 
     if(typeof parent === "function"){
       var tmp = function(){};
-      tmp.prototype=parent.prototype;
+      for(var i=arguments.length-1;i>0;i--){
+        for(var j in arguments[i].prototype){
+          tmp.prototype[j]=arguments[i].prototype[j];
+        }
+      }
       _class.prototype=new tmp;
 
       _class.prototype.constructor=_class;
