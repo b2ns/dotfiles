@@ -24,8 +24,8 @@
         }
       }
       tmp.prototype._init=function () {
-        while(arr.length>0){
-          arr.shift().apply(this,arguments);
+        for(var i=0,len=arr.length;i<len;i++){
+          arr[i].apply(this,arguments);
         }
       }
 
