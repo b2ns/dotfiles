@@ -16,10 +16,12 @@
 
       for(var i=arguments.length-1;i>0;i--){
         for(var j in arguments[i].prototype){
-          if(j.search(/^_[a-z0-9_$]*$/gi)===-1)
-            tmp.prototype[j]=arguments[i].prototype[j];
-          else if(j==="_init"){
-            arr.push(arguments[i].prototype[j]);
+          if(!Object.prototype.hasOwnProperty(j)){
+            if(j.search(/^_[a-z0-9_$]*$/gi)===-1)
+              tmp.prototype[j]=arguments[i].prototype[j];
+            else if(j==="_init"){
+              arr.push(arguments[i].prototype[j]);
+            }
           }
         }
       }
@@ -44,6 +46,7 @@
     _class.fn._init=function (){};
 
     for(var i in method){
+      if(method.hasOwnProperty(i))
       _class.fn[i]=method[i];
     }
     return _class;
