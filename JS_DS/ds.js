@@ -97,7 +97,8 @@
       },
       forEach:function (func) {
         for(var key in this._body){
-          func.call(this,this._body[key],key);
+          if(this._body.hasOwnProperty(key))
+            func.call(this,this._body[key],key);
         }
       },
     },ds
