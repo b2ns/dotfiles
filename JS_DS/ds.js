@@ -34,15 +34,16 @@
       _class.prototype=new tmp;
 
       _class.prototype.constructor=_class;
-      _class.prototype._super=function () {
+      _class._super=function () {
         if(typeof tmp.prototype[arguments.callee.caller.name]==="function")
           tmp.prototype[arguments.callee.caller.name].apply(this,arguments);
       };
     }
 
+    if(typeof _class._super !== "function")
+      _class._super=function (){};
+
     _class.fn=_class.prototype;
-    if(typeof _class.fn._super !== "function")
-      _class.fn._super=function (){};
     _class.fn._init=function (){};
 
     for(var i in method){
