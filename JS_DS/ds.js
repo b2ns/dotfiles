@@ -4,6 +4,7 @@
 */
 
 (function (exports) {
+  "use strict";
   //make it easier to define a new class
   var Class = function (method,parent) {
     var _class=function () {
@@ -11,7 +12,7 @@
     };
 
     if(typeof parent === "function"){
-      var tmp = function(){};
+      var tmp = function(){this.constructor=_class;};
       var arr=new Array();
 
       for(var i=arguments.length-1;i>0;i--){
@@ -30,18 +31,10 @@
           arr[i].apply(this,arguments);
         }
       }
+      _class._super=tmp.prototype;
 
-      _class.prototype=new tmp;
-
-      _class.prototype.constructor=_class;
-      _class._super=function () {
-        if(typeof tmp.prototype[arguments.callee.caller.name]==="function")
-          tmp.prototype[arguments.callee.caller.name].apply(this,arguments);
-      };
+      _class.prototype=new tmp();
     }
-
-    if(typeof _class._super !== "function")
-      _class._super=function (){};
 
     _class.fn=_class.prototype;
     _class.fn._init=function (){};
@@ -58,7 +51,6 @@
     {
       foo:function () {
         console.log("foo from ds");
-        console.log(this);
       },
       length:function () {
         if(this._length!==undefined)
@@ -129,7 +121,7 @@
       forEach:function (func) {
         this._body.forEach(func);
       },
-      intersection:function (set) {
+      intersect:function (set) {
         var result=new ds.Set();
         if(set){
           this.forEach(function (val) {
@@ -472,8 +464,8 @@
       _forEachPre:function (node,func) {
         if(node){
           func.call(this,node.val);
-          arguments.callee(node.left,func);
-          arguments.callee(node.right,func);
+          this._forEachPre(node.left,func);
+          this._forEachPre(node.right,func);
         }
       },
       forEachMid:function (func) {
@@ -481,9 +473,9 @@
       },
       _forEachMid:function (node,func) {
         if(node){
-          arguments.callee(node.left,func);
+          this._forEachMid(node.left,func);
           func.call(this,node.val);
-          arguments.callee(node.right,func);
+          this._forEachMid(node.right,func);
         }
       },
       forEachPost:function (func) {
@@ -491,8 +483,8 @@
       },
       _forEachPost:function (node,func) {
         if(node){
-          arguments.callee(node.left,func);
-          arguments.callee(node.right,func);
+          this._forEachPost(node.left,func);
+          this._forEachPost(node.right,func);
           func.call(this,node.val);
         }
       },
