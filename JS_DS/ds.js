@@ -6,450 +6,450 @@
 (function (exports) {
   "use strict";
   //make it easier to define a new class
-  var Class = function (method,parent) {
-    var _class=function () {
-      this._init.apply(this,arguments);
+  var Class = function (method, parent) {
+    var _class = function () {
+      this._init.apply(this, arguments);
     };
 
-    if(typeof parent === "function"){
-      var tmp = function(){this.constructor=_class;};
-      var arr=new Array();
+    if (typeof parent === "function") {
+      var tmp = function () { this.constructor = _class; };
+      var arr = new Array();
 
-      for(var i=arguments.length-1;i>0;i--){
-        for(var j in arguments[i].prototype){
-          if(!Object.prototype.hasOwnProperty(j)){
-            if(j.search(/^_[a-z0-9_$]*$/gi)===-1)
-              tmp.prototype[j]=arguments[i].prototype[j];
-            else if(j==="_init"){
+      for (var i = arguments.length - 1; i > 0; i--) {
+        for (var j in arguments[i].prototype) {
+          if (!Object.prototype.hasOwnProperty(j)) {
+            if (j.search(/^_[a-z0-9_$]*$/gi) === -1)
+              tmp.prototype[j] = arguments[i].prototype[j];
+            else if (j === "_init") {
               arr.push(arguments[i].prototype[j]);
             }
           }
         }
       }
-      tmp.prototype._init=function () {
-        for(var i=0,len=arr.length;i<len;i++){
-          arr[i].apply(this,arguments);
+      tmp.prototype._init = function () {
+        for (var i = 0, len = arr.length; i < len; i++) {
+          arr[i].apply(this, arguments);
         }
       }
-      _class._super=tmp.prototype;
+      _class._super = tmp.prototype;
 
-      _class.prototype=new tmp();
+      _class.prototype = new tmp();
     }
 
-    _class.fn=_class.prototype;
-    _class.fn._init=function (){};
+    _class.fn = _class.prototype;
+    _class.fn._init = function () { };
 
-    for(var i in method){
-      if(method.hasOwnProperty(i))
-      _class.fn[i]=method[i];
+    for (var i in method) {
+      if (method.hasOwnProperty(i))
+        _class.fn[i] = method[i];
     }
     return _class;
   };
 
   //ds
-  var ds=Class(
+  var ds = Class(
     {
-      foo:function () {
+      foo: function () {
         console.log("foo from ds");
       },
-      length:function () {
-        if(this._length!==undefined)
+      length: function () {
+        if (this._length !== undefined)
           return this._length;
-        if(this._body!==undefined)
+        if (this._body !== undefined)
           return this._body.length;
       },
-      clear:function () {
+      clear: function () {
         this._init(this._cmp);
       },
     }
   );
-  exports.ds=ds; //expose the ds
-  ds.Class=Class;
+  exports.ds = ds; //expose the ds
+  ds.Class = Class;
 
   //HashTable
-  ds.HashTable=Class(
+  ds.HashTable = Class(
     {
-      _init:function () {
+      _init: function () {
         this._body = new Object();
-        this._length=0;
+        this._length = 0;
       },
-      find:function (key) {
+      find: function (key) {
         return this._body[key];
       },
-      insert:function (key,val) {
-        if(val!==undefined){
-          this._body[key]=val;
+      insert: function (key, val) {
+        if (val !== undefined) {
+          this._body[key] = val;
           this._length++;
           return val;
         }
       },
-      delete:function (key) {
-        if(this._body[key]!==undefined){
-          var tmp=this._body[key];
+      delete: function (key) {
+        if (this._body[key] !== undefined) {
+          var tmp = this._body[key];
           delete this._body[key];
           this._length--;
           return tmp;
         }
       },
-      forEach:function (func) {
-        for(var key in this._body){
-          if(this._body.hasOwnProperty(key))
-            func.call(this,this._body[key],key);
+      forEach: function (func) {
+        for (var key in this._body) {
+          if (this._body.hasOwnProperty(key))
+            func.call(this, this._body[key], key);
         }
       },
-    },ds
+    }, ds
   );
 
   //Set
-  ds.Set=Class(
+  ds.Set = Class(
     {
-      _init:function () {
-        this._body=new ds.HashTable();
+      _init: function () {
+        this._body = new ds.HashTable();
       },
-      length:function () {
+      length: function () {
         return this._body.length();
       },
-      insert:function (val) {
-        return this._body.insert(val,val);
+      insert: function (val) {
+        return this._body.insert(val, val);
       },
-      delete:function (val) {
+      delete: function (val) {
         return this._body.delete(val);
       },
-      find:function (val) {
+      find: function (val) {
         return this._body.find(val);
       },
-      forEach:function (func) {
+      forEach: function (func) {
         this._body.forEach(func);
       },
-      intersect:function (set) {
-        var result=new ds.Set();
-        if(set){
+      intersect: function (set) {
+        var result = new ds.Set();
+        if (set) {
           this.forEach(function (val) {
-            if(set.find(val))
+            if (set.find(val))
               result.insert(val);
           });
         }
         return result;
       },
-      union:function (set) {
-        var result=new ds.Set();
+      union: function (set) {
+        var result = new ds.Set();
         this.forEach(function (val) {
           result.insert(val);
         });
-        if(set){
+        if (set) {
           set.forEach(function (val) {
             result.insert(val);
           });
         }
         return result;
       },
-      complement:function (set) {
-        var result=new ds.Set();
-        if(set){
+      complement: function (set) {
+        var result = new ds.Set();
+        if (set) {
           this.forEach(function (val) {
-            if(set.find(val)===undefined)
+            if (set.find(val) === undefined)
               result.insert(val);
           });
-        }else{
+        } else {
           this.forEach(function (val) {
             result.insert(val);
           });
         }
         return result;
       },
-    },ds
+    }, ds
   );
 
   //Stack
-  ds.Stack=Class(
+  ds.Stack = Class(
     {
-      _init:function () {
+      _init: function () {
         this._body = new Array();
       },
-      push:function (item) {
+      push: function (item) {
         this._body.push(item);
         return item;
       },
-      pop:function () {
+      pop: function () {
         return this._body.pop();
       },
-      top:function () {
-        return this._body[this._body.length-1];
+      top: function () {
+        return this._body[this._body.length - 1];
       },
-      bottom:function () {
+      bottom: function () {
         return this._body[0];
       },
-    },ds
+    }, ds
   );
 
   //Queue
-  ds.Queue=Class(
+  ds.Queue = Class(
     {
-      _init:function () {
+      _init: function () {
         this._body = new Array();
       },
-      enqueue:function (item) {
+      enqueue: function (item) {
         this._body.push(item);
         return item;
       },
-      dequeue:function () {
+      dequeue: function () {
         return this._body.shift();
       },
-      first:function () {
+      first: function () {
         return this._body[0];
       },
-      last:function () {
-        return this._body[this._body.length-1];
+      last: function () {
+        return this._body[this._body.length - 1];
       },
-    },ds
+    }, ds
   );
 
   //List
-  var ListNode=Class(
+  var ListNode = Class(
     {
-      _init:function (val,pre,next) {
-        this.val=val;
-        this.pre=pre;
-        this.next=next;
+      _init: function (val, pre, next) {
+        this.val = val;
+        this.pre = pre;
+        this.next = next;
       }
     }
   );
 
-  ds.List=Class(
+  ds.List = Class(
     {
-      _init:function (cmp) {
-        this._head=new ListNode();
-        this._tail=new ListNode();
-        this._head.next=this._tail;
-        this._tail.pre=this._head;
-        this._length=0;
-        this._cmp=cmp||function (a,b) {return (a===b)?0:1;};
+      _init: function (cmp) {
+        this._head = new ListNode();
+        this._tail = new ListNode();
+        this._head.next = this._tail;
+        this._tail.pre = this._head;
+        this._length = 0;
+        this._cmp = cmp || function (a, b) { return (a === b) ? 0 : 1; };
       },
-      insert:function (val,nodeVal) {
-        var node=(nodeVal)?this._find(nodeVal):this._tail.pre;
-        node=(node)?node:this._tail.pre;
+      insert: function (val, nodeVal) {
+        var node = (nodeVal) ? this._find(nodeVal) : this._tail.pre;
+        node = (node) ? node : this._tail.pre;
 
-        var newNode=new ListNode(val,node,node.next);
-        node.next.pre=newNode;
-        node.next=newNode;
+        var newNode = new ListNode(val, node, node.next);
+        node.next.pre = newNode;
+        node.next = newNode;
 
         this._length++;
         return val;
       },
-      delete:function (val) {
-        var node=this._find(val);
-        if(node){
-          node.pre.next=node.next;
-          node.next.pre=node.pre;
+      delete: function (val) {
+        var node = this._find(val);
+        if (node) {
+          node.pre.next = node.next;
+          node.next.pre = node.pre;
           this._length--;
           return val;
         }
       },
-      find:function (val) {
-        var node=this._find(val);
-        return node&&node.val;
+      find: function (val) {
+        var node = this._find(val);
+        return node && node.val;
       },
-      _find:function (val) {
-        var node=this._head.next;
-        while(node!==this._tail){
-          if(this._cmp(val,node.val)===0) break;
-          node=node.next;
+      _find: function (val) {
+        var node = this._head.next;
+        while (node !== this._tail) {
+          if (this._cmp(val, node.val) === 0) break;
+          node = node.next;
         }
-        return (node===this._tail)?undefined:node;
+        return (node === this._tail) ? undefined : node;
       },
-      forEach:function (func) {
-        var node=this._head.next;
-        while(node!==this._tail){
-          func.call(this,node.val);
-          node=node.next;
+      forEach: function (func) {
+        var node = this._head.next;
+        while (node !== this._tail) {
+          func.call(this, node.val);
+          node = node.next;
         }
       },
-    },ds
+    }, ds
   );
 
   //BinarySearchTree
-  var TreeNode=Class(
+  var TreeNode = Class(
     {
-      _init:function (val,height,parent,left,right) {
-        this.val=val;
-        this.height=height;
-        this.parent=parent;
-        this.left=left;
-        this.right=right;
+      _init: function (val, height, parent, left, right) {
+        this.val = val;
+        this.height = height;
+        this.parent = parent;
+        this.left = left;
+        this.right = right;
       },
     }
   );
 
-  ds.BST=Class(
+  ds.BST = Class(
     {
-      _init:function (cmp) {
-        this._root=undefined;
-        this._length=0;
-        this._cmp=cmp||function (a,b){return (a>b)?1:((a<b)?-1:0);};
+      _init: function (cmp) {
+        this._root = undefined;
+        this._length = 0;
+        this._cmp = cmp || function (a, b) { return (a > b) ? 1 : ((a < b) ? -1 : 0); };
       },
-      _height:function (node) {
-        return (node)?node.height:-1;
+      _height: function (node) {
+        return (node) ? node.height : -1;
       },
-      _maxHeight:function (left,right) {
-        var lh=this._height(left);
-        var rh=this._height(right);
-        return (lh>rh)?lh:rh;
+      _maxHeight: function (left, right) {
+        var lh = this._height(left);
+        var rh = this._height(right);
+        return (lh > rh) ? lh : rh;
       },
-      _rotate:function (lr,sd,node) {
-        var topNode,tmp;
-        if(lr==="left"&&sd==="single"){
-          topNode=node.left;
-          topNode.parent=node.parent;
-          node.left=topNode.right;if(topNode.right) topNode.right.parent=node;
-          topNode.right=node;node.parent=topNode;
-        }else if(lr==="right"&&sd==="single"){
-          topNode=node.right;
-          topNode.parent=node.parent;
-          node.right=topNode.left;if(topNode.left) topNode.left.parent=node;
-          topNode.left=node;node.parent=topNode;
-        }else if(lr==="left"&&sd==="double"){
-          topNode=node.left.right;
-          tmp=node.left;
-          topNode.parent=node.parent;
-          node.left=topNode.right;if(topNode.right) topNode.right.parent=node;
-          tmp.right=topNode.left;if(topNode.left) topNode.left.parent=tmp;
-          topNode.right=node;node.parent=topNode;
-          topNode.left=tmp;tmp.parent=topNode;
-        }else if(lr==="right"&&sd==="double"){
-          topNode=node.right.left;
-          tmp=node.right;
-          topNode.parent=node.parent;
-          node.right=topNode.left;if(topNode.left) topNode.left.parent=node;
-          tmp.left=topNode.right;if(topNode.right) topNode.right.parent=tmp;
-          topNode.left=node;node.parent=topNode;
-          topNode.right=tmp;tmp.parent=topNode;
+      _rotate: function (lr, sd, node) {
+        var topNode, tmp;
+        if (lr === "left" && sd === "single") {
+          topNode = node.left;
+          topNode.parent = node.parent;
+          node.left = topNode.right; if (topNode.right) topNode.right.parent = node;
+          topNode.right = node; node.parent = topNode;
+        } else if (lr === "right" && sd === "single") {
+          topNode = node.right;
+          topNode.parent = node.parent;
+          node.right = topNode.left; if (topNode.left) topNode.left.parent = node;
+          topNode.left = node; node.parent = topNode;
+        } else if (lr === "left" && sd === "double") {
+          topNode = node.left.right;
+          tmp = node.left;
+          topNode.parent = node.parent;
+          node.left = topNode.right; if (topNode.right) topNode.right.parent = node;
+          tmp.right = topNode.left; if (topNode.left) topNode.left.parent = tmp;
+          topNode.right = node; node.parent = topNode;
+          topNode.left = tmp; tmp.parent = topNode;
+        } else if (lr === "right" && sd === "double") {
+          topNode = node.right.left;
+          tmp = node.right;
+          topNode.parent = node.parent;
+          node.right = topNode.left; if (topNode.left) topNode.left.parent = node;
+          tmp.left = topNode.right; if (topNode.right) topNode.right.parent = tmp;
+          topNode.left = node; node.parent = topNode;
+          topNode.right = tmp; tmp.parent = topNode;
         }
-        node.height=1+this._maxHeight(node.left,node.right);
-        if(tmp) tmp.height=1+this._maxHeight(tmp.left,tmp.right);
-        topNode.height=1+this._maxHeight(topNode.left,topNode.right);
+        node.height = 1 + this._maxHeight(node.left, node.right);
+        if (tmp) tmp.height = 1 + this._maxHeight(tmp.left, tmp.right);
+        topNode.height = 1 + this._maxHeight(topNode.left, topNode.right);
         return topNode;
       },
-      _AVL:function (newNode) {
-        for(var node=newNode.parent,topNode;node;node=node.parent,topNode=undefined){
-          if(this._height(node.left)-this._height(node.right)>=2){
-            if(this._height(node.left.left)>=this._height(node.left.right)){
-              topNode=this._rotate("left","single",node);
-            }else{
-              topNode=this._rotate("left","double",node);
+      _AVL: function (newNode) {
+        for (var node = newNode.parent, topNode; node; node = node.parent, topNode = undefined) {
+          if (this._height(node.left) - this._height(node.right) >= 2) {
+            if (this._height(node.left.left) >= this._height(node.left.right)) {
+              topNode = this._rotate("left", "single", node);
+            } else {
+              topNode = this._rotate("left", "double", node);
             }
-          }else if(this._height(node.right)-this._height(node.left)>=2){
-            if(this._height(node.right.left)>this._height(node.right.right)){
-              topNode=this._rotate("right","double",node);
-            }else{
-              topNode=this._rotate("right","single",node);
+          } else if (this._height(node.right) - this._height(node.left) >= 2) {
+            if (this._height(node.right.left) > this._height(node.right.right)) {
+              topNode = this._rotate("right", "double", node);
+            } else {
+              topNode = this._rotate("right", "single", node);
             }
-          }else{
-            node.height=1+this._maxHeight(node.left,node.right);
+          } else {
+            node.height = 1 + this._maxHeight(node.left, node.right);
           }
-          if(topNode){
-            if(topNode.parent){
-              if(this._cmp(topNode.val,topNode.parent.val)===-1){
-                topNode.parent.left=topNode;
-              }else{
-                topNode.parent.right=topNode;
+          if (topNode) {
+            if (topNode.parent) {
+              if (this._cmp(topNode.val, topNode.parent.val) === -1) {
+                topNode.parent.left = topNode;
+              } else {
+                topNode.parent.right = topNode;
               }
-            }else{
-              this._root=topNode;
+            } else {
+              this._root = topNode;
             }
           }
         }
       },
-      insert:function (val) {
-        if(this._root){
-          var node=this._root,parent;
-          while(node){
-            parent=node;
-            if(this._cmp(val,node.val)===-1){
-              node=node.left;
+      insert: function (val) {
+        if (this._root) {
+          var node = this._root, parent;
+          while (node) {
+            parent = node;
+            if (this._cmp(val, node.val) === -1) {
+              node = node.left;
             }
-            else if(this._cmp(val,node.val)===1){
-              node=node.right;
+            else if (this._cmp(val, node.val) === 1) {
+              node = node.right;
             }
             else
               return undefined;
           }
-          var newNode=new TreeNode(val,0,parent);
-          if(this._cmp(val,parent.val)===-1)
-            parent.left=newNode;
+          var newNode = new TreeNode(val, 0, parent);
+          if (this._cmp(val, parent.val) === -1)
+            parent.left = newNode;
           else
-            parent.right=newNode;
-          
+            parent.right = newNode;
+
           this._AVL(newNode);
-        }else{
-          this._root=new TreeNode(val,0,undefined);
+        } else {
+          this._root = new TreeNode(val, 0, undefined);
         }
         this._length++;
         return val;
       },
-      find:function (val) {
-        if(val === undefined) return undefined;
-        var node=this._root;
-        while(node){
-          if(this._cmp(val,node.val)===-1)
-            node=node.left;
-          else if(this._cmp(val,node.val)===1)
-            node=node.right;
+      find: function (val) {
+        if (val === undefined) return undefined;
+        var node = this._root;
+        while (node) {
+          if (this._cmp(val, node.val) === -1)
+            node = node.left;
+          else if (this._cmp(val, node.val) === 1)
+            node = node.right;
           else
             return node.val;
         }
         return undefined;
       },
-      _minmax:function (root,lr) {
-        var node=root;
-        if(node){
-          for(;node[lr];node=node[lr]) ;
+      _minmax: function (root, lr) {
+        var node = root;
+        if (node) {
+          for (; node[lr]; node = node[lr]);
         }
         return node;
       },
-      min:function () {
-        var node=this._minmax(this._root,"left");
-        return node&&node.val;
+      min: function () {
+        var node = this._minmax(this._root, "left");
+        return node && node.val;
       },
-      max:function () {
-        var node=this._minmax(this._root,"right");
-        return node&&node.val;
+      max: function () {
+        var node = this._minmax(this._root, "right");
+        return node && node.val;
       },
-      delete:function (val) {
-        if(val === undefined) return undefined;
-        var node=this._root;
-        while(node){
-          if(this._cmp(val,node.val)===-1)
-            node=node.left;
-          else if(this._cmp(val,node.val)===1)
-            node=node.right;
-          else{
-            var tmp=node.val;
-            if(node.left){
-              var maxNode=this._minmax(node.left,"right");
-              node.val=maxNode.val;
-              if(maxNode===node.left)
-                node.left=maxNode.left;
+      delete: function (val) {
+        if (val === undefined) return undefined;
+        var node = this._root;
+        while (node) {
+          if (this._cmp(val, node.val) === -1)
+            node = node.left;
+          else if (this._cmp(val, node.val) === 1)
+            node = node.right;
+          else {
+            var tmp = node.val;
+            if (node.left) {
+              var maxNode = this._minmax(node.left, "right");
+              node.val = maxNode.val;
+              if (maxNode === node.left)
+                node.left = maxNode.left;
               else
-                maxNode.parent.right=maxNode.left;
-              if(maxNode.left) maxNode.left.parent=maxNode.parent;
+                maxNode.parent.right = maxNode.left;
+              if (maxNode.left) maxNode.left.parent = maxNode.parent;
               this._AVL(maxNode);
-            }else if(node.right){
-              var minNode=this._minmax(node.right,"left");
-              node.val=minNode.val;
-              if(minNode===node.right)
-                node.right=minNode.right;
+            } else if (node.right) {
+              var minNode = this._minmax(node.right, "left");
+              node.val = minNode.val;
+              if (minNode === node.right)
+                node.right = minNode.right;
               else
-                minNode.parent.left=minNode.right;
-              if(minNode.right) minNode.right.parent=maxNode.parent;
+                minNode.parent.left = minNode.right;
+              if (minNode.right) minNode.right.parent = maxNode.parent;
               this._AVL(minNode);
-            }else{
-              if(node.parent){
-                if(this._cmp(node.val,node.parent.val)===-1)
-                  node.parent.left=undefined;
+            } else {
+              if (node.parent) {
+                if (this._cmp(node.val, node.parent.val) === -1)
+                  node.parent.left = undefined;
                 else
-                  node.parent.right=undefined;
-              }else{
-                this._root=undefined;
+                  node.parent.right = undefined;
+              } else {
+                this._root = undefined;
               }
               this._AVL(node);
             }
@@ -458,100 +458,100 @@
           }
         }
       },
-      forEachPre:function (func) {
-        this._forEachPre(this._root,func);
+      forEachPre: function (func) {
+        this._forEachPre(this._root, func);
       },
-      _forEachPre:function (node,func) {
-        if(node){
-          func.call(this,node.val);
-          this._forEachPre(node.left,func);
-          this._forEachPre(node.right,func);
+      _forEachPre: function (node, func) {
+        if (node) {
+          func.call(this, node.val);
+          this._forEachPre(node.left, func);
+          this._forEachPre(node.right, func);
         }
       },
-      forEachMid:function (func) {
-        this._forEachMid(this._root,func);
+      forEachMid: function (func) {
+        this._forEachMid(this._root, func);
       },
-      _forEachMid:function (node,func) {
-        if(node){
-          this._forEachMid(node.left,func);
-          func.call(this,node.val);
-          this._forEachMid(node.right,func);
+      _forEachMid: function (node, func) {
+        if (node) {
+          this._forEachMid(node.left, func);
+          func.call(this, node.val);
+          this._forEachMid(node.right, func);
         }
       },
-      forEachPost:function (func) {
-        this._forEachPost(this._root,func);
+      forEachPost: function (func) {
+        this._forEachPost(this._root, func);
       },
-      _forEachPost:function (node,func) {
-        if(node){
-          this._forEachPost(node.left,func);
-          this._forEachPost(node.right,func);
-          func.call(this,node.val);
+      _forEachPost: function (node, func) {
+        if (node) {
+          this._forEachPost(node.left, func);
+          this._forEachPost(node.right, func);
+          func.call(this, node.val);
         }
       },
-      forEachLevel:function (func) {
-        var q=new ds.Queue();
-        var node=this._root;
-        if(node)
+      forEachLevel: function (func) {
+        var q = new ds.Queue();
+        var node = this._root;
+        if (node)
           q.enqueue(node);
-        while(q.length()>0){
-          node=q.dequeue();
-          func.call(this,node.val);
-          if(node.left)
+        while (q.length() > 0) {
+          node = q.dequeue();
+          func.call(this, node.val);
+          if (node.left)
             q.enqueue(node.left);
-          if(node.right)
+          if (node.right)
             q.enqueue(node.right);
         }
       },
-    },ds
+    }, ds
   );
 
   //PriorityQueue
-  ds.PQ=Class(
+  ds.PQ = Class(
     {
-      _init:function (cmp) {
-        this._body=new Array(1);
-        this._cmp=cmp||function (a,b){return (a>b)?1:((a<b)?-1:0);};
+      _init: function (cmp) {
+        this._body = new Array(1);
+        this._cmp = cmp || function (a, b) { return (a > b) ? 1 : ((a < b) ? -1 : 0); };
       },
-      length:function () {
-        return this._body.length-1;
+      length: function () {
+        return this._body.length - 1;
       },
-      insert:function (val) {
-        var len=this._body.length;
+      insert: function (val) {
+        var len = this._body.length;
         this._body.push(val);
-        for(var j=len,i=Math.floor(len/2);i>0 && this._cmp(val,this._body[i])===-1;j=i,i=Math.floor(i/2)){
-          this._body[j]=this._body[i];
+        for (var j = len, i = Math.floor(len / 2); i > 0 && this._cmp(val, this._body[i]) === -1; j = i, i = Math.floor(i / 2)) {
+          this._body[j] = this._body[i];
         }
-        if(j!==len)
-          this._body[j]=val;
+        if (j !== len)
+          this._body[j] = val;
         return val;
       },
-      top:function () {
+      top: function () {
         return this._body[1];
       },
-      delete:function () {
-        var len=this.length();
-        if(len<=0) return undefined
-        
-        var top=this._body[1],
-            last=this._body[len--];
-        for(var j=1,i=2;i<=len;j=i,i*=2){
-          if(this._cmp(this._body[i],this._body[i+1])===1)
+      delete: function () {
+        var len = this.length();
+        if (len <= 0) return undefined
+
+        var top = this._body[1],
+          last = this._body[len--];
+        for (var j = 1, i = 2; i <= len; j = i, i *= 2) {
+          if (this._cmp(this._body[i], this._body[i + 1]) === 1)
             i++;
-          if(this._cmp(last,this._body[i])===1)
-            this._body[j]=this._body[i];
+          if (this._cmp(last, this._body[i]) === 1)
+            this._body[j] = this._body[i];
           else
             break;
         }
-        this._body[j]=last;
+        this._body[j] = last;
         this._body.pop();
         return top;
       },
-      forEach:function (func) {
-        for(var i=1,len=this.length();i<=len;i++){
-          func.call(this,this._body[i]);
+      forEach: function (func) {
+        for (var i = 1, len = this.length(); i <= len; i++) {
+          func.call(this, this._body[i]);
         }
       },
-    },ds
+    }, ds
   );
 
   //Graph
@@ -559,5 +559,5 @@
   //Digraph
 
 
-  
+
 })(window);
