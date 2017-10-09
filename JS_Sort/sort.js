@@ -5,6 +5,7 @@
 
 (function (exports) {
 
+  "use strict";
   //default comparator
   var defCmp = function (a, b) {
     if (typeof a === "string" && typeof b === "string") {
@@ -44,7 +45,7 @@
       bucketArr[arr[i] - min]++;
 
     for (var i = 0, j = 0; i < bucketLen;) {
-      if (bucketArr[i] != 0) {
+      if (bucketArr[i] !== 0) {
         arr[j++] = i + min;
         bucketArr[i]--;
       }
@@ -110,7 +111,7 @@
     var floatDown = function (i, size) {
       var tmp = arr[i];
       for (j = 2 * i + 1; j < size; i = j, j = 2 * i + 1) {
-        if (j != size - 1 && cmp(arr[j], arr[j + 1]) === -1)
+        if (j !== size - 1 && cmp(arr[j], arr[j + 1]) === -1)
           j++;
         if (cmp(tmp, arr[j]) === -1)
           arr[i] = arr[j];
@@ -227,9 +228,9 @@
     sortPivot(0, len - 1);
   };
 
-  //overwrite the sort method of Array's prototype
+  //expose sortBy
   exports.sortBy = function (cmp, method) {
-    if (typeof cmp != "function") {
+    if (typeof cmp !== "function") {
       method = cmp;
       cmp = defCmp;
     }
