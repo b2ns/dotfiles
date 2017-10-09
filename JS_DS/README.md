@@ -1,5 +1,5 @@
 # A set of basic data structures for JavaScript
-### Note: everything are under the namespace 'ds'.
+### Note: everything is under the namespace 'ds'.
 ## HashTable
     var ht = new ds.HashTable();
 
@@ -27,3 +27,74 @@
     set1.complement(set2);
     set1.clear();
 ## Stack
+    var  s = new ds.Stack();
+
+    s.length();
+    s.push(val);
+    s.pop();
+    s.top();
+    s.bottom();
+    s.clear();
+## Queue
+    var q = new ds.Queue();
+
+    q.length();
+    q.enqueue(val);
+    q.dequeue();
+    q.first();
+    q.last();
+    q.clear();
+## List
+    var lst = new ds.List();
+    var lst = new ds.List(function (a,b){
+        return (a.id === b.id) ? 0 : 1;
+    });
+
+    lst.length();
+    lst.insert(val); or lst.insert(val,existVal);
+    lst.delete(val);
+    lst.find(val);
+    lst.forEach(function (val){
+        console.log(val);
+    });
+    lst.clear();
+## BinarySearchTree(AVL)
+    var bst = new ds.BST();
+    var bst = new ds.BST(function (a,b){
+        return (a.id > b.id) ? 1 : ((a.id < b.id) ? -1 : 0);
+    });
+
+    bst.length();
+    bst.insert(val);
+    bst.delete(val);
+    bst.find(val);
+    bst.min();
+    bst.max();
+    bst.forEachPre(function (val){
+        console.log(val);
+    });
+    bst.forEachMid(function (val){
+        console.log(val);
+    });
+    bst.forEachPost(function (val){
+        console.log(val);
+    });
+    bst.forEachLevel(function (val){
+        console.log(val);
+    });
+    bst.clear();
+## PriorityQueue
+    var pq = new ds.PQ();
+    var pq = new ds.PQ(function (a,b){
+        return (a.id > b.id) ? 1 : ((a.id < b.id) ? -1 : 0);
+    });
+
+    pq.length();
+    pq.insert(val);
+    pq.delete();
+    pq.top();
+    pq.forEach(function (val){
+        console.log(val);
+    });
+    pq.clear();
+    
