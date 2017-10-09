@@ -29,10 +29,16 @@
   var bucket = function (cmp) {
     var arr = this;
     var len = arr.length;
+    var tmp;
 
-    for (var i = 0, max = min = arr[i++]; i < len; i++) {
+    for (var i = 0, max = arr[i++], min = max; i < len; i++) {
       if (cmp(max, arr[i]) === -1) max = arr[i];
       if (cmp(min, arr[i]) === 1) min = arr[i];
+    }
+    if (min > max) {
+      tmp = min;
+      min = max;
+      max = tmp;
     }
 
     var bucketLen = max - min + 1;
@@ -44,13 +50,23 @@
     for (var i = 0; i < len; i++)
       bucketArr[arr[i] - min]++;
 
-    for (var i = 0, j = 0; i < bucketLen;) {
-      if (bucketArr[i] !== 0) {
-        arr[j++] = i + min;
-        bucketArr[i]--;
+    if (tmp === undefined) {
+      for (var i = 0, j = 0; i < bucketLen;) {
+        if (bucketArr[i] !== 0) {
+          arr[j++] = i + min;
+          bucketArr[i]--;
+        } else {
+          i++;
+        }
       }
-      else {
-        i++;
+    } else {
+      for (var i = 0, j = len-1; i < bucketLen;) {
+        if (bucketArr[i] !== 0) {
+          arr[j--] = i + min;
+          bucketArr[i]--;
+        } else {
+          i++;
+        }
       }
     }
   };
@@ -110,7 +126,7 @@
 
     var floatDown = function (i, size) {
       var tmp = arr[i];
-      for (j = 2 * i + 1; j < size; i = j, j = 2 * i + 1) {
+      for (var j = 2 * i + 1; j < size; i = j, j = 2 * i + 1) {
         if (j !== size - 1 && cmp(arr[j], arr[j + 1]) === -1)
           j++;
         if (cmp(tmp, arr[j]) === -1)
