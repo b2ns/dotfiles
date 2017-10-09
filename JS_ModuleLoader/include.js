@@ -4,6 +4,7 @@
  */
 
 (function (exports) {
+  "use strict";
   var callbackArr = [],
       existMod = document.getElementsByTagName("script");
 
