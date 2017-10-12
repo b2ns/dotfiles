@@ -1,0 +1,19 @@
+{
+  "libs": [
+	"browser",
+	"jquery",
+	"ecmascript",
+	"bootstrap"
+  ],
+  "loadEagerly": [
+
+  ],
+  "dontLoad":[
+
+  ],
+  "plugins": {
+	"node":{
+	}
+
+  }
+}

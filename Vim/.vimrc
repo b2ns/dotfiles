@@ -20,10 +20,10 @@ Plugin 'majutsushi/tagbar'        " 函数列表
 
 Plugin 'kovisoft/slimv'           " Lisp
 Plugin 'Valloric/YouCompleteMe'   " C/C++自动补全
-Plugin 'davidhalter/jedi-vim'     " python补全引擎
-Plugin 'klen/python-mode'         " python高亮
 Plugin 'marijnh/tern_for_vim'     " javascript补全引擎
 Plugin 'mattn/emmet-vim'          " html、css、xml等补全
+Plugin 'davidhalter/jedi-vim'     " python补全引擎
+Plugin 'klen/python-mode'         " python高亮
 "Plugin 'scrooloose/syntastic'    " 语法检查
 
 "Plugin 'terryma/vim-multiple-cursors' " 多重选择
@@ -76,6 +76,9 @@ let g:ycm_complete_in_strings = 1                 " 在字符串输入中也能�
 let g:ycm_collect_identifiers_from_comments_and_strings = 0 " 注释和字符串中的文字也会被收入补全
 let g:ycm_confirm_extra_conf=0                    " 关闭加载.ycm_extra_conf.py提示  
 let g:ycm_key_invoke_completion = '<C-Space>'     " 全局函数提示(printf)
+
+" Tern.js配置
+"let g:tern_show_signature_in_pum=1               "显示函数参数提示
 
 " UltiSnips配置
 "let g:UltiSnipsExpandTrigger="<leader>"
