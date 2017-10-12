@@ -1,0 +1,139 @@
+
+priority -50
+
+#######################  预处理  #######################
+snippet inc "include <xxx.h>"
+#include <$1.h>$0
+endsnippet
+
+snippet incl "include 'xxx'"
+#include "$1"$0
+endsnippet
+
+snippet def "#define ..."
+#define $1
+endsnippet
+
+snippet typ "typedef ... ;"
+typedef $1;$0
+endsnippet
+
+snippet typs "typedef struct ... ;"
+typedef struct{
+  $1
+}$2;$0
+endsnippet
+
+snippet st "struct定义 ;"
+struct $1{
+  $2
+};$0
+endsnippet
+
+#######################  main模板  #######################
+snippet main "#include <stdio.h> ... main(void)"
+#include <stdio.h>
+
+int main(void)
+{
+  $1
+
+  getchar();
+  return 0;
+}
+endsnippet
+
+snippet mainv "main(void)"
+int main(void)
+{
+	${VISUAL}$0
+	getchar();
+	return 0;
+}
+endsnippet
+
+snippet mainc "main(int argc,char *argv[])"
+int main(int argc, char *argv[])
+{
+	${VISUAL}$0
+	return 0;
+}
+endsnippet
+
+#######################  控制  #######################
+snippet if "if ..."
+if($1){
+  $2
+}$0
+endsnippet
+
+snippet ife "if ... else ..."
+if($1){
+  $2
+}else{
+  $3
+}$0
+endsnippet
+
+snippet eli "else ... if ..." w
+else if($1){
+  $2
+}$0
+endsnippet
+
+snippet ?: "(cond)?true:false" i
+($1)?$2:$3;$0
+endsnippet
+
+snippet swi "switch ... case ..."
+switch($1){
+  case 1$2: $3 break;
+  default: $4;
+}$0
+endsnippet
+
+snippet for "for loop"
+for(i=0$1;i<n$2;i++$3){
+  $4
+}$0
+endsnippet
+
+snippet whi "while loop"
+while($1){
+  $2
+}$0
+endsnippet
+
+#######################  函数  #######################
+snippet fund "函数原型声明 ;"
+${1:void} ${2:foo}(${3:void});$0
+endsnippet
+
+snippet func "函数实现"
+${1:void} ${2:foo}(${3:void}){
+  $4
+}$0
+endsnippet
+
+#######################  输入输出  #######################
+snippet sca "scanf('',&);"
+scanf("${1:%d}",&$2);$0
+endsnippet
+
+snippet pri "printf('',);"
+printf("${1:%d\n}",$2);$0
+endsnippet
+
+snippet get "getchar();"
+getchar();$0
+endsnippet
+
+snippet hel "hello world"
+printf("hello world\n");$0
+endsnippet
+
+
+
+
+
+# vim:ft=snippets:

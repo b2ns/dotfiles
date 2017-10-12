@@ -1,0 +1,115 @@
+priority -50
+
+############
+#  COMMON  #
+############
+
+# The smart snippets use a global options called
+# "g:ultisnips_javascript.{option}" which can control the format
+# of trailing semicolon, space before function paren, etc.
+#
+# e.g.
+# let g:ultisnips_javascript = {
+#      \ 'keyword-spacing': 'always',
+#      \ 'semi': 'never',
+#      \ 'space-before-function-paren': 'always',
+#      \ }
+
+
+global !p
+from javascript_snippets import (
+	semi, space_before_function_paren, keyword_spacing
+)
+endglobal
+
+#######################  控制  #######################
+snippet if "if ..."
+if($1){
+  $2
+}$0
+endsnippet
+
+snippet ife "if ... else ..."
+if($1){
+  $2
+}else{
+  $3
+}$0
+endsnippet
+
+snippet eli "else ... if ..." w
+else if($1){
+  $2
+}$0
+endsnippet
+
+snippet ?: "(cond)?true:false" i
+($1)?$2:$3;$0
+endsnippet
+
+snippet swi "switch ... case ..."
+switch($1){
+  case 1$2: $3 break;
+  default: $4;
+}$0
+endsnippet
+
+snippet for "for loop"
+for(var i=0$1;i<n$2;i++$3){
+  $4
+}$0
+endsnippet
+
+snippet whi "while loop"
+while($1){
+  $2
+}$0
+endsnippet
+
+#######################  函数  #######################
+snippet funa "匿名函数" i
+function (){
+  $1
+}$0
+endsnippet
+
+snippet func "带参数函数" i
+function $1($2){
+  $3
+}$0
+endsnippet
+
+snippet funp "自执行函数包装"
+(function (){
+  $1
+})();
+endsnippet
+
+#######################  输入输出  #######################
+snippet log "控制台log输出"
+console.log($1);$0
+endsnippet
+
+snippet hel "hello world"
+console.log("hello world");$0
+endsnippet
+
+#######################  jQuery  #######################
+snippet jq "$('selector')"
+$("$1")$0
+endsnippet
+
+#######################  其他  #######################
+snippet inc "include.js"
+include([
+],function (){
+  //your code here
+  $1
+});$0
+endsnippet
+
+
+
+
+
+# vim:ft=snippets:
