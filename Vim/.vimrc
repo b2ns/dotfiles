@@ -45,9 +45,12 @@ filetype plugin indent on         " required
 "插件配置#######################################################
 " NERDTree配置
 nmap nt :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif  "自动关闭
+let g:NERDTreeWinSize=20                          " 窗口宽度(31)
 
 " Tagbar配置
 nmap tb :TagbarToggle<CR>
+let g:tagbar_width = 20                           " 窗口宽度(40)
 
 " Lisp配置
 let g:slimv_swank_cmd = '! xterm -e sbcl --load /home/ding/.vim/bundle/slimv/slime/start-swank.lisp &'
@@ -79,11 +82,15 @@ let g:ycm_cache_omnifunc=0                        " 禁止缓存匹配项,每次
 
 
 " Tern.js配置
-"let g:tern_show_signature_in_pum=1               "显示函数参数提示
+let g:tern_show_signature_in_pum=1               " 显示函数参数提示
+
+" Emmet配置
+let g:user_emmet_leader_key = '<leader>'          " Emmet触发按键(<c-y>)
+let g:emmet_html5 = 1                             " 使用HTML5标准风格
 
 " UltiSnips配置
-"let g:UltiSnipsExpandTrigger="<leader>"
-let g:UltiSnipsJumpForwardTrigger='<leader><leader>'
+"let g:UltiSnipsExpandTrigger="<leader><tab>"
+"let g:UltiSnipsJumpForwardTrigger='<leader><leader>'
 "let g:UltiSnipsJumpBackwardTrgger='<leader><tab>'
 "let g:UltiSnipsListSnippets="<c-e>"
 let g:UltiSnipsEnableSnipMate=0                   "不使用snipMate的代码片段
@@ -106,8 +113,8 @@ au FocusLost * :up
 autocmd! BufWritePost ~/.vimrc source %
 
 " 设置tags
-set tags=tags
 set autochdir
+set tags=tags;
 
 " 自动补全
 filetype plugin indent on
