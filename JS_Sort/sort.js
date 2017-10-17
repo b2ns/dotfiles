@@ -151,58 +151,48 @@
     var len = arr.length;
     var tmparr = new Array(len);
 
-    var merger = function (lstart, rstart, rend) {
-      for (var i = lstart, j = rstart, k = lstart; i < rstart && j < rend;) {
-        if (cmp(arr[i], arr[j]) === -1)
-          tmparr[k++] = arr[i++];
-        else
-          tmparr[k++] = arr[j++];
-      }
-      while (i < rstart)
-        tmparr[k++] = arr[i++];
-      while (j < rend)
-        tmparr[k++] = arr[j++];
-      for (var i = lstart; i < rend; i++)
-        arr[i] = tmparr[i];
-    };
+	for (var step = 1,tmp; step < len; step = tmp)
+	  for(var i=0,j=i+step,k=j+step-1,tmp=step<<1;j<len;i+=tmp,j=i+step,k=j+step-1){
+		if(cmp(arr[j-1],arr[j])===1){
+		  if(k>len-1) k=len-1;
+		  merger(i,j,k);
+		}
+	  }
 
-    for (var k = 1; k < len; k <<= 1)
-      for (var i = 0; i < len;) {
-        var lstart = i;
-        var rstart = (i += k);
-        var rend = (i += k);
-        if (rstart >= len) {
-          rstart = rend = len;
-        } else if (rend > len) {
-          rend = len;
-        }
-        merger(lstart, rstart, rend);
-      }
+	function merger(left,right,rend){
+	  for(var i=left,j=right,k=left;k<=rend;k++){
+		if(i>=right) tmparr[k]=arr[j++];
+		else if(j>rend) tmparr[k]=arr[i++];
+		else if(cmp(arr[i],arr[j])===-1) tmparr[k]=arr[i++];
+		else tmparr[k]=arr[j++];
+	  }
+      for (var i=left; i<=rend; i++)
+        arr[i]=tmparr[i];
+	}
 
     /* Recursion method
-        var merger = function (left,right) {
-          if(left<right){
-            var mid=Math.floor((left+right)/2);
-            merger(left,mid);
-            merger(mid+1,right);
-    
-            for(var i=left,j=mid+1,k=left;i<=mid && j<=right;){
-              if(cmp(arr[i],arr[j])===-1)
-                tmparr[k++]=arr[i++];
-              else
-                tmparr[k++]=arr[j++];
-            }
-            while(i<=mid)
-                tmparr[k++]=arr[i++];
-            while(j<=right)
-                tmparr[k++]=arr[j++];
-            for(var i=left;i<=right;i++)
-              arr[i]=tmparr[i];
-            }
-        };
-        merger(0,len-1); 
-        */
+	var merger = function (left,right) {
+	  if(left<right){
+		var mid=Math.floor((left+right)/2);
+		merger(left,mid);
+		merger(mid+1,right);
 
+		for(var i=left,j=mid+1,k=left;i<=mid && j<=right;){
+		  if(cmp(arr[i],arr[j])===-1)
+			tmparr[k++]=arr[i++];
+		  else
+			tmparr[k++]=arr[j++];
+		}
+		while(i<=mid)
+			tmparr[k++]=arr[i++];
+		while(j<=right)
+			tmparr[k++]=arr[j++];
+		for(var i=left;i<=right;i++)
+		  arr[i]=tmparr[i];
+		}
+	};
+	merger(0,len-1); 
+	*/
   };
 
   //QuickSort
@@ -210,7 +200,7 @@
     var arr = this;
     var len = arr.length;
 
-    var choicePivot = function (left, right) {
+    var getPivot = function (left, right) {
       var mid = Math.floor((left + right) / 2);
       if (cmp(arr[left], arr[right]) === 1) swap(arr, left, right);
       if (cmp(arr[left], arr[mid]) === 1) swap(arr, left, mid);
@@ -221,7 +211,7 @@
     };
     var sortPivot = function (left, right) {
       if (right - left >= 10) {
-        var pivot = choicePivot(left, right);
+        var pivot = getPivot(left, right);
         for (var i = left, j = right - 1; ;) {
           while (cmp(arr[++i], pivot) === -1);
           while (cmp(arr[--j], pivot) === 1);
