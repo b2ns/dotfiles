@@ -80,18 +80,18 @@ let g:ycm_confirm_extra_conf=0                    " 关闭加载.ycm_extra_conf.
 let g:ycm_enable_diagnostic_signs = 0             " 关闭错误诊断侧向标记 
 let g:ycm_cache_omnifunc=0                        " 禁止缓存匹配项,每次都重新生成匹配项
 
-
 " Tern.js配置
 let g:tern_show_signature_in_pum=1               " 显示函数参数提示
 
 " Emmet配置
 let g:user_emmet_leader_key = '<leader>'          " Emmet触发按键(<c-y>)
 let g:emmet_html5 = 1                             " 使用HTML5标准风格
+let g:user_emmet_install_global = 0               " 全局关闭
 
 " UltiSnips配置
 "let g:UltiSnipsExpandTrigger="<leader><tab>"
-"let g:UltiSnipsJumpForwardTrigger='<leader><leader>'
-"let g:UltiSnipsJumpBackwardTrgger='<leader><tab>'
+let g:UltiSnipsJumpForwardTrigger='<leader>n'
+let g:UltiSnipsJumpBackwardTrgger='<leader>N'
 "let g:UltiSnipsListSnippets="<c-e>"
 let g:UltiSnipsEnableSnipMate=0                   "不使用snipMate的代码片段
 
@@ -256,11 +256,10 @@ func! Bracket()
 	inoremap } {}<left>
 	inoremap " ""<left>
 	inoremap ' ''<left>
-	"inoremap <Tab> <right>
+	inoremap <S-Tab> <right>
 endfunc
 autocmd! FileType c,cpp,sh,python,html,css,javascript,json call Bracket()
-inoremap <S-Tab> <right>
-"nnoremap br :call Bracket() <cr>
+autocmd FileType html,css,scss EmmetInstall       " 仅html,css,scss等开启
 
 " 上下左右按键
 nnoremap i k
