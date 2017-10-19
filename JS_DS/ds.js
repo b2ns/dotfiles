@@ -62,7 +62,7 @@
     }
   });
   exports.ds = ds; //expose the ds
-  ds.Class = Class;
+  ds.Class = Class; //expose Class method
 
   //HashTable
   ds.HashTable = Class({
@@ -213,7 +213,7 @@
       this._cmp = cmp || function (a, b) { return (a === b) ? 0 : 1; };
     },
     insert: function (val, nodeVal) {
-      var node = (nodeVal) ? this._find(nodeVal) : this._tail.pre;
+      var node = (nodeVal!==undefined) ? this._find(nodeVal) : this._tail.pre;
       node = (node) ? node : this._tail.pre;
 
       var newNode = new ListNode(val, node, node.next);
@@ -535,18 +535,108 @@
   }, ds);
 
   //Graph
-  var GraphNode = Class({
-
-  });
-
   ds.Graph = Class({
     _init: function () {
-      this.name;
+	  this._body=new Array(10000);
+	  this._hash=new ds.HashTable();
+	  this._rehash=new ds.HashTable();
+	  this._length=0;
+	  this._endIndex=0;
+	  this._emptyPos=new ds.Stack();
     },
-    length: function () {
+    numOfVertex: function () {
+	  return this._length;
+    },
+	numOfEdge: function (){
+	  var n=0;
+	  for(var i=0;i<this._endIndex;i++){
+		if(this._body[i]!==undefined)
+		  n+=this._body[i].length();
+	  }
+	  return n/2;
+	},
+	_addNum: function (v){
+	  var n=this._hash.find(v);
+	  if(n===undefined){
+		n=(this._emptyPos.length()===0)?this._endIndex++:this._emptyPos.pop();
+		this._hash.insert(v,n);
+		this._rehash.insert(n,v);
+		this._length++;
+		this._body[n]=new ds.BST();
+	  }
+	  return n;
+	},
+	_delNum: function (v){
+	  var n=this._hash.find(v);
+	  if(n!==undefined){
+		this._hash.delete(v);
+		this._rehash.delete(n);
+	    this._emptyPos.push(n);
+		this._length--;
+	  }
+	  return n;
+	},
+	insertEdge: function (v1,v2){
+	  if(v1===v2 || v2===undefined) return;
+	  var n1=this._addNum(v1),
+		  n2=this._addNum(v2);
+	  this._body[n1].insert(n2);
+	  this._body[n2].insert(n1);
 
-    },
-  });
+	},
+	deleteEdge: function (v1,v2){
+	  var n1=this._hash.find(v1),
+		  n2=this._hash.find(v2);
+	  if(n1!==undefined && n2!==undefined){
+		this._body[n1].delete(n2);
+		this._body[n2].delete(n1);
+	  }
+	},
+	insertVertex:function (v){
+	  var n=this._addNum(v);
+	  for(var i=0;i<this._endIndex;i++){
+		if(this._body[i]===undefined || i===n) continue;
+		this._body[n].insert(i);
+		this._body[i].insert(n);
+	  }
+	},
+	deleteVertex: function (v){
+	  var n=this._delNum(v);
+	  if(n!==undefined){
+		var q=new ds.Queue();
+		this._body[n].forEachMid(function (v){
+		  q.enqueue(v);
+		});
+		this._body[n]=undefined;
+		while(q.length()){
+		  this._body[q.dequeue()].delete(n);
+		}
+	  }
+	},
+	forEach: function (func){
+	  for(var i=0;i<this._endIndex;i++){
+		if(this._body[i]===undefined) continue;
+		func.call(this,this._rehash.find(i));
+	  }
+	},
+	toString: function (){
+	  var str="";
+	  var q=new ds.Queue();
+	  for(var i=0;i<this._endIndex;i++){
+		if(this._body[i]===undefined) continue;
+
+		str+=this._rehash.find(i)+":";
+		this._body[i].forEachMid(function (v){
+		  q.enqueue(v);
+		});
+		while(q.length()){
+		  str+=this._rehash.find(q.dequeue())+",";
+		}
+		str+="\n";
+	  }
+	  return str;
+	},
+  },ds);
 
   //Digraph
 
