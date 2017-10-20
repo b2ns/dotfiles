@@ -994,12 +994,10 @@ let s:emmet_settings = {
 \    },
 \    'css': {
 \        'filters': 'fc',
+\        'indentation': '  ',
 \        'snippets': {
 \
 \"语法及高级特性": "",
-\  "注释": "",
-\           "cm": "/* |${child} */",
-\
 \  "优先级": "",
 \           "!": "!important",
 \
@@ -1028,6 +1026,7 @@ let s:emmet_settings = {
 \           "@charset": "@charset \"utf-8\"",
 \           "@page": "@page <label> <pseudo-class> { css }",
 \           "@supports": "@supports (rule)[operator (rule)]* { sRules }\noperator：or  and  not",
+\
 \
 \"布局": "",
 \           "d": "display:|;",
@@ -1088,16 +1087,17 @@ let s:emmet_settings = {
 \           "ovy:h": "overflow-y:hidden;",
 \           "ovy:s": "overflow-y:scroll;",
 \
+\
 \"多列": "",
 \           "col": "columns:|;",
-\           "col+": "columns:width count;",
+\           "col?": "/*columns:width count;*/",
 \           "colw": "column-width:|;",
 \           "colc": "column-count:|;",
 \
 \           "colg": "column-gap:normal|;",
 \
 \           "colr": "column-rule:|;",
-\           "colr+": "column-rule:width style color;",
+\           "colr?": "/*column-rule:width style color;*/",
 \           "colrw": "column-rule-width:|;",
 \           "colrs": "column-rule-style:|;",
 \           "colrc": "column-rule-color:|;",
@@ -1110,15 +1110,16 @@ let s:emmet_settings = {
 \           "colaf": "column-break-after:|;",
 \           "colis": "column-break-inside:|;",
 \
+\
 \"伸缩盒子": "",
 \           "fx": "flex:|;",
-\           "fx+": "flex:grow shrink basis;",
+\           "fx?": "/*flex:grow shrink basis;*/",
 \           "fxg": "flex-grow:|;",
 \           "fxs": "flex-shrink:|;",
 \           "fxb": "flex-basis:|;",
 \
 \           "fxf": "flex-flow:|;",
-\           "fxf+": "flex-flow:direction wrap|;",
+\           "fxf?": "/*flex-flow:direction wrap|;*/",
 \           "fxd": "flex-direction:|;",
 \           "fxd:r": "flex-direction:row;",
 \           "fxd:rr": "flex-direction:row-reverse;",
@@ -1163,49 +1164,40 @@ let s:emmet_settings = {
 \
 \
 \"定位": "",
-\           "pos": "position:absolute|;",
+\           "pos": "position:|;",
 \           "pos:s": "position:static;",
-\           "pos:a": "position:absolute;",
 \           "pos:r": "position:relative;",
+\           "pos:a": "position:absolute;",
 \           "pos:f": "position:fixed;",
 \
 \           "t": "top:|;",
-\           "t:a": "top:auto;",
 \           "r": "right:|;",
-\           "r:a": "right:auto;",
 \           "b": "bottom:|;",
-\           "b:a": "bottom:auto;",
 \           "l": "left:|;",
-\           "l:a": "left:auto;",
 \
 \           "z": "z-index:|;",
-\           "z:a": "z-index:auto;",
 \
 \           "clip": "clip:rect(0,0,0,0|);",
 \           "clip:a": "clip:auto;",
-\           "clip?": "/*推荐使用clip-path*/",
+\
 \
 \"尺寸": "",
 \           "w": "width:|;",
-\           "w:a": "width:auto;",
-\           "miw": "min-width:|;",
-\           "maw": "max-width:|;",
+\           "minw": "min-width:|;",
+\           "maxw": "max-width:|;",
 \           "h": "height:|;",
-\           "h:a": "height:auto;",
-\           "mih": "min-height:|;",
-\           "mah": "max-height:|;",
+\           "minh": "min-height:|;",
+\           "maxh": "max-height:|;",
+\
 \
 \"外边距": "",
-\           "m": "margin:0| auto;",
-\           "m:a": "margin:auto;",
+\           "m": "margin:|;",
+\           "m:0a": "margin:0 auto;",
 \           "mt": "margin-top:|;",
-\           "mt:a": "margin-top:auto;",
 \           "mr": "margin-right:|;",
-\           "mr:a": "margin-right:auto;",
 \           "mb": "margin-bottom:|;",
-\           "mb:a": "margin-bottom:auto;",
 \           "ml": "margin-left:|;",
-\           "ml:a": "margin-left:auto;",
+\
 \
 \"内边距": "",
 \           "p": "padding:|;",
@@ -1214,6 +1206,7 @@ let s:emmet_settings = {
 \           "pb": "padding-bottom:|;",
 \           "pl": "padding-left:|;",
 \
+\
 \"边框": "",
 \           "bd": "border:|;",
 \           "bd:n": "border:none;",
@@ -1221,7 +1214,7 @@ let s:emmet_settings = {
 \           "bdw": "border-width:thin;",
 \           "bds": "border-style:solid;",
 \           "bdc": "border-color:red;",
-\           "bd?": "/*border：<line-width> || <line-style> || <color>\n<line-width> = <length> | thin:1px | medium:3px | thick:5px\n<line-style> = none | hidden | dotted | dashed | solid | double | groove | ridge | inset | outset*/",
+\           "bd?": "/*border：<line-width> <line-style> <color>\n<line-width> = <length> | thin:1px | medium:3px | thick:5px\n<line-style> = none | hidden | dotted | dashed | solid | double | groove | ridge | inset | outset*/",
 \
 \           "bdt": "border-top:|;",
 \           "bdt+": "border-top:thin solid red;",
@@ -1253,11 +1246,11 @@ let s:emmet_settings = {
 \           "bdtrrad": "border-top-right-radius:5px 10px|;",
 \           "bdbrrad": "border-bottom-right-radius:5px 10px|;",
 \           "bdblrad": "border-bottom-left-radius:5px 10px|;",
-\           "bdrad?": "/*border-radius：水平半径[ <length> | <percentage> ]{1,4} [ / 垂直半径[ <length> | <percentage> ]{1,4} ]?*/",
+\           "bdrad?": "/*border-radius：水平半径[ <length> <percentage> ]{1,4} [ / 垂直半径[ <length> <percentage> ]{1,4} ]?*/",
 \
 \           "boxsh": "box-shadow:5px 5px gray;",
 \           "boxsh:n": "box-shadow:none;",
-\           "boxsh+": "box-shadow:inset? hoff voff blur spread color;",
+\           "boxsh?": "/*box-shadow:inset? xoff yoff blur spread color;*/",
 \
 \           "bdi": "border-image:url(|);",
 \           "bdi:n": "border-image:none;",
@@ -1274,15 +1267,16 @@ let s:emmet_settings = {
 \
 \           "bgi": "background-image:url(|);",
 \
-\           "bgr": "background-repeat:repeat|;",
+\           "bgr": "background-repeat:|;",
 \           "bgr+": "background-repeat:repeat no-repeat|;",
+\           "bgr:r": "background-repeat:repeat;",
 \           "bgr:n": "background-repeat:no-repeat;",
 \           "bgr:x": "background-repeat:repeat-x;",
 \           "bgr:y": "background-repeat:repeat-y;",
-\           "bgr:sp": "background-repeat:space;",
+\           "bgr:s": "background-repeat:space;",
 \           "bgr:rd": "background-repeat:round;",
 \
-\           "bga": "background-attachment:scroll|;",
+\           "bga": "background-attachment:|;",
 \           "bga:f": "background-attachment:fixed;",
 \           "bga:s": "background-attachment:scroll;",
 \           "bga:l": "background-attachment:local;",
@@ -1309,6 +1303,7 @@ let s:emmet_settings = {
 \
 \           "bgc": "background-color:red;",
 \
+\
 \"颜色": "",
 \           "c": "color:red;",
 \           "c:#": "color:#fff;",
@@ -1318,34 +1313,34 @@ let s:emmet_settings = {
 \           "c:h": "color:hsl(色调(0-360), 饱和度(0%-100%), 亮度(0%-100%));",
 \           "c:ha": "color:hsla(色调(0-360), 饱和度(0%-100%), 亮度(0%-100%), 不透明度(0-1.0));",
 \
+\
 \"不透明度": "",
 \           "op": "opacity:|;",
 \           "op@ie": "filter:alpha(opacity=|);",
 \           "op:ie": "filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);",
 \           "op:ms": "-ms-filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity=100)';",
 \
+\
 \"字体": "",
 \           "f": "font:1em serif|;",
 \           "f+": "font:italic small-caps bold 1em/1 sans-serif|;",
 \           "f?": "/*font：[ [ <' font-style '> || <' font-variant '> || <' font-weight '> ]? <' font-size '> [ / <' line-height '> ]? <' font-family '> ] | caption | icon | menu | message-box | small-caption | status-bar*/",
 \
-\           "fs": "font-style:italic;",
+\           "fs": "font-style:|;",
 \           "fs:n": "font-style:normal;",
 \           "fs:i": "font-style:italic;",
 \           "fs:o": "font-style:oblique;",
 \
-\           "fv": "font-variant:small-caps;",
+\           "fv": "font-variant:|;",
 \           "fv:n": "font-variant:normal;",
 \           "fv:sc": "font-variant:small-caps;",
 \
-\           "fw": "font-weight:bold|;",
+\           "fw": "font-weight:|;",
 \           "fw:n": "font-weight:normal;",
 \           "fw:b": "font-weight:bold;",
 \           "fw:br": "font-weight:bolder;",
 \           "fw:lr": "font-weight:lighter;",
 \           "fw?": "/*font-weight:[lighter normal:400 bold:700 bolder (100-900)];*/",
-\
-\           "lh": "line-height:|;",
 \
 \           "fsz": "font-size:|;",
 \           "fsz:xxs": "font-size:xx-small;",
@@ -1358,7 +1353,7 @@ let s:emmet_settings = {
 \           "fsz:sr": "font-size:smaller;",
 \           "fsz:lr": "font-size:larger;",
 \
-\           "ff": "font-family:serif|;",
+\           "ff": "font-family:|;",
 \           "ff:s": "font-family:serif;",
 \           "ff:s+": "font-family: \"Times New Roman\", Times, Georgia, serif;",
 \           "ff:ss": "font-family:sans-serif;",
@@ -1368,9 +1363,11 @@ let s:emmet_settings = {
 \           "ff:c": "font-family:cursive;",
 \           "ff:f": "font-family:fantasy;",
 \
-\"文本": "",
 \
-\           "ta": "text-align:center;",
+\"文本": "",
+\           "lh": "line-height:|;",
+\
+\           "ta": "text-align:;",
 \           "ta:l": "text-align:left;",
 \           "ta:c": "text-align:center;",
 \           "ta:r": "text-align:right;",
@@ -1409,7 +1406,7 @@ let s:emmet_settings = {
 \           "wow:n": "word-wrap:normal;",
 \           "wow:b": "word-wrap:break-word;",
 \
-\           "tt": "text-transform:uppercase|;",
+\           "tt": "text-transform:|;",
 \           "tt:n": "text-transform:none;",
 \           "tt:c": "text-transform:capitalize;",
 \           "tt:u": "text-transform:uppercase;",
@@ -1426,6 +1423,7 @@ let s:emmet_settings = {
 \           "tsh:n": "text-shadow:none;",
 \           "tsh?": "/*text-shadow：none | <shadow> [ , <shadow> ]*\n<shadow> = <length>{2,3} && <color>?*/",
 \
+\
 \"书写模式": "",
 \           "dir": "direction:ltr;",
 \           "dir:r": "direction:rtl;",
@@ -1439,12 +1437,13 @@ let s:emmet_settings = {
 \           "wm:vrl@ie": "writing-mode:tb-rl;",
 \           "wm:vlr": "writing-mode:vertical-lr;",
 \
+\
 \"列表": "",
 \           "lis": "list-style:none|;",
 \           "lis:n": "list-style:none;",
-\           "lis+": "list-style:type pos img|;",
+\           "lis?": "/*list-style:type pos img*/;",
 \
-\           "list": "list-style-type:none|;",
+\           "list": "list-style-type:|;",
 \           "list:n": "list-style-type:none;",
 \           "list:d": "list-style-type:disc;",
 \           "list:c": "list-style-type:circle;",
@@ -1462,6 +1461,7 @@ let s:emmet_settings = {
 \
 \           "lisi": "list-style-image:url(|);",
 \           "lisi:n": "list-style-image:none;",
+\
 \
 \"表格": "",
 \           "tbl": "table-layout:fixed|;",
@@ -1503,6 +1503,7 @@ let s:emmet_settings = {
 \           "q:ru": "quotes:'\\00AB' '\\00BB' '\\201E' '\\201C';",
 \           "q:en": "quotes:'\\201C' '\\201D' '\\2018' '\\2019';",
 \
+\
 \"转换": "",
 \           "trf": "transform:|;",
 \           "trf?": "/*transform：none | <transform-function>+\ntransform-function list:\nmatrix() = matrix(<number>[,<number>]{5,5})\nmatrix3d() = matrix3d(<number>[,<number>]{15,15})\ntranslate() = translate(<translation-value>[,<translation-value>]?)\ntranslate3d() = translate3d(<translation-value>,<translation-value>,<length>)\ntranslatex() = translatex(<translation-value>)\ntranslatey() = translatey(<translation-value>)\ntranslatez() = translatez(<length>)\nrotate() = rotate(<angle>)\nrotate3d() = rotate3d(<number>,<number>,<number>,<angle>)\nrotatex() = rotatex(<angle>)\nrotatey() = rotatey(<angle>)\nrotatez() = rotatez(<angle>)\nscale() = scale(<number>[,<number>]?)\nscale3d() = scale3d(<number>,<number>,<number>)\nscalex() = scalex(<number>)\nscaley() = scaley(<number>)\nscalez() = scalez(<number>)\nskew() = skew(<angle>[,<angle>]?)\nskewx() = skewx(<angle>)\nskewy() = skewy(<angle>)\nperspective() = perspective(<length>)\n<translation-value> = <length> | <percentage>*/",
@@ -1543,13 +1544,14 @@ let s:emmet_settings = {
 \"过渡": "",
 \           "trs": "transition:all 0.5s;",
 \           "trs+": "transition:all 0.5s ease-in 0.1s;",
-\           "trs?": "/*transition：<single-transition>[,<single-transition>]*\n<single-transition> = [ none | <single-transition-property> ] || <time> || <single-transition-timing-function> || <time>*/",
+\           "trs?": "/*transition：<single-transition>[,<single-transition>]*\n<single-transition> = [ none | <single-transition-property> ] || <duration-time> || <single-transition-timing-function> || <delay-time>*/",
 \
-\           "trspro": "transition-property:${1:prop};",
+\           "trspro": "transition-property:|;",
 \
-\           "trsdur": "transition-duration:${1:time};",
+\           "trsdur": "transition-duration:|;",
 \
-\           "trstf": "transition-timing-function:linear|;",
+\           "trstf": "transition-timing-function:|;",
+\           "trstf:l": "transition-timing-function:linear|;",
 \           "trstf:e": "transition-timing-function:ease;",
 \           "trstf:ei": "transition-timing-function:ease-in;",
 \           "trstf:eo": "transition-timing-function:ease-out;",
@@ -1559,17 +1561,19 @@ let s:emmet_settings = {
 \           "trstf:steps": "transition-timing-function:steps(int|,end);",
 \           "trstf:cb": "transition-timing-function:cubic-bezier(${1:0.1}, ${2:0.7}, ${3:1.0}, ${3:0.1});",
 \
-\           "trsdel": "transition-delay:0|;",
+\           "trsdel": "transition-delay:|;",
+\
 \
 \"动画": "",
 \           "anim": "animation:|;",
-\           "anim+": "animation:name duration timing-function delay iteration-count direction fill-mode play-state;",
+\           "anim?": "/*animation:name duration timing-function delay iteration-count direction fill-mode play-state;*/",
 \
-\           "animn": "animation-name:name|;",
+\           "animn": "animation-name:|;",
 \
-\           "animdur": "animation-duration:1|s;",
+\           "animdur": "animation-duration:|s;",
 \
-\           "animtf": "animation-timing-function:linear|;",
+\           "animtf": "animation-timing-function:|;",
+\           "animtf:l": "animation-timing-function:linear;",
 \           "animtf:e": "animation-timing-function:ease;",
 \           "animtf:ei": "animation-timing-function:ease-in;",
 \           "animtf:eo": "animation-timing-function:ease-out;",
@@ -1579,21 +1583,23 @@ let s:emmet_settings = {
 \           "animtf:steps": "animation-timing-function:steps(int|,end);",
 \           "animtf:cb": "animation-timing-function:cubic-bezier(0.1, 0.7, 1.0, 0.1);",
 \
-\           "animdel": "animation-delay:1|s;",
+\           "animdel": "animation-delay:|s;",
 \
 \           "animic": "animation-iteration-count:infinite|;",
 \
-\           "animdir": "animation-direction:normal|;",
+\           "animdir": "animation-direction:|;",
+\           "animdir:n": "animation-direction:normal;",
 \           "animdir:r": "animation-direction:reverse;",
 \           "animdir:a": "animation-direction:alternate;",
 \           "animdir:ar": "animation-direction:alternate-reverse;",
 \
-\           "animfm": "animation-fill-mode:both|;",
+\           "animfm": "animation-fill-mode:|;",
 \           "animfm:f": "animation-fill-mode:forwards;",
 \           "animfm:b": "animation-fill-mode:backwards;",
 \
-\           "animps": "animation-play-state:running|;",
+\           "animps": "animation-play-state:|;",
 \           "animps:p": "animation-play-state:paused;",
+\           "animps:r": "animation-play-state:running;",
 \
 \
 \"用户界面": "",
@@ -1624,26 +1630,14 @@ let s:emmet_settings = {
 \           "ol": "outline:|;",
 \           "ol+": "outline:width style color;",
 \           "ol:n": "outline:none;",
-\           "olw": "outline-width:|;",
-\           "olw:tn": "outline-width:thin;",
-\           "olw:m": "outline-width:medium;",
-\           "olw:tc": "outline-width:thick;",
-\           "ols": "outline-style:|;",
-\           "ols:n": "outline-style:none;",
-\           "ols:dt": "outline-style:dotted;",
-\           "ols:ds": "outline-style:dashed;",
-\           "ols:s": "outline-style:solid;",
-\           "ols:db": "outline-style:double;",
-\           "ols:g": "outline-style:groove;",
-\           "ols:r": "outline-style:ridge;",
-\           "ols:i": "outline-style:inset;",
-\           "ols:o": "outline-style:outset;",
-\           "olc": "outline-color:red;",
+\           "olw": "outline-width:thin|;",
+\           "ols": "outline-style:solid|;",
+\           "olc": "outline-color:red|;",
 \           "olc:i": "outline-color:invert;",
 \           "olo": "outline-offset:|;",
 \
 \
-\           "bxz": "box-sizing:border-box;",
+\           "bxz": "box-sizing:|;",
 \           "bxz:cb": "box-sizing:content-box;",
 \           "bxz:bb": "box-sizing:border-box;",
 \
