@@ -1768,26 +1768,9 @@ let s:emmet_settings = {
 \        },
 \        'default_attributes': {
 \            'html:xml': [{'xmlns': 'http://www.w3.org/1999/xhtml'}, {'xml:lang': '${lang}'}],
-\            'a': [{'href': ''}],
-\            'a:tar': [{'href': ''}, {'target': '_blank'}],
-\            'a:http': [{'href': 'http://|'}],
-\            'abbr': [{'title': ''}],
-\            'acronym': [{'title': ''}],
-\            'base': [{'href': ''}],
-\            'base:tar': [{'href': ''}, {'target': '_self'}],
-\            'bdo': [{'dir': ''}],
-\            'bdo:r': [{'dir': 'rtl'}],
-\            'bdo:l': [{'dir': 'ltr'}],
-\            'del': [{'datetime': '${datetime}'}],
-\            'ins': [{'datetime': '${datetime}'}],
-\            'link': [{'rel': 'stylesheet'}, {'href': ''}],
-\            'link:css': [{'rel': 'stylesheet'}, g:emmet_html5 ? {} : {'type': 'text/css'}, {'href': 'css/main|.css'}],
-\            'link:media': [{'rel': 'stylesheet'}, g:emmet_html5 ? {} : {'type': 'text/css'}, {'href': 'print|.css'}, {'media': 'all'}],
-\            'link:icon': [{'rel': 'shortcut icon'}, {'type': 'image/x-icon'}, {'href': 'favicon.ico|'}],
-\            'link:import': [{'rel': 'import'}, {'href': '|.html'}],
-\            'link:touch': [{'rel': 'apple-touch-icon'}, {'href': '|favicon.png'}],
-\            'link:rss': [{'rel': 'alternate'}, {'type': 'application/rss+xml'}, {'title': 'RSS'}, {'href': '|rss.xml'}],
-\            'link:atom': [{'rel': 'alternate'}, {'type': 'application/atom+xml'}, {'title': 'Atom'}, {'href': 'atom.xml'}],
+\
+\
+\'头部': '',
 \            'meta:char': [{'charset': '${charset}'}],
 \            'meta:view': [{'name': 'viewport'}, {'content': 'width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0'}],
 \            'meta:des': [{'name': 'description'}, {'content': '|'}],
@@ -1801,26 +1784,54 @@ let s:emmet_settings = {
 \            'meta:exp': [{'http-equiv': 'expires'}, {'content': 'GMT|'}],
 \            'meta:cache': [{'http-equiv': 'Cache-Control'}, {'content': '|'}],
 \            'meta:cookie': [{'http-equiv': 'Set-Cookie'}, {'content': '|'}],
+\            'meta:cook': [{'http-equiv': 'Set-Cookie'}, {'content': '|'}],
 \            'meta:type': [{'http-equiv': 'Content-Type'}, {'content': 'text/html;charset=UTF-8'}],
+\
+\            'base': [{'href': ''}],
+\            'base:tar': [{'href': ''}, {'target': '_self'}],
+\
+\            'link': [{'rel': 'stylesheet'}, {'href': ''}],
+\            'link:css': [{'rel': 'stylesheet'}, g:emmet_html5 ? {} : {'type': 'text/css'}, {'href': 'css/main|.css'}],
+\            'link:media': [{'rel': 'stylesheet'}, g:emmet_html5 ? {} : {'type': 'text/css'}, {'href': 'print|.css'}, {'media': 'all'}],
+\            'link:icon': [{'rel': 'shortcut icon'}, {'type': 'image/x-icon'}, {'href': 'favicon.ico|'}],
+\            'link:import': [{'rel': 'import'}, {'href': '|.html'}],
+\            'link:touch': [{'rel': 'apple-touch-icon'}, {'href': '|favicon.png'}],
+\            'link:rss': [{'rel': 'alternate'}, {'type': 'application/rss+xml'}, {'title': 'RSS'}, {'href': '|rss.xml'}],
+\            'link:atom': [{'rel': 'alternate'}, {'type': 'application/atom+xml'}, {'title': 'Atom'}, {'href': 'atom.xml'}],
+\
 \            'style': g:emmet_html5 ? [] : [{'type': 'text/css'}],
 \            'script': g:emmet_html5 ? [] : [{'type': 'text/javascript'}],
 \            'script:src': (g:emmet_html5 ? [] : [{'type': 'text/javascript'}]) + [{'src': ''}],
+\
+\
+\'链接': '',
+\            'a': [{'href': ''}],
+\            'a:tar': [{'href': ''}, {'target': '_blank'}],
+\            'a:http': [{'href': 'http://|'}],
+\
+\
+\'多媒体': '',
 \            'img': [{'src': ''}, {'alt': ''}],
-\            'iframe': [{'src': ''}, {'frameborder': '0'}],
-\            'embed': [{'src': ''}, {'type': ''}],
-\            'object': [{'data': ''}, {'type': ''}],
-\            'param': [{'name': ''}, {'value': ''}],
+\
 \            'map': {'name': ''},
 \            'area': [{'shape': ''}, {'coords': ''}, {'href': ''}, {'alt': ''}],
 \            'area:d': [{'shape': 'default'}, {'href': ''}, {'alt': ''}],
 \            'area:c': [{'shape': 'circle'}, {'coords': ''}, {'href': ''}, {'alt': ''}],
 \            'area:r': [{'shape': 'rect'}, {'coords': ''}, {'href': ''}, {'alt': ''}],
 \            'area:p': [{'shape': 'poly'}, {'coords': ''}, {'href': ''}, {'alt': ''}],
+\
+\            'video': [{'src': ''}, {'controls': 'controls'}],
+\            'audio': [{'src': ''}, {'controls': 'controls'}],
+\
+\
+\'表单': '',
 \            'form': [{'action': ''}],
 \            'form:get': [{'action': ''}, {'method': 'get'}],
 \            'form:post': [{'action': ''}, {'method': 'post'}],
 \            'form:upload': [{'action': ''}, {'method': 'post'}, {'enctype': 'multipart/form-data'}],
+\
 \            'label': [{'for': ''}],
+\
 \            'input': [{'type': ''}],
 \            'input:hidden': [{'type': 'hidden'}, {'name': ''}],
 \            'input:h': [{'type': 'hidden'}, {'name': ''}],
@@ -1853,21 +1864,41 @@ let s:emmet_settings = {
 \            'input:reset': [{'type': 'reset'}, {'value': ''}],
 \            'input:button': [{'type': 'button'}, {'value': ''}],
 \            'input:b': [{'type': 'button'}, {'value': ''}],
+\
 \            'select': [{'name': ''}, {'id': ''}],
 \            'option': [{'value': ''}],
+\
 \            'textarea': [{'name': ''}, {'id': ''}, {'cols': '30'}, {'rows': '10'}],
+\
+\
+\'框架': '',
+\            'iframe': [{'src': ''}, {'frameborder': '0'}],
+\
+\            'embed': [{'src': ''}, {'type': ''}],
+\
+\            'object': [{'data': ''}, {'type': ''}],
+\
+\
+\'其他': '',
+\            'abbr': [{'title': ''}],
+\            'acronym': [{'title': ''}],
+\            'bdo': [{'dir': ''}],
+\            'bdo:r': [{'dir': 'rtl'}],
+\            'bdo:l': [{'dir': 'ltr'}],
+\            'del': [{'datetime': '${datetime}'}],
+\            'ins': [{'datetime': '${datetime}'}],
+\            'param': [{'name': ''}, {'value': ''}],
 \            'menu:context': [{'type': 'context'}],
 \            'menu:c': [{'type': 'context'}],
 \            'menu:toolbar': [{'type': 'toolbar'}],
 \            'menu:t': [{'type': 'toolbar'}],
-\            'video': [{'src': ''}, {'controls': 'controls'}],
-\            'audio': [{'src': ''}, {'controls': 'controls'}],
 \        },
 \        'aliases': {
 \            'js': 'script',
-\            'js:s': 'script:src',
+\            'jss': 'script:src',
 \            'nojs': 'noscript',
 \            'css': 'style',
+\
 \            'bq': 'blockquote',
 \            'hea': 'header',
 \            'foot': 'footer',
@@ -1900,6 +1931,7 @@ let s:emmet_settings = {
 \            'det': 'details',
 \            'acr': 'acronym',
 \            'cmd': 'command',
+\
 \            'html:*': 'html',
 \            'link:*': 'link',
 \            'meta:*': 'meta',
