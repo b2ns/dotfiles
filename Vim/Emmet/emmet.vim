@@ -1703,18 +1703,21 @@ let s:emmet_settings = {
 \    'html': {
 \        'filters': 'html',
 \        'snippets': {
-\            '!': "html:5",
 \            '!5': "<!DOCTYPE html>\n",
-\            '!4t':  "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n",
-\            '!4s':  "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">\n",
-\            '!xt':  "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n",
-\            '!xs':  "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n",
+\            '!4t': "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n",
+\            '!4s': "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">\n",
+\            '!4f': "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\" \"http://www.w3.org/TR/html4/frameset.dtd\">",
+\            '!xt': "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n",
+\            '!xs': "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n",
+\            '!xf': "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Frameset//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd\">",
 \            '!xxs': "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n",
+\
 \            'c': "<!-- |${child} -->",
 \            'c:ie6': "<!--[if lte IE 6]>\n\t${child}|\n<![endif]-->",
 \            'c:ie9': "<!--[if lte IE 9]>\n\t${child}|\n<![endif]-->",
 \            'c:ie': "<!--[if IE]>\n\t${child}|\n<![endif]-->",
 \            'c:noie': "<!--[if !IE]><!-->\n\t${child}|\n<!--<![endif]-->",
+\
 \            'html:4t': "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n"
 \                    ."<html lang=\"${lang}\">\n"
 \                    ."<head>\n"
@@ -1765,30 +1768,35 @@ let s:emmet_settings = {
 \                    ."</head>\n"
 \                    ."<body>\n\t${child}|\n</body>\n"
 \                    ."</html>",
+\            '!': "html:5",
 \        },
 \        'default_attributes': {
+\'基础': '',
 \            'html:xml': [{'xmlns': 'http://www.w3.org/1999/xhtml'}, {'xml:lang': '${lang}'}],
+\            'html:man': [{'manifest': '|'}, {'lang': '${lang}'}],
+\
+\            'head': [],
+\
+\            'body': [],
 \
 \
-\'头部': '',
+\'头部元信息': '',
+\            'title': [],
+\
+\            'base': [{'href': ''}],
+\            'base:tar': [{'href': ''}, {'target': '_self'}],
+\
 \            'meta:char': [{'charset': '${charset}'}],
 \            'meta:view': [{'name': 'viewport'}, {'content': 'width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0'}],
 \            'meta:des': [{'name': 'description'}, {'content': '|'}],
 \            'meta:key': [{'name': 'keywords'}, {'content': '|'}],
 \            'meta:aut': [{'name': 'author'}, {'content': '|'}],
-\            'meta:compat': [{'http-equiv': 'X-UA-Compatible'}, {'content': 'IE=edge'}],
 \            'meta:com': [{'http-equiv': 'X-UA-Compatible'}, {'content': 'IE=edge'}],
-\            'meta:refresh': [{'http-equiv': 'refresh'}, {'content': '3|'}],
 \            'meta:ref': [{'http-equiv': 'refresh'}, {'content': '3|'}],
-\            'meta:expires': [{'http-equiv': 'expires'}, {'content': 'GMT|'}],
 \            'meta:exp': [{'http-equiv': 'expires'}, {'content': 'GMT|'}],
 \            'meta:cache': [{'http-equiv': 'Cache-Control'}, {'content': '|'}],
-\            'meta:cookie': [{'http-equiv': 'Set-Cookie'}, {'content': '|'}],
 \            'meta:cook': [{'http-equiv': 'Set-Cookie'}, {'content': '|'}],
 \            'meta:type': [{'http-equiv': 'Content-Type'}, {'content': 'text/html;charset=UTF-8'}],
-\
-\            'base': [{'href': ''}],
-\            'base:tar': [{'href': ''}, {'target': '_self'}],
 \
 \            'link': [{'rel': 'stylesheet'}, {'href': ''}],
 \            'link:css': [{'rel': 'stylesheet'}, g:emmet_html5 ? {} : {'type': 'text/css'}, {'href': 'css/main|.css'}],
@@ -1804,7 +1812,63 @@ let s:emmet_settings = {
 \            'script:src': (g:emmet_html5 ? [] : [{'type': 'text/javascript'}]) + [{'src': ''}],
 \
 \
-\'链接': '',
+\'内容结构化': '',
+\            'br': [],
+\            'hr': [],
+\
+\            'h1': [],
+\            'h6': [],
+\
+\            'p': [],
+\
+\
+\'文本格式化': '',
+\            'abbr': [{'title': ''}],
+\            'address': [],
+\            'b': [],
+\            'bdi': [],
+\            'bdo': [{'dir': ''}],
+\            'bdo:r': [{'dir': 'rtl'}],
+\            'bdo:l': [{'dir': 'ltr'}],
+\            'blockquote': [],
+\            'blockquote:c': [{'cite': '|'}],
+\            'cite': [],
+\            'code': [],
+\            'del': [{'datetime': '${datetime}'}],
+\            'dfn': [],
+\            'em': [],
+\            'i': [],
+\            'ins': [{'datetime': '${datetime}'}],
+\            'kbd': [],
+\            'mark': [],
+\            'meter': [{'value': '|'}],
+\            'pre': [],
+\            'progress': [{'value': '|'},{'max': '|'}],
+\            'q': [],
+\            'q:c': [{'cite': '|'}],
+\            'ruby': [],
+\            'rt': [],
+\            'rp': [],
+\            's': [],
+\            'samp': [],
+\            'small': [],
+\            'strong': [],
+\            'sub': [],
+\            'sup': [],
+\            'time': [{'datetime': '${datetime}'}],
+\            'u': [],
+\            'var': [],
+\            'wbr': [],
+\
+\
+\            'param': [{'name': ''}, {'value': ''}],
+\            'menu:context': [{'type': 'context'}],
+\            'menu:c': [{'type': 'context'}],
+\            'menu:toolbar': [{'type': 'toolbar'}],
+\            'menu:t': [{'type': 'toolbar'}],
+\
+\
+\'超链接': '',
 \            'a': [{'href': ''}],
 \            'a:tar': [{'href': ''}, {'target': '_blank'}],
 \            'a:http': [{'href': 'http://|'}],
@@ -1812,86 +1876,99 @@ let s:emmet_settings = {
 \
 \'多媒体': '',
 \            'img': [{'src': ''}, {'alt': ''}],
+\            'img:w': [{'src': ''}, {'alt': ''},{'width': ''}],
+\            'img:map': [{'src': ''}, {'alt': ''},{'usemap': ''}],
 \
-\            'map': {'name': ''},
+\            'map': [{'name': ''}],
 \            'area': [{'shape': ''}, {'coords': ''}, {'href': ''}, {'alt': ''}],
 \            'area:d': [{'shape': 'default'}, {'href': ''}, {'alt': ''}],
 \            'area:c': [{'shape': 'circle'}, {'coords': ''}, {'href': ''}, {'alt': ''}],
 \            'area:r': [{'shape': 'rect'}, {'coords': ''}, {'href': ''}, {'alt': ''}],
 \            'area:p': [{'shape': 'poly'}, {'coords': ''}, {'href': ''}, {'alt': ''}],
 \
+\            'figure': [],
+\            'figcaption': [],
+\
 \            'video': [{'src': ''}, {'controls': 'controls'}],
 \            'audio': [{'src': ''}, {'controls': 'controls'}],
+\            'source': [{'src': ''}, {'type': ''}],
+\            'track': [{'src': ''}],
+\
+\            'canvas': [],
+\
+\
+\'列表': '',
+\
+\
+\'表格': '',
 \
 \
 \'表单': '',
-\            'form': [{'action': ''}],
+\            'form': [{'action': ''}, {'method': 'get'}],
 \            'form:get': [{'action': ''}, {'method': 'get'}],
 \            'form:post': [{'action': ''}, {'method': 'post'}],
 \            'form:upload': [{'action': ''}, {'method': 'post'}, {'enctype': 'multipart/form-data'}],
+\            'form:all': [{'action': ''}, {'method': 'post'}, {'name': ''},{'target': ''},{'enctype': 'multipart/form-data'},{'autocomplete': 'on'},{'novalidate': 'novalidate'}],
 \
 \            'label': [{'for': ''}],
 \
 \            'input': [{'type': ''}],
-\            'input:hidden': [{'type': 'hidden'}, {'name': ''}],
 \            'input:h': [{'type': 'hidden'}, {'name': ''}],
-\            'input:text': [{'type': 'text'}, {'name': ''}, {'id': ''}],
 \            'input:t': [{'type': 'text'}, {'name': ''}, {'id': ''}],
-\            'input:search': [{'type': 'search'}, {'name': ''}, {'id': ''}],
+\            'input:tp': [{'type': 'text'}, {'name': ''}, {'id': ''}, {'placeholder': ''}],
+\            'input:p': [{'type': 'password'}, {'name': ''}, {'id': ''}],
+\            'input:c': [{'type': 'checkbox'}, {'name': ''}, {'id': ''}, {'value': ''}],
+\            'input:r': [{'type': 'radio'}, {'name': ''}, {'id': ''}, {'value': ''}],
+\            'input:f': [{'type': 'file'}, {'name': ''}, {'id': ''}],
+\            'input:b': [{'type': 'button'}, {'value': 'button|'}],
+\            'input:s': [{'type': 'submit'}, {'value': 'submit|'}],
+\            'input:re': [{'type': 'reset'}, {'value': 'reset|'}],
+\
+\            'button': [{'type': 'button'}],
+\            'button:b': [{'type': 'button'}],
+\            'button:s': [{'type': 'submit'}],
+\            'button:re': [{'type': 'reset'}],
+\
+\            'input:i': [{'type': 'image'}, {'src': ''}, {'alt': ''},{'width': ''}],
+\            'input:num': [{'type': 'number'}, {'name': ''}, {'id': ''}],
+\            'input:color': [{'type': 'color'}, {'name': ''}, {'id': ''}],
+\            'input:range': [{'type': 'range'}, {'name': ''}, {'id': ''}],
+\            'input:time': [{'type': 'time'}, {'name': ''}, {'id': ''}],
+\            'input:mon': [{'type': 'month'}, {'name': ''}, {'id': ''}],
+\            'input:week': [{'type': 'week'}, {'name': ''}, {'id': ''}],
+\            'input:date': [{'type': 'date'}, {'name': ''}, {'id': ''}],
+\            'input:datetime': [{'type': 'datetime'}, {'name': ''}, {'id': ''}],
+\            'input:datetimel': [{'type': 'datetime-local'}, {'name': ''}, {'id': ''}],
+\            'input:se': [{'type': 'search'}, {'name': ''}, {'id': ''}],
 \            'input:email': [{'type': 'email'}, {'name': ''}, {'id': ''}],
 \            'input:url': [{'type': 'url'}, {'name': ''}, {'id': ''}],
-\            'input:password': [{'type': 'password'}, {'name': ''}, {'id': ''}],
-\            'input:p': [{'type': 'password'}, {'name': ''}, {'id': ''}],
-\            'input:datetime': [{'type': 'datetime'}, {'name': ''}, {'id': ''}],
-\            'input:date': [{'type': 'date'}, {'name': ''}, {'id': ''}],
-\            'input:datetime-local': [{'type': 'datetime-local'}, {'name': ''}, {'id': ''}],
-\            'input:month': [{'type': 'month'}, {'name': ''}, {'id': ''}],
-\            'input:week': [{'type': 'week'}, {'name': ''}, {'id': ''}],
-\            'input:time': [{'type': 'time'}, {'name': ''}, {'id': ''}],
-\            'input:number': [{'type': 'number'}, {'name': ''}, {'id': ''}],
-\            'input:color': [{'type': 'color'}, {'name': ''}, {'id': ''}],
-\            'input:checkbox': [{'type': 'checkbox'}, {'name': ''}, {'id': ''}],
-\            'input:c': [{'type': 'checkbox'}, {'name': ''}, {'id': ''}],
-\            'input:radio': [{'type': 'radio'}, {'name': ''}, {'id': ''}],
-\            'input:r': [{'type': 'radio'}, {'name': ''}, {'id': ''}],
-\            'input:range': [{'type': 'range'}, {'name': ''}, {'id': ''}],
-\            'input:file': [{'type': 'file'}, {'name': ''}, {'id': ''}],
-\            'input:f': [{'type': 'file'}, {'name': ''}, {'id': ''}],
-\            'input:submit': [{'type': 'submit'}, {'value': ''}],
-\            'input:s': [{'type': 'submit'}, {'value': ''}],
-\            'input:image': [{'type': 'image'}, {'src': ''}, {'alt': ''}],
-\            'input:i': [{'type': 'image'}, {'src': ''}, {'alt': ''}],
-\            'input:reset': [{'type': 'reset'}, {'value': ''}],
-\            'input:button': [{'type': 'button'}, {'value': ''}],
-\            'input:b': [{'type': 'button'}, {'value': ''}],
+\
+\            'input:list': [{'list': 'datalist-id|'}],
+\            'datalist': [{'id': ''}],
 \
 \            'select': [{'name': ''}, {'id': ''}],
+\            'optgroup': [{'label': ''}],
 \            'option': [{'value': ''}],
 \
 \            'textarea': [{'name': ''}, {'id': ''}, {'cols': '30'}, {'rows': '10'}],
 \
+\            'fieldset': [],
+\            'legend': [],
+\
+\            'output': [{'name': ''},{'for': ''}],
+\
 \
 \'框架': '',
-\            'iframe': [{'src': ''}, {'frameborder': '0'}],
+\            'iframe': [{'src': ''}, {'name': ''},{'width': ''},{'height': ''}],
 \
+\
+\'程序': '',
 \            'embed': [{'src': ''}, {'type': ''}],
 \
 \            'object': [{'data': ''}, {'type': ''}],
 \
 \
 \'其他': '',
-\            'abbr': [{'title': ''}],
-\            'acronym': [{'title': ''}],
-\            'bdo': [{'dir': ''}],
-\            'bdo:r': [{'dir': 'rtl'}],
-\            'bdo:l': [{'dir': 'ltr'}],
-\            'del': [{'datetime': '${datetime}'}],
-\            'ins': [{'datetime': '${datetime}'}],
-\            'param': [{'name': ''}, {'value': ''}],
-\            'menu:context': [{'type': 'context'}],
-\            'menu:c': [{'type': 'context'}],
-\            'menu:toolbar': [{'type': 'toolbar'}],
-\            'menu:t': [{'type': 'toolbar'}],
 \        },
 \        'aliases': {
 \            'js': 'script',
