@@ -1305,13 +1305,13 @@ let s:emmet_settings = {
 \
 \
 \"颜色": "",
-\           "c": "color:red;",
-\           "c:#": "color:#fff;",
+\           "c": "color:red|;",
+\           "c:#": "color:#fff|;",
 \           "c:tr": "color:transparent;",
-\           "c:r": "color:rgb(0, 0, 0);",
-\           "c:ra": "color:rgba(0, 0, 0, 0.5);",
-\           "c:h": "color:hsl(色调(0-360), 饱和度(0%-100%), 亮度(0%-100%));",
-\           "c:ha": "color:hsla(色调(0-360), 饱和度(0%-100%), 亮度(0%-100%), 不透明度(0-1.0));",
+\           "c:r": "color:rgb(0, 0, 0|);",
+\           "c:ra": "color:rgba(0, 0, 0, 0.5|);",
+\           "c:h": "color:hsl(色调(0-360), 饱和度(0%-100%), 亮度(0%-100%)|);",
+\           "c:ha": "color:hsla(色调(0-360), 饱和度(0%-100%), 亮度(0%-100%), 不透明度(0-1.0)|);",
 \
 \
 \"不透明度": "",
@@ -1367,7 +1367,7 @@ let s:emmet_settings = {
 \"文本": "",
 \           "lh": "line-height:|;",
 \
-\           "ta": "text-align:;",
+\           "ta": "text-align:|;",
 \           "ta:l": "text-align:left;",
 \           "ta:c": "text-align:center;",
 \           "ta:r": "text-align:right;",
@@ -1781,31 +1781,27 @@ let s:emmet_settings = {
 \
 \
 \'头部元信息': '',
+\            'meta:char': [{'charset': '${charset}'}],
+\            'meta:type': [{'http-equiv': 'Content-Type'}, {'content': 'text/html;charset=${charset}'}],
+\
 \            'title': [],
 \
-\            'base': [{'href': ''}],
-\            'base:tar': [{'href': ''}, {'target': '_self'}],
+\            'base': [{'href': ''}, {'target': ''}],
 \
-\            'meta:char': [{'charset': '${charset}'}],
-\            'meta:view': [{'name': 'viewport'}, {'content': 'width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0'}],
 \            'meta:des': [{'name': 'description'}, {'content': '|'}],
 \            'meta:key': [{'name': 'keywords'}, {'content': '|'}],
 \            'meta:aut': [{'name': 'author'}, {'content': '|'}],
+\            'meta:view': [{'name': 'viewport'}, {'content': 'width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0'}],
 \            'meta:com': [{'http-equiv': 'X-UA-Compatible'}, {'content': 'IE=edge'}],
 \            'meta:ref': [{'http-equiv': 'refresh'}, {'content': '3|'}],
 \            'meta:exp': [{'http-equiv': 'expires'}, {'content': 'GMT|'}],
 \            'meta:cache': [{'http-equiv': 'Cache-Control'}, {'content': '|'}],
 \            'meta:cook': [{'http-equiv': 'Set-Cookie'}, {'content': '|'}],
-\            'meta:type': [{'http-equiv': 'Content-Type'}, {'content': 'text/html;charset=UTF-8'}],
 \
 \            'link': [{'rel': 'stylesheet'}, {'href': ''}],
 \            'link:css': [{'rel': 'stylesheet'}, g:emmet_html5 ? {} : {'type': 'text/css'}, {'href': 'css/main|.css'}],
 \            'link:media': [{'rel': 'stylesheet'}, g:emmet_html5 ? {} : {'type': 'text/css'}, {'href': 'print|.css'}, {'media': 'all'}],
 \            'link:icon': [{'rel': 'shortcut icon'}, {'type': 'image/x-icon'}, {'href': 'favicon.ico|'}],
-\            'link:import': [{'rel': 'import'}, {'href': '|.html'}],
-\            'link:touch': [{'rel': 'apple-touch-icon'}, {'href': '|favicon.png'}],
-\            'link:rss': [{'rel': 'alternate'}, {'type': 'application/rss+xml'}, {'title': 'RSS'}, {'href': '|rss.xml'}],
-\            'link:atom': [{'rel': 'alternate'}, {'type': 'application/atom+xml'}, {'title': 'Atom'}, {'href': 'atom.xml'}],
 \
 \            'style': g:emmet_html5 ? [] : [{'type': 'text/css'}],
 \            'script': g:emmet_html5 ? [] : [{'type': 'text/javascript'}],
@@ -1816,10 +1812,24 @@ let s:emmet_settings = {
 \            'br': [],
 \            'hr': [],
 \
+\            'div': [],
+\            'span': [],
+\
 \            'h1': [],
 \            'h6': [],
 \
 \            'p': [],
+\
+\            'nav': [],
+\            'header': [],
+\            'footer': [],
+\            'section': [],
+\            'article': [],
+\            'aside': [],
+\
+\            'details': [{'open': ''}],
+\            'summary': [],
+\            'dialog': [{'open': ''}],
 \
 \
 \'文本格式化': '',
@@ -1861,17 +1871,12 @@ let s:emmet_settings = {
 \            'wbr': [],
 \
 \
-\            'param': [{'name': ''}, {'value': ''}],
-\            'menu:context': [{'type': 'context'}],
-\            'menu:c': [{'type': 'context'}],
-\            'menu:toolbar': [{'type': 'toolbar'}],
-\            'menu:t': [{'type': 'toolbar'}],
 \
 \
 \'超链接': '',
 \            'a': [{'href': ''}],
 \            'a:tar': [{'href': ''}, {'target': '_blank'}],
-\            'a:http': [{'href': 'http://|'}],
+\            'a:h': [{'href': 'http://|'}],
 \
 \
 \'多媒体': '',
@@ -1898,9 +1903,34 @@ let s:emmet_settings = {
 \
 \
 \'列表': '',
+\            'ul': [],
+\            'ol': [],
+\            'li': [],
+\
+\            'dl': [],
+\            'dt': [],
+\            'dd': [],
+\
+\            'menu:c': [{'type': 'context'}],
+\            'menu:t': [{'type': 'toolbar'}],
+\
+\            'command': [{'type': 'command'},{'label': ''}],
 \
 \
 \'表格': '',
+\            'table': [{'boder': ''}],
+\            'caption': [],
+\
+\            'colgroup': [],
+\            'col': [{'span': ''}],
+\
+\            'tr': [],
+\            'th': [],
+\            'td': [],
+\
+\            'thead': [],
+\            'tfoot': [],
+\            'tbody': [],
 \
 \
 \'表单': '',
@@ -1966,6 +1996,7 @@ let s:emmet_settings = {
 \            'embed': [{'src': ''}, {'type': ''}],
 \
 \            'object': [{'data': ''}, {'type': ''}],
+\            'param': [{'name': ''}, {'value': ''}],
 \
 \
 \'其他': '',
@@ -2001,12 +2032,9 @@ let s:emmet_settings = {
 \            'dlg': 'dialog',
 \            'str': 'strong',
 \            'prog': 'progress',
-\            'datag': 'datagrid',
 \            'datal': 'datalist',
-\            'kg': 'keygen',
 \            'out': 'output',
 \            'det': 'details',
-\            'acr': 'acronym',
 \            'cmd': 'command',
 \
 \            'html:*': 'html',
@@ -2025,7 +2053,7 @@ let s:emmet_settings = {
 \            'ul': 'ul>li',
 \            'dl': 'dl>dt+dd',
 \            'map': 'map>area',
-\            'table': 'table>tr>td',
+\            'table': 'table>caption+(colgroup>col)+(thead>tr>th)+(tfoot>tr>td)+tbody>tr>td',
 \            'colgroup': 'colgroup>col',
 \            'colg': 'colgroup>col',
 \            'tr': 'tr>td',
