@@ -1211,37 +1211,37 @@ let s:emmet_settings = {
 \           "bd": "border:|;",
 \           "bd:n": "border:none;",
 \           "bd+": "border:thin solid red;",
-\           "bdw": "border-width:thin;",
-\           "bds": "border-style:solid;",
-\           "bdc": "border-color:red;",
+\           "bdw": "border-width:|;",
+\           "bds": "border-style:|;",
+\           "bdc": "border-color:|;",
 \           "bd?": "/*border：<line-width> <line-style> <color>\n<line-width> = <length> | thin:1px | medium:3px | thick:5px\n<line-style> = none | hidden | dotted | dashed | solid | double | groove | ridge | inset | outset*/",
 \
 \           "bdt": "border-top:|;",
 \           "bdt+": "border-top:thin solid red;",
-\           "bdtw": "border-top-width:thin;",
-\           "bdts": "border-top-style:solid;",
-\           "bdtc": "border-top-color:red;",
+\           "bdtw": "border-top-width:|;",
+\           "bdts": "border-top-style:|;",
+\           "bdtc": "border-top-color:|;",
 \
 \           "bdr": "border-right:|;",
 \           "bdr+": "border-right:thin solid red;",
-\           "bdrw": "border-right-width:thin;",
-\           "bdrs": "border-right-style:solid;",
-\           "bdrc": "border-right-color:red;",
+\           "bdrw": "border-right-width:|;",
+\           "bdrs": "border-right-style:|;",
+\           "bdrc": "border-right-color:|;",
 \
 \           "bdb": "border-bottom:|;",
 \           "bdb+": "border-bottom:thin solid red;",
-\           "bdbw": "border-bottom-width:thin;",
-\           "bdbs": "border-bottom-style:solid;",
-\           "bdbc": "border-bottom-color:red;",
+\           "bdbw": "border-bottom-width:|;",
+\           "bdbs": "border-bottom-style:|;",
+\           "bdbc": "border-bottom-color:|;",
 \
 \           "bdl": "border-left:|;",
 \           "bdl+": "border-left:thin solid red;",
-\           "bdlw": "border-left-width:thin;",
-\           "bdls": "border-left-style:solid;",
-\           "bdlc": "border-left-color:red;",
+\           "bdlw": "border-left-width:|;",
+\           "bdls": "border-left-style:|;",
+\           "bdlc": "border-left-color:|;",
 \
 \           "bdrad": "border-radius:5%|;",
-\           "bdrad:v": "border-radius:5% / 10%;",
+\           "bdrad:v": "border-radius:5% / 10%|;",
 \           "bdtlrad": "border-top-left-radius:5px 10px|;",
 \           "bdtrrad": "border-top-right-radius:5px 10px|;",
 \           "bdbrrad": "border-bottom-right-radius:5px 10px|;",
@@ -1301,7 +1301,7 @@ let s:emmet_settings = {
 \           "bgcp:pb": "background-clip:padding-box;",
 \           "bgcp:cb": "background-clip:content-box;",
 \
-\           "bgc": "background-color:red;",
+\           "bgc": "background-color:red|;",
 \
 \
 \"颜色": "",
@@ -1419,16 +1419,16 @@ let s:emmet_settings = {
 \           "td:l": "text-decoration:line-through;",
 \           "td?": "/*text-decoration：<' text-decoration-line '> || <' text-decoration-style '> || <' text-decoration-color '>*/",
 \
-\           "tsh": "text-shadow:hoff voff blur gray;",
+\           "tsh": "text-shadow:hoff voff blur gray|;",
 \           "tsh:n": "text-shadow:none;",
 \           "tsh?": "/*text-shadow：none | <shadow> [ , <shadow> ]*\n<shadow> = <length>{2,3} && <color>?*/",
 \
 \
 \"书写模式": "",
-\           "dir": "direction:ltr;",
+\           "dir": "direction:ltr|;",
 \           "dir:r": "direction:rtl;",
 \
-\           "unicode-bidi": "normal embed bidi-override;",
+\           "unicode-bidi": "normal embed bidi-override|;",
 \
 \           "wm": "writing-mode:horizontal-tb;",
 \           "wm:h": "writing-mode:horizontal-tb;",
@@ -1542,8 +1542,8 @@ let s:emmet_settings = {
 \
 \
 \"过渡": "",
-\           "trs": "transition:all 0.5s;",
-\           "trs+": "transition:all 0.5s ease-in 0.1s;",
+\           "trs": "transition:all 0.5s|;",
+\           "trs+": "transition:all 0.5s ease-in 0.1s|;",
 \           "trs?": "/*transition：<single-transition>[,<single-transition>]*\n<single-transition> = [ none | <single-transition-property> ] || <duration-time> || <single-transition-timing-function> || <delay-time>*/",
 \
 \           "trspro": "transition-property:|;",
@@ -1628,11 +1628,11 @@ let s:emmet_settings = {
 \           "cur:grab": "cursor:grab;",
 \
 \           "ol": "outline:|;",
-\           "ol+": "outline:width style color;",
+\           "ol+": "outline:thin solid red|;",
 \           "ol:n": "outline:none;",
-\           "olw": "outline-width:thin|;",
-\           "ols": "outline-style:solid|;",
-\           "olc": "outline-color:red|;",
+\           "olw": "outline-width:|;",
+\           "ols": "outline-style:|;",
+\           "olc": "outline-color:|;",
 \           "olc:i": "outline-color:invert;",
 \           "olo": "outline-offset:|;",
 \
@@ -1713,10 +1713,11 @@ let s:emmet_settings = {
 \            '!xxs': "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n",
 \
 \            'c': "<!-- |${child} -->",
-\            'c:ie6': "<!--[if lte IE 6]>\n\t${child}|\n<![endif]-->",
+\            'c:ie6': "<!--[if IE 6]>\n\t${child}|\n<![endif]-->",
 \            'c:ie9': "<!--[if lte IE 9]>\n\t${child}|\n<![endif]-->",
 \            'c:ie': "<!--[if IE]>\n\t${child}|\n<![endif]-->",
 \            'c:noie': "<!--[if !IE]><!-->\n\t${child}|\n<!--<![endif]-->",
+\            'c:js': "<script>\n<!--\n|\n//-->\n</script>",
 \
 \            'html:4t': "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n"
 \                    ."<html lang=\"${lang}\">\n"
@@ -1798,7 +1799,7 @@ let s:emmet_settings = {
 \            'meta:cache': [{'http-equiv': 'Cache-Control'}, {'content': '|'}],
 \            'meta:cook': [{'http-equiv': 'Set-Cookie'}, {'content': '|'}],
 \
-\            'link': [{'rel': 'stylesheet'}, {'href': ''}],
+\            'link': [{'rel': ''}, g:emmet_html5 ? {} : {'type': ''}, {'href': ''}],
 \            'link:css': [{'rel': 'stylesheet'}, g:emmet_html5 ? {} : {'type': 'text/css'}, {'href': 'css/main|.css'}],
 \            'link:media': [{'rel': 'stylesheet'}, g:emmet_html5 ? {} : {'type': 'text/css'}, {'href': 'print|.css'}, {'media': 'all'}],
 \            'link:icon': [{'rel': 'shortcut icon'}, {'type': 'image/x-icon'}, {'href': 'favicon.ico|'}],
@@ -1833,50 +1834,55 @@ let s:emmet_settings = {
 \
 \
 \'文本格式化': '',
+\            'em': [],
+\            'strong': [],
+\            'i': [],
+\            'b': [],
+\            'mark': [],
+\
+\            'del': [{'datetime': '${datetime}'}],
+\            'ins': [{'datetime': '${datetime}'}],
+\            's': [],
+\            'u': [],
+\            'small': [],
+\
+\            'blockquote': [],
+\            'blockquote:c': [{'cite': '|'}],
+\            'q': [],
+\            'q:c': [{'cite': '|'}],
+\            'cite': [],
+\
+\            'pre': [],
+\            'var': [],
+\            'code': [],
+\            'kbd': [],
+\            'samp': [],
+\            'dfn': [],
+\
 \            'abbr': [{'title': ''}],
 \            'address': [],
-\            'b': [],
+\
 \            'bdi': [],
 \            'bdo': [{'dir': ''}],
 \            'bdo:r': [{'dir': 'rtl'}],
 \            'bdo:l': [{'dir': 'ltr'}],
-\            'blockquote': [],
-\            'blockquote:c': [{'cite': '|'}],
-\            'cite': [],
-\            'code': [],
-\            'del': [{'datetime': '${datetime}'}],
-\            'dfn': [],
-\            'em': [],
-\            'i': [],
-\            'ins': [{'datetime': '${datetime}'}],
-\            'kbd': [],
-\            'mark': [],
+\
 \            'meter': [{'value': '|'}],
-\            'pre': [],
 \            'progress': [{'value': '|'},{'max': '|'}],
-\            'q': [],
-\            'q:c': [{'cite': '|'}],
+\            'time': [{'datetime': '${datetime}'}],
+\
 \            'ruby': [],
 \            'rt': [],
 \            'rp': [],
-\            's': [],
-\            'samp': [],
-\            'small': [],
-\            'strong': [],
 \            'sub': [],
 \            'sup': [],
-\            'time': [{'datetime': '${datetime}'}],
-\            'u': [],
-\            'var': [],
 \            'wbr': [],
-\
-\
 \
 \
 \'超链接': '',
 \            'a': [{'href': ''}],
-\            'a:tar': [{'href': ''}, {'target': '_blank'}],
 \            'a:h': [{'href': 'http://|'}],
+\            'a:tar': [{'href': ''}, {'target': '_blank'}],
 \
 \
 \'多媒体': '',
@@ -1894,8 +1900,8 @@ let s:emmet_settings = {
 \            'figure': [],
 \            'figcaption': [],
 \
-\            'video': [{'src': ''}, {'controls': 'controls'}],
-\            'audio': [{'src': ''}, {'controls': 'controls'}],
+\            'audio:s': [{'src': ''}, {'controls': 'controls'}],
+\            'video:s': [{'src': ''}, {'controls': 'controls'}],
 \            'source': [{'src': ''}, {'type': ''}],
 \            'track': [{'src': ''}],
 \
@@ -2061,7 +2067,7 @@ let s:emmet_settings = {
 \            'optgroup': 'optgroup>option',
 \            'optg': 'optgroup>option',
 \        },
-\        'empty_elements': 'area,base,basefont,br,col,frame,hr,img,input,isindex,link,meta,param,embed,keygen,command',
+\        'empty_elements': 'area,base,basefont,br,col,iframe,hr,img,input,link,meta,param,embed,keygen,command',
 \        'block_elements': 'address,applet,blockquote,button,center,dd,del,dir,div,dl,dt,fieldset,form,frameset,hr,iframe,ins,isindex,li,link,map,menu,noframes,noscript,object,ol,p,pre,script,table,tbody,td,tfoot,th,thead,tr,ul,h1,h2,h3,h4,h5,h6,header,footer,nav,main,article,section,aside',
 \        'inline_elements': 'a,abbr,acronym,applet,b,basefont,bdo,big,br,button,cite,code,del,dfn,em,font,i,iframe,img,input,ins,kbd,label,map,object,q,s,samp,script,small,span,strike,strong,sub,sup,textarea,tt,u,var',
 \        'empty_element_suffix': g:emmet_html5 ? '>' : ' />',
