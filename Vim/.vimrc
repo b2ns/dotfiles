@@ -16,6 +16,7 @@ Plugin 'VundleVim/Vundle.vim'     " let Vundle manage Vundle, required
 
 "插件安装#######################################################
 Plugin 'scrooloose/nerdtree'      " 文件浏览
+Plugin 'kien/ctrlp.vim'           " 文件查找
 Plugin 'majutsushi/tagbar'        " 函数列表
 
 Plugin 'kovisoft/slimv'           " Lisp
@@ -26,7 +27,8 @@ Plugin 'davidhalter/jedi-vim'     " python补全引擎
 Plugin 'klen/python-mode'         " python高亮
 "Plugin 'scrooloose/syntastic'    " 语法检查
 
-"Plugin 'terryma/vim-multiple-cursors' " 多重选择
+Plugin 'easymotion/vim-easymotion' " 快速跳转
+Plugin 'terryma/vim-multiple-cursors' " 多重选择
 Plugin 'scrooloose/nerdcommenter' " 快速注释
 Plugin 'tpope/vim-repeat'         " 重复上次操作
 "Plugin 'godlygeek/tabular'       " 快速对齐
@@ -35,7 +37,8 @@ Plugin 'tpope/vim-repeat'         " 重复上次操作
 Plugin 'SirVer/ultisnips'         " 片段引擎
 Plugin 'honza/vim-snippets'       " 片段库
 
-"Plugin 'vim-airline/vim-airline' " 状态栏
+Plugin 'bling/vim-airline'        " 状态栏
+Plugin 'tpope/vim-fugitive'       " git
 
 "插件安装结束#######################################################
 
@@ -47,6 +50,13 @@ filetype plugin indent on         " required
 nmap nt :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif  "自动关闭
 let g:NERDTreeWinSize=20                          " 窗口宽度(31)
+
+" Ctrlp配置
+let g:ctrlp_by_filename = 0                       " 只通过文件名搜索
+let g:ctrlp_regexp = 0                            " 关闭正则表达式
+let g:ctrlp_user_command = ''                     " 自定义系统命令
+let g:ctrlp_follow_symlinks = 1                   " 查询链接目录
+
 
 " Tagbar配置
 nmap tb :TagbarToggle<CR>
@@ -70,15 +80,15 @@ let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'     " 全局配置文件
 let g:ycm_key_list_select_completion=['<c-n>','<down>']    " youcompleteme  默认tab  s-tab 和自动补全冲突
 let g:ycm_key_list_previous_completion=['<c-p>','<up>']
 let g:ycm_key_invoke_completion = '<C-Space>'     " 进行语义补全
-let g:ycm_min_num_of_chars_for_completion=1       " 从第1个键入字符就开始罗列匹配项
+let g:ycm_min_num_of_chars_for_completion=2       " 从第n个键入字符就开始罗列匹配项
 let g:ycm_seed_identifiers_with_syntax=1          " 语法关键字补全
-let g:ycm_complete_in_comments = 1                " 在注释输入中也能补全
-let g:ycm_complete_in_strings = 1                 " 在字符串输入中也能补全
-let g:ycm_collect_identifiers_from_comments_and_strings = 0 " 注释和字符串中的文字也收入补全
-let g:ycm_collect_identifiers_from_tags_files=1   " 开启标签引擎
-let g:ycm_confirm_extra_conf=0                    " 关闭加载.ycm_extra_conf.py提示 
-let g:ycm_enable_diagnostic_signs = 0             " 关闭错误诊断侧向标记 
-let g:ycm_cache_omnifunc=0                        " 禁止缓存匹配项,每次都重新生成匹配项
+let g:ycm_complete_in_comments = 1                " 在注释输入中补全
+let g:ycm_complete_in_strings = 1                 " 在字符串输入中补全
+let g:ycm_collect_identifiers_from_comments_and_strings = 0 " 注释和字符串中的文字收入补全
+let g:ycm_collect_identifiers_from_tags_files=1   " 标签引擎
+let g:ycm_confirm_extra_conf=0                    " 加载.ycm_extra_conf.py提示 
+let g:ycm_enable_diagnostic_signs = 0             " 错误诊断侧向标记 
+let g:ycm_cache_omnifunc=1                        " 缓存匹配项
 
 " Tern.js配置
 let g:tern_show_signature_in_pum=1               " 显示函数参数提示
@@ -87,6 +97,9 @@ let g:tern_show_signature_in_pum=1               " 显示函数参数提示
 let g:user_emmet_leader_key = '<leader>'          " Emmet触发按键(<c-y>)
 let g:emmet_html5 = 1                             " 使用HTML5标准风格
 let g:user_emmet_install_global = 0               " 全局关闭
+
+" Multiple-cursors配置
+
 
 " UltiSnips配置
 "let g:UltiSnipsExpandTrigger="<leader><tab>"
@@ -103,7 +116,7 @@ let g:UltiSnipsEnableSnipMate=0                   "不使用snipMate的代码片
 " 取消自动备份
 "set noundofile
 "set nobackup
-"set noswapfile
+set noswapfile
 
 " 失去焦点自动保存当前文件
 au FocusLost * :up
