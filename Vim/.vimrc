@@ -50,6 +50,7 @@ filetype plugin indent on         " required
 nmap nt :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif  "自动关闭
 let g:NERDTreeWinSize=20                          " 窗口宽度(31)
+let g:NERDTreeQuitOnOpen=1                        " 打开文件后自动关闭
 
 " Ctrlp配置
 let g:ctrlp_by_filename = 0                       " 只通过文件名搜索
@@ -97,6 +98,8 @@ let g:tern_show_signature_in_pum=1               " 显示函数参数提示
 let g:user_emmet_leader_key = '<leader>'          " Emmet触发按键(<c-y>)
 let g:emmet_html5 = 1                             " 使用HTML5标准风格
 let g:user_emmet_install_global = 0               " 全局关闭
+
+" Easymotion配置
 
 " Multiple-cursors配置
 
@@ -185,14 +188,14 @@ syntax on
 "set gcr=a:block-blinkon0
 
 " 禁止显示滚动条
-" set guioptions-=l
-" set guioptions-=L
-" set guioptions-=r
-" set guioptions-=R
+ set guioptions-=l
+ set guioptions-=L
+ set guioptions-=r
+ set guioptions-=R
 
 " 禁止显示菜单和工具条
-" set guioptions-=m
-" set guioptions-=T
+ set guioptions-=m
+ set guioptions-=T
 
 " 默认启动窗口最大化
 if has("gui_running")

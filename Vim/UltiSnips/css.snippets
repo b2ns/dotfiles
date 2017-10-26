@@ -1,0 +1,159 @@
+priority -50
+
+#######################  选择器  #######################
+# 属性
+snippet = "attr='abc'" i
+[$1="$2"]$0
+endsnippet
+
+snippet ~ "attr='abc' or attr='abc b c" i
+[$1~="$2"]$0
+endsnippet
+
+snippet | "attr='abc' or attr='abc-de" i
+[$1|="$2"]$0
+endsnippet
+
+snippet ^ "attr='abc*'" i
+[$1^="$2"]$0
+endsnippet
+
+snippet $ "attr='*abc'" i
+[$1$="$2"]$0
+endsnippet
+
+snippet * "attr='*abc*'" i
+[$1*="$2"]$0
+endsnippet
+
+# 伪类
+snippet :li ":link" i
+:link 
+endsnippet
+
+snippet :vi ":visited" i
+:visited 
+endsnippet
+
+snippet :ho ":hover" i
+:hover 
+endsnippet
+
+snippet :ac ":active" i
+:active 
+endsnippet
+
+snippet :fo ":focus" i
+:focus 
+endsnippet
+
+snippet :la ":lang(zh)" i
+:lang($1) $0
+endsnippet
+
+snippet :not ":not()" i
+:not($1) $0
+endsnippet
+
+snippet :root ":root" i
+:root 
+endsnippet
+
+snippet :fc ":first-child" i
+:first-child 
+endsnippet
+
+snippet :lc ":last-child" i
+:last-child 
+endsnippet
+
+snippet :oc ":only-child" i
+:only-child 
+endsnippet
+
+snippet :nc ":nth-child" i
+:nth-child($1) $0
+endsnippet
+
+snippet :nlc ":nth-last-child" i
+:nth-last-child($1) $0
+endsnippet
+
+snippet :ft ":first-of-type" i
+:first-of-type 
+endsnippet
+
+snippet :lt ":last-of-type" i
+:last-of-type 
+endsnippet
+
+snippet :ot ":only-of-type" i
+:only-of-type 
+endsnippet
+
+snippet :nt ":nth-of-type" i
+:nth-of-type($1) $0
+endsnippet
+
+snippet :nlt ":nth-last-of-type" i
+:nth-last-of-type($1) $0
+endsnippet
+
+snippet :em ":empty" i
+:empty 
+endsnippet
+
+snippet :ch ":checked" i
+:checked 
+endsnippet
+
+snippet :en ":enabled" i
+:enabled 
+endsnippet
+
+snippet :dis ":disabled" i
+:disabled 
+endsnippet
+
+snippet :tar ":target" i
+:target 
+endsnippet
+
+# 伪元素
+snippet :a ":after" i
+:after 
+endsnippet
+snippet :aa "::after" i
+::after 
+endsnippet
+
+snippet :b ":before" i
+:before 
+endsnippet
+snippet :bb "::before" i
+::before 
+endsnippet
+
+snippet :fe ":first-leter" i
+:first-leter 
+endsnippet
+snippet :ffe "::first-leter" i
+::first-leter 
+endsnippet
+
+snippet :fi ":first-line" i
+:first-line 
+endsnippet
+snippet :ffi "::first-line" i
+::first-line 
+endsnippet
+
+snippet ::pla "::placeholder" i
+::placeholder 
+endsnippet
+
+snippet ::sel "::selction" i
+::selction 
+endsnippet
+
+# vim:ft=snippets:

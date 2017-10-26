@@ -1924,7 +1924,7 @@ let s:emmet_settings = {
 \
 \
 \'表格': '',
-\            'table': [{'boder': ''}],
+\            'table': [{'border': '1'}],
 \            'caption': [],
 \
 \            'colgroup': [],
@@ -2074,6 +2074,7 @@ let s:emmet_settings = {
 \        'indent_blockelement': 0,
 \        'block_all_childless': 0,
 \        'indentation': '  ',
+\        'quote_char': '"',
 \    },
 \    'elm': {
 \        'indentation': '    ',
