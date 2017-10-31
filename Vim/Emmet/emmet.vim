@@ -1716,7 +1716,7 @@ let s:emmet_settings = {
 \            'c:ie6': "<!--[if IE 6]>\n\t${child}|\n<![endif]-->",
 \            'c:ie9': "<!--[if lte IE 9]>\n\t${child}|\n<![endif]-->",
 \            'c:ie': "<!--[if IE]>\n\t${child}|\n<![endif]-->",
-\            'c:noie': "<!--[if !IE]><!-->\n\t${child}|\n<!--<![endif]-->",
+\            'c:noie': "<!--[if ! IE]><!-->\n\t${child}|\n<!--<![endif]-->",
 \            'c:js': "<script>\n<!--\n|\n//-->\n</script>",
 \
 \            'html:4t': "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n"
