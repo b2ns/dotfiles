@@ -2,7 +2,6 @@
 ### Note: everything is under the namespace **ds**.
 ___
 ## HashTable
-___
 ```
 var ht = new ds.HashTable();
 
@@ -16,7 +15,6 @@ console.log(key+":"+val);
 ht.clear();
 ```
 ## Set
-___
 ```
 var set1 = new ds.Set(),
         set2 = new ds.Set();
@@ -34,7 +32,6 @@ set1.complement(set2);
 set1.clear();
 ```
 ## Stack
-___
 ```
 var  s = new ds.Stack();
 
@@ -46,7 +43,6 @@ s.bottom();
 s.clear();
 ```
 ## Queue
-___
 ```
 var q = new ds.Queue();
 
@@ -58,7 +54,6 @@ q.last();
 q.clear();
 ```
 ## List
-___
 ```
 var lst = new ds.List();
 var lst = new ds.List(function (a,b){
@@ -75,7 +70,6 @@ lst.forEach(function (val){
 lst.clear();
 ```
 ## BinarySearchTree(AVL)
-___
 ```
 var bst = new ds.BST();
 var bst = new ds.BST(function (a,b){
@@ -103,7 +97,6 @@ bst.forEachLevel(function (val){
 bst.clear();
 ```
 ## PriorityQueue
-___
 ```
 var pq = new ds.PQ();
 var pq = new ds.PQ(function (a,b){
