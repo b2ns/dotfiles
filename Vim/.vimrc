@@ -38,7 +38,7 @@ Plugin 'SirVer/ultisnips'         " 片段引擎
 Plugin 'honza/vim-snippets'       " 片段库
 
 Plugin 'bling/vim-airline'        " 状态栏
-Plugin 'tpope/vim-fugitive'       " git
+"Plugin 'tpope/vim-fugitive'       " git
 
 "插件安装结束#######################################################
 
