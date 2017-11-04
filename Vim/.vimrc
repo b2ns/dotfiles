@@ -254,7 +254,13 @@ set nofoldenable
 let mapleader=","
 
 " 多文件之间切换
-nnoremap <silent> <F8> :bn!<CR> 
+" nnoremap <silent> <F8> :bn!<CR> 
+
+" 从系统剪贴板粘贴
+nnoremap <c-v> "+gP
+
+" 复制到系统剪切板 
+vnoremap <c-c> "+y
 
 " buffer窗口最大化
 nnoremap <F11> <c-w>\|
