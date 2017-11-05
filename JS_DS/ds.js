@@ -213,8 +213,9 @@
       this._cmp = cmp || function (a, b) { return (a === b) ? 0 : 1; };
     },
     insert: function (val, nodeVal) {
-      var node = (nodeVal!==undefined) ? this._find(nodeVal) : this._tail.pre;
-      node = (node) ? node : this._tail.pre;
+	  var node;
+	  if(nodeVal === undefined || (node=this._find(nodeVal)) === undefined)
+		node=this._tail.pre;
 
       var newNode = new ListNode(val, node, node.next);
       node.next.pre = newNode;
@@ -543,6 +544,9 @@
 	  this._length=0;
 	  this._endIndex=0;
 	  this._emptyPos=new ds.Stack();
+	  this._cmp=function (a,b){
+	    return (a.n>b.n)?1:((a.n<b.n)?-1:0);
+	  }
     },
     numOfVertex: function () {
 	  return this._length;
@@ -562,7 +566,7 @@
 		this._hash.insert(v,n);
 		this._rehash.insert(n,v);
 		this._length++;
-		this._body[n]=new ds.BST();
+		this._body[n]=new ds.BST(this._cmp);
 	  }
 	  return n;
 	},
@@ -576,28 +580,31 @@
 	  }
 	  return n;
 	},
-	insertEdge: function (v1,v2){
+	insertEdge: function (v1,v2,w){
 	  if(v1===v2 || v2===undefined) return;
+	  if(w===undefined) w=0;
+
 	  var n1=this._addNum(v1),
 		  n2=this._addNum(v2);
-	  this._body[n1].insert(n2);
-	  this._body[n2].insert(n1);
+	  this._body[n1].insert({n:n2,w:w});
+	  this._body[n2].insert({n:n1,w:w});
 
 	},
 	deleteEdge: function (v1,v2){
 	  var n1=this._hash.find(v1),
 		  n2=this._hash.find(v2);
 	  if(n1!==undefined && n2!==undefined){
-		this._body[n1].delete(n2);
-		this._body[n2].delete(n1);
+		this._body[n1].delete({n:n2});
+		this._body[n2].delete({n:n1});
 	  }
 	},
-	insertVertex:function (v){
+	insertVertex:function (v,w){
+	  if(w===undefined) w=0;
 	  var n=this._addNum(v);
 	  for(var i=0;i<this._endIndex;i++){
 		if(this._body[i]===undefined || i===n) continue;
-		this._body[n].insert(i);
-		this._body[i].insert(n);
+		this._body[n].insert({n:i,w:w});
+		this._body[i].insert({n:n,w:w});
 	  }
 	},
 	deleteVertex: function (v){
@@ -609,14 +616,8 @@
 		});
 		this._body[n]=undefined;
 		while(q.length()){
-		  this._body[q.dequeue()].delete(n);
+		  this._body[q.dequeue().n].delete({n:n});
 		}
-	  }
-	},
-	forEach: function (func){
-	  for(var i=0;i<this._endIndex;i++){
-		if(this._body[i]===undefined) continue;
-		func.call(this,this._rehash.find(i));
 	  }
 	},
 	toString: function (){
@@ -630,7 +631,7 @@
 		  q.enqueue(v);
 		});
 		while(q.length()){
-		  str+=this._rehash.find(q.dequeue())+",";
+		  str+=this._rehash.find(q.first().n)+"-"+q.dequeue().w+",";
 		}
 		str+="\n";
 	  }
