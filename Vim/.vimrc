@@ -255,6 +255,9 @@ let mapleader=","
 
 " 多文件之间切换
 " nnoremap <silent> <F8> :bn!<CR> 
+" 
+" 全选
+nnoremap <c-a> ggVG
 
 " 从系统剪贴板粘贴
 nnoremap <c-v> "+gP
