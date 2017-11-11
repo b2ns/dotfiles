@@ -62,7 +62,6 @@
     }
   });
   exports.ds = ds; //expose the ds
-  ds.Class = Class; //expose Class method
 
   //HashTable
   ds.HashTable = Class({
