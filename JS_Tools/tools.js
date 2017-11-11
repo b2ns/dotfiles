@@ -9,6 +9,10 @@
   var _=function (){};
   /* export to global */
   exports.Tools=exports._=_;
+  /* when conflict with others */
+  _.noConflict=function (interface){
+	exports[interface]=this;
+  };
 
   /********** TOOLS DEFINE AFTER THIS LINE **********/
 
