@@ -10,38 +10,17 @@
     var _class = function () {
       this._init.apply(this, arguments);
     };
-
+    _class.prototype._super = Object.prototype;
     if (typeof parent === "function") {
       var tmp = function () { this.constructor = _class; };
-      var arr = new Array();
-
-      for (var i = arguments.length - 1; i > 0; i--) {
-        for (var j in arguments[i].prototype) {
-          if (!Object.prototype.hasOwnProperty(j)) {
-            if (j.search(/^_[a-z0-9_$]*$/gi) === -1)
-              tmp.prototype[j] = arguments[i].prototype[j];
-            else if (j === "_init") {
-              arr.push(arguments[i].prototype[j]);
-            }
-          }
-        }
-      }
-      tmp.prototype._init = function () {
-        for (var i = 0, len = arr.length; i < len; i++) {
-          arr[i].apply(this, arguments);
-        }
-      }
-      _class._super = tmp.prototype;
-
-      _class.prototype = new tmp();
+	  tmp.prototype = parent.prototype;
+	  _class.prototype = new tmp();
+	  _class.prototype._super = parent.prototype;
     }
-
-    _class.fn = _class.prototype;
-    _class.fn._init = function () { };
-
+    _class.prototype._init = function () { };
     for (var i in method) {
       if (method.hasOwnProperty(i))
-        _class.fn[i] = method[i];
+        _class.prototype[i] = method[i];
     }
     return _class;
   };
