@@ -10,8 +10,8 @@
   /* export to global */
   exports.Tools=exports._=_;
   /* when conflict with others */
-  _.noConflict=function (interface){
-	exports[interface]=this;
+  _.noConflict=function (name){
+	exports[name]=this;
   };
 
   /********** TOOLS DEFINE AFTER THIS LINE **********/
@@ -20,16 +20,17 @@
   /* define a class and extends from only one super class */
   _.class=function (member,dad){
 	var Class=function (){
-	  this.init.apply(this,arguments);
+	  this._init.apply(this,arguments);
 	};
+	Class.prototype._super=Object.prototype;
 	if(typeof dad === "function"){
 	  var F=function (){};
 	  F.prototype=dad.prototype;
 	  Class.prototype=new F();
 	  Class.prototype.constructor=Class;
-	  Class.prototype.super=dad.prototype;
+	  Class.prototype._super=dad.prototype;
 	}
-	Class.prototype.init=function (){};
+	Class.prototype._init=function (){};
 	for(var m in member){
 	  if(member.hasOwnProperty(m))
 		Class.prototype[m]=member[m];
@@ -51,6 +52,10 @@
 	F.prototype=obj;
 	return new F();
   };
+  /* make a singleton */
+  _.singleton=function (constructor){
+	return constructor();
+  };
   /* lazy load a singleton */
   _.lazySingleton=function (constructor){
 	var instance=null;
@@ -66,7 +71,7 @@
   _.loop=function (fn,N){
     var N=N||1;
 	for(var i=0;i<N;i++)
-	  fn.call(null,i);
+	  fn(i);
   };
   /* random number */
   _.random=function (a,b){
@@ -88,7 +93,7 @@
   };
   /* timer */
   _.Timer=_.class({
-	init: function (){
+	_init: function (){
 	  this._time=0;
 	},
 	start: function (){
@@ -102,7 +107,7 @@
   });
   /* counter */
   _.Counter=_.class({
-	init: function (num){
+	_init: function (num){
 	  this._count=num||0;
 	},
 	show: function (){
