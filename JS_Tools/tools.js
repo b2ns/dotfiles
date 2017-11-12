@@ -42,7 +42,7 @@
 	for(var i=0,len=dads.length;i<len;i++){
 	  var dad=dads[i];
 	  for(var method in dad.prototype)
-		if(!son.prototype[method])
+		if(!son.prototype[method] && method.search(/^_[a-z0-9_$]*/gi)===-1)
 		  son.prototype[method]=dad.prototype[method];
 	}
   };
