@@ -52,18 +52,19 @@
 	F.prototype=obj;
 	return new F();
   };
-  /* make a singleton */
-  _.singleton=function (constructor){
-	return constructor();
-  };
-  /* lazy load a singleton */
-  _.lazySingleton=function (constructor){
-	var instance=null;
-	return {
-	  getInstance: function (){
-	    return (instance)?instance:constructor();
-	  }
-	};
+  /* make a singleton or a lazy loading singleton */
+  _.singleton=function (constructor,isLazy){
+	if(isLazy!==true)
+	  return constructor();
+	else{
+	  var instance;
+	  return {
+		getInstance: function (){
+		  console.log(instance);
+		  return (instance)?instance:instance=constructor();
+		}
+	  };
+	}
   };
 
   /***** normal use *****/
