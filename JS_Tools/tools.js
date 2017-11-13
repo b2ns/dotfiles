@@ -7,10 +7,13 @@
   "use strict";
   /* every thing bind to the function '_' */
   var _=function (){};
+  /* save previous _ */
+  var previous_=exports._;
   /* export to global */
   exports.Tools=exports._=_;
   /* when conflict with others */
   _.noConflict=function (name){
+	exports._=previous_;
 	exports[name]=this;
   };
 
