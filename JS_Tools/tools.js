@@ -63,7 +63,6 @@
 	  var instance;
 	  return {
 		getInstance: function (){
-		  console.log(instance);
 		  return (instance)?instance:instance=constructor();
 		}
 	  };
@@ -84,7 +83,7 @@
 	  case 1: b=a,a=0;break;
 	  default: ;
 	}
-	return Math.floor(Math.random()*(b-a))+a;
+	return a+Math.floor(Math.random()*(b-a+1));//include right num
   };
   /* random string */
   _.randomStr=function (length){
