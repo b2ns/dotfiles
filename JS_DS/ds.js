@@ -27,9 +27,6 @@
 
   //ds
   var ds = Class({
-    foo: function () {
-      console.log("foo from ds");
-    },
     length: function () {
       if (this._length !== undefined)
         return this._length;
