@@ -52,6 +52,15 @@ var FlySpeakDog=_.class("FlySpeakDog",{
   speak: function (){
     console.log("speaking");
   },
+  static: {
+	foo: function (){
+	  console.log("static foo");
+	},
+	bar: function (){
+	  console.log(this._name);
+	  console.log("static bar");
+	},
+  }
 }).extends(FlyDog).implements(Speak);
 
 console.log(new Animal());
@@ -61,12 +70,5 @@ console.log(new FlySpeakDog());
 
 var a=new FlySpeakDog("Jack",2,"丁世鹏");
 console.log(a);
-console.log(_.typeof(a));
-console.log(_.instanceof(a,FlySpeakDog));
-console.log(_.instanceof(a,FlyDog));
-console.log(_.instanceof(a,Dog));
-console.log(_.instanceof(a,Animal));
-console.log(_.instanceof(a,Speak));
-console.log(_.instanceof(a,Fly));
-console.log(_.instanceof(a,Tiger));
-console.log(_.instanceof(a,Array));
+FlySpeakDog.foo();
+FlySpeakDog.bar();

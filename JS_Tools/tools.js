@@ -101,10 +101,16 @@
 	var Class=function (){
 	  Class.init.apply(this,arguments);
 	};
+
 	Class.init=init;
 	Class._name=className;
 	Class.extends=extend;
 	Class.implements=implement;
+	if(member.static){
+	  for(var m in member.static)
+		if(member.static.hasOwnProperty(m) && !Class[m])
+		  Class[m]=member.static[m];
+	}
 
 	Class.prototype.className=className;
 	Class.prototype.superClassName=[];
@@ -113,7 +119,7 @@
 	Class.prototype.methods=methods;
 
 	for(var m in member){
-	  if(member.hasOwnProperty(m) && !Class.prototype[m] && m!=="init")
+	  if(member.hasOwnProperty(m) && !Class.prototype[m] && m!=="init" && m!=="static")
 		Class.prototype[m]=member[m];
 	}
 	return Class;
