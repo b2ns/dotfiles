@@ -1,5 +1,5 @@
 /*
- *Description: some useful tools for JavaScript
+ *Description: some useful tools for javascript
  *Author: b2ns
  */
 
@@ -28,10 +28,13 @@
 	for(var i=0,len=methodArr.length;i<len;i++)
 	  if(typeof methodArr[i] === "string")
 		methods.push(methodArr[i]);
-	return {
-	  interfaceName:name,
-	  methods: methods
+
+	var interfaces=function (){
+	  throw new Error("Interface '"+interfaces._name+"' can not make an instance");
 	};
+	interfaces._name=name;
+	interfaces._methods=methods;
+	return interfaces;
   };
   /* define a class and support multiple extends */
   // extends
@@ -48,7 +51,8 @@
 		  this.prototype[m]=tmpproto[m];
 	  }
 
-	  this.prototype._super=dad.prototype;
+	  this.prototype.super=dad.prototype;
+	  this.prototype.superClassName.push(dad._name||dad.name);
 	}
 	// multiple extends using mixin
 	if(len>1){
@@ -59,6 +63,7 @@
 		  if(!this.prototype[m])
 			this.prototype[m]=dad.prototype[m];
 		}
+		this.prototype.superClassName.push(dad._name||dad.name);
 	  }
 	}
 	return this;
@@ -67,33 +72,48 @@
   var implement=function (interfaces){
 	for(var i=0,len=arguments.length;i<len;i++){
 	  var interf=arguments[i];
-	  if(!interf.interfaceName) continue;
-	  for(var j=0,len2=interf.methods.length;j<len2;j++){
-		var method=interf.methods[j];
+	  if(!interf._name) continue;
+	  for(var j=0,len2=interf._methods.length;j<len2;j++){
+		var method=interf._methods[j];
 		if(!this.prototype[method] || typeof this.prototype[method]!=="function")
-		  throw new Error("Class '"+this.prototype.className+"' does not implements Method '"
-			  +method+"' in Interface '"+interf.interfaceName+"'!");
+		  throw new Error("Class '"+this.prototype.className+"' does not implements Method '"+method+"' in Interface '"+interf._name+"'!");
 	  }
+	  this.prototype.interfaceName.push(interf._name);
 	}
 	return this
+  };
+  // show all the public methods
+  var methods=function (){
+    var arr=[];
+	for(var m in this){
+	  var method=this[m];
+	  if(typeof method==="function" && method.name.search(/^_[a-z0-9_$]*/gi)===-1 && method.name!=="methods")
+		arr.push(method.name);
+	}
+	return arr;
   };
   // class
   _.class=function (className,member){
 	if(arguments.length!==2)
 	  throw new Error("_.class needs two arguments!");
 
+	var init=member.init||function (){};
 	var Class=function (){
-	  this._init.apply(this,arguments);
+	  Class.init.apply(this,arguments);
 	};
+	Class.init=init;
+	Class._name=className;
 	Class.extends=extend;
 	Class.implements=implement;
 
-	Class.prototype._super=Object.prototype;
-	Class.prototype._init=function (){};
 	Class.prototype.className=className;
+	Class.prototype.superClassName=[];
+	Class.prototype.interfaceName=[];
+	Class.prototype.super=Object.prototype;
+	Class.prototype.methods=methods;
 
 	for(var m in member){
-	  if(member.hasOwnProperty(m))
+	  if(member.hasOwnProperty(m) && !Class.prototype[m] && m!=="init")
 		Class.prototype[m]=member[m];
 	}
 	return Class;
@@ -182,14 +202,28 @@
   });
 
   /***** Other Stuff Related To JavaScript *****/
-  /* exact type of variable */
-  _.typeof=function (variable){
-	if(variable.className)
-	  return variable.className;
-	return Object.prototype.toString.call(variable).slice(8, -1);
+  /* exact type */
+  _.typeof=function (obj){
+	if(obj.className)
+	  return obj.className;
+	return Object.prototype.toString.call(obj).slice(8, -1);
   };
-  /* bind this to a certain object */
-  _.proxy=function (that,fn){
+  /* is instance of a class or implements a interface*/
+  _.instanceof=function (obj,type){
+	if(typeof obj==="object" || typeof obj==="function"){
+	  if(obj instanceof type) return true;
+	}
+	else if(new Object(obj) instanceof type)
+	  return true;
+
+	if(obj && obj.superClassName && obj.superClassName.indexOf(type._name||type.name)!==-1)
+	  return true;
+	if(obj && obj.interfaceName && obj.interfaceName.indexOf(type._name||type.name)!==-1)
+	  return true;
+	return false;
+  };
+  /* bind 'this' to a certain object */
+  _.bind=function (that,fn){
 	return function (){
 	  return fn.apply(that,arguments);
 	};

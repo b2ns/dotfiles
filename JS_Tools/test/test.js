@@ -1,64 +1,62 @@
 // Interface
-var Live=_.interface("Live",["eat",12,"sleep"]);
-var Walk=_.interface("Walk",["walk"]);
+var Fly=_.interface("Fly",["run","fly"]);
+var Swim=_.interface("Swim",[]);
+var Jump=_.interface("Jump",["jump"]);
 
 // Class
-var Man=_.class("Man",{
-  _init: function (){
-	this.name="Man";
+var Human=_.class("Human",{
+  init:function (name,age,sex){
+    this.name=name||"name";
+	this.age=age||20;
+	this.sex=sex||"male";
   },
-  getName: function (){
-	console.log(this.name);
-    return this.name
+  speak: function (){
+    console.log("speak");
   },
-  sleep:function (){
-
+  walk: function (){
+    console.log("walk");
   },
-   
-}).extends();
-
-var Fly=_.class("Fly",{
-  foo: function (){
-    console.log("foo from fly");
-  },
-  _run: function (){
+  run: function (){
     console.log("run");
   },
+  foo: function (){
+    console.log("foo from Man");
+  },
+});
+var Alien=_.class("Alien",{
+  init: function (force){
+    this.force=force||100;
+  },
+  transform: function (){
+    console.log("transform");
+  },
+  foo: function (){
+    console.log("foo from Alien");
+  },
+});
+
+var SuperMan=_.class("SuperMan",{
+  init: function (name,age,sex,height,force){
+	Human.init.apply(this,arguments);
+	Alien.init.call(this,force);
+	this.height=height||173;
+
+  },
+  lazer: function (){
+    console.log("lazer");
+	this.foo();
+	this.super.foo();
+  },
   fly: function (){
-	this._run();
     console.log("fly");
   },
-});
-
-var Swim=_.class("Swim",{
   foo: function (){
-    console.log("foo from swim");
+    console.log("foo from SuperMan");
   },
-  _breath: function (){
-    
-  },
-  swim: function (){
-    console.log("swim");
-  },
-});
+}).extends(Human,Alien).implements(Fly,Swim);
 
-var Boy=_.class("Boy",{
-  _init: function (name,age){
-	this._super._init.call(this,name);
-    this.age=age||12;
-  },
-  getAge: function (){
-    console.log(this.age);
-	return this.age
-  },
-  eat:function (){
-    
-  },
-  walk:function (){
-    
-  },
-}).extends(Man,12,Fly,Swim).implements(Live,12,Walk);
 
-console.log(new Boy());
-var b=new Boy();
-console.log(_.typeof(b));
+// Instance
+var sm=new SuperMan("Clark",30,"male",188);
+console.log(sm);
+console.log(sm.methods());
