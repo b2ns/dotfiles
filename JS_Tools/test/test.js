@@ -72,3 +72,9 @@ var a=new FlySpeakDog("Jack",2,"丁世鹏");
 console.log(a);
 FlySpeakDog.foo();
 FlySpeakDog.bar();
+
+console.log(_.instanceof(a,Animal));
+console.log(_.instanceof(a,Dog));
+console.log(_.instanceof(a,FlyDog));
+console.log(_.instanceof(a,FlySpeakDog));
+console.log(a.methods());

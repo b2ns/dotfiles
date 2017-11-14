@@ -51,6 +51,7 @@
 		  this.prototype[m]=tmpproto[m];
 	  }
 
+	  this.prototype.constructor=tmpproto.constructor;
 	  this.prototype.super=dad.prototype;
 	  this.prototype.superClassName.push(dad._name||dad.name);
 	}
@@ -87,7 +88,7 @@
     var arr=[];
 	for(var m in this){
 	  var method=this[m];
-	  if(typeof method==="function" && method.name.search(/^_[a-z0-9_$]*/gi)===-1 && method.name!=="methods")
+	  if(typeof method==="function" && method.name.search(/^_[a-z0-9_$]*/gi)===-1 && method.name!=="methods" && method.name!=="Class")
 		arr.push(method.name);
 	}
 	return arr;
