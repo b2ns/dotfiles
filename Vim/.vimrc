@@ -274,11 +274,12 @@ nnoremap <F12> <c-w>=
 " 自动补全括号
 func! Bracket()
 	inoremap ( ()<left>
+	inoremap ) ();<left><left>
 	inoremap [ []<left>
-	"inoremap { {}<left><CR><up><right><CR>
-	inoremap { {}<left><CR><up><esc>o
+	inoremap ] [];<left><left>
 	"inoremap { {}<left><left><CR><right><CR><up><right><CR>
-	inoremap } {}<left>
+	inoremap { {}<left><CR><up><esc>o
+	inoremap } {};<left><left>
 	inoremap " ""<left>
 	inoremap ' ''<left>
 	inoremap <S-Tab> <right>

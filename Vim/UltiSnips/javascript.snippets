@@ -67,19 +67,43 @@ while($1){
 endsnippet
 
 #######################  函数  #######################
-snippet fun "匿名函数" i
+snippet fn "匿名函数" i
 function (){
   $1
 }$0
 endsnippet
 
-snippet func "带参数函数" i
+snippet fn, "匿名函数," i
+function (){
+  $1
+},$0
+endsnippet
+
+snippet fn; "匿名函数;" i
+function (){
+  $1
+};$0
+endsnippet
+
+snippet fnc "带参数函数" i
 function $1($2){
   $3
 }$0
 endsnippet
 
-snippet funp "自执行函数包装"
+snippet fnc, "带参数函数," i
+function $1($2){
+  $3
+},$0
+endsnippet
+
+snippet fnc; "带参数函数;" i
+function $1($2){
+  $3
+};$0
+endsnippet
+
+snippet fnp "自执行函数包装" i
 (function (){
   $1
 })();
@@ -111,8 +135,6 @@ endsnippet
 snippet use "use strict"
 "use strict";
 endsnippet
-
-
 
 
 
