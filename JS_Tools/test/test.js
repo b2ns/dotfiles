@@ -1,74 +1,72 @@
 // Interface
-var Fly=_.interface("Fly",["run","fly"]);
-var Swim=_.interface("Swim",[]);
-var Jump=_.interface("Jump",["jump"]);
+var Fly=_.interface("Fly",["fly"]),
+	Speak=_.interface("Speak",["speak"]);
 
 // Class
-var Human=_.class("Human",{
-  init:function (name,age,sex){
-    this.name=name||"name";
-	this.age=age||20;
-	this.sex=sex||"male";
+var Animal=_.class("Animal",{
+  init: function (name,age){
+    this.name=name||"小丑";
+	this.age=age||1;
   },
-  speak: function (){
-    console.log("speak");
+  eat: function (){
+    console.log("eat");
   },
-  walk: function (){
-    console.log("walk");
-  },
-  run: function (){
-    console.log("run");
-  },
-  foo: function (){
-    console.log("foo from Man");
+  shout: function (){
+    console.log("shout");
   },
 });
-var Alien=_.class("Alien",{
-  init: function (force){
-    this.force=force||100;
+var Tiger=_.class("Tiger",{
+  init: function (name,age){
+    Animal.init.apply(this,arguments);
   },
-  transform: function (){
-    console.log("transform");
+  scare: function (){
+    console.log("scary");
   },
-  foo: function (){
-    console.log("foo from Alien");
-  },
-});
 
-var SuperMan=_.class("SuperMan",{
-  init: function (name,age,sex,height,force){
-	Human.init.apply(this,arguments);
-	Alien.init.call(this,force);
-	this.height=height||173;
+}).extends(Animal);
 
+var Dog=_.class("Dog",{
+  init: function (name,age,host){
+    Animal.init.call(this,name,age);
+	this.host=host||"nobody";
   },
-  lazer: function (){
-    console.log("lazer");
-	this.foo();
-	this.super.foo();
+  shout: function (){
+    console.log("wangwang!");
+  },
+}).extends(Animal,Tiger);
+
+var FlyDog=_.class("FlyDog",{
+  init: function (name,age,host){
+    Dog.init.apply(this,arguments);
   },
   fly: function (){
-    console.log("fly");
+    console.log("flying");
   },
-  foo: function (){
-    console.log("foo from SuperMan");
+}).extends(Dog).implements(Fly);
+
+
+var FlySpeakDog=_.class("FlySpeakDog",{
+  init: function (name,age,host){
+    FlyDog.init.apply(this,arguments);
   },
-}).extends(Human,Alien).implements(Fly,Swim);
+  speak: function (){
+    console.log("speaking");
+  },
+}).extends(FlyDog).implements(Speak);
 
+console.log(new Animal());
+console.log(new Dog);
+console.log(new FlyDog());
+console.log(new FlySpeakDog());
 
-// Instance
-var sm=new SuperMan("Clark",30,"male",188);
-console.log(sm);
-console.log(sm.methods());
-console.log(_.instanceof(23,Number));
-console.log(_.instanceof(null,Object));
-console.log(_.instanceof(undefined,Object));
-console.log(_.instanceof(sm,Human));
-console.log(_.instanceof(sm,Object));
-console.log(_.instanceof(sm,Alien));
-console.log(_.instanceof(sm,Fly));
-
-console.log(_.typeof(undefined));
-console.log(_.typeof(null));
-console.log(_.typeof(0));
-console.log(_.typeof(""));
+var a=new FlySpeakDog("Jack",2,"丁世鹏");
+console.log(a);
+console.log(_.typeof(a));
+console.log(_.instanceof(a,FlySpeakDog));
+console.log(_.instanceof(a,FlyDog));
+console.log(_.instanceof(a,Dog));
+console.log(_.instanceof(a,Animal));
+console.log(_.instanceof(a,Speak));
+console.log(_.instanceof(a,Fly));
+console.log(_.instanceof(a,Tiger));
+console.log(_.instanceof(a,Array));

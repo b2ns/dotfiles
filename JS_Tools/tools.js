@@ -160,7 +160,7 @@
     var length=length||5;
 	var arr=new Array(length);
 	while(length--){
-	  arr[length]=String.fromCharCode(Math.floor(Math.random()*26)+97);
+	  arr[length]=String.fromCharCode(Math.floor(Math.random()*95)+32);
 	}
 	return arr.join("");
   };
@@ -214,7 +214,9 @@
 	if(objtype==="object" || objtype==="function"){
 	  if(obj instanceof type)
 		return true;
-	  if(obj && obj.interfaceName && (obj.interfaceName.indexOf(type._name||type.name)!==-1 || obj.superClassName.indexOf(type._name||type.name)!==-1))
+	  if(obj && obj.interfaceName)
+		for(var o=obj;o!==Object.prototype;o=o.super)
+          if(o.interfaceName.indexOf(type._name||type.name)!==-1 || o.superClassName.indexOf(type._name||type.name)!==-1)
 		return true;
 	}
 	else if(objtype!=="undefined" && new Object(obj) instanceof type)
