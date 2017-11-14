@@ -60,3 +60,15 @@ var SuperMan=_.class("SuperMan",{
 var sm=new SuperMan("Clark",30,"male",188);
 console.log(sm);
 console.log(sm.methods());
+console.log(_.instanceof(23,Number));
+console.log(_.instanceof(null,Object));
+console.log(_.instanceof(undefined,Object));
+console.log(_.instanceof(sm,Human));
+console.log(_.instanceof(sm,Object));
+console.log(_.instanceof(sm,Alien));
+console.log(_.instanceof(sm,Fly));
+
+console.log(_.typeof(undefined));
+console.log(_.typeof(null));
+console.log(_.typeof(0));
+console.log(_.typeof(""));

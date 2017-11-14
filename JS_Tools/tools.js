@@ -204,22 +204,22 @@
   /***** Other Stuff Related To JavaScript *****/
   /* exact type */
   _.typeof=function (obj){
-	if(obj.className)
+	if(obj && obj.className)
 	  return obj.className;
 	return Object.prototype.toString.call(obj).slice(8, -1);
   };
   /* is instance of a class or implements a interface*/
   _.instanceof=function (obj,type){
-	if(typeof obj==="object" || typeof obj==="function"){
-	  if(obj instanceof type) return true;
+	var objtype=typeof obj;
+	if(objtype==="object" || objtype==="function"){
+	  if(obj instanceof type)
+		return true;
+	  if(obj && obj.interfaceName && (obj.interfaceName.indexOf(type._name||type.name)!==-1 || obj.superClassName.indexOf(type._name||type.name)!==-1))
+		return true;
 	}
-	else if(new Object(obj) instanceof type)
+	else if(objtype!=="undefined" && new Object(obj) instanceof type)
 	  return true;
 
-	if(obj && obj.superClassName && obj.superClassName.indexOf(type._name||type.name)!==-1)
-	  return true;
-	if(obj && obj.interfaceName && obj.interfaceName.indexOf(type._name||type.name)!==-1)
-	  return true;
 	return false;
   };
   /* bind 'this' to a certain object */
