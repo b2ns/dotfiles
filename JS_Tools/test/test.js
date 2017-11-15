@@ -84,4 +84,6 @@ console.log(_.instanceof(a,Animal));
 console.log(_.instanceof(a,Dog));
 console.log(_.instanceof(a,FlyDog));
 console.log(_.instanceof(a,FlySpeakDog));
+console.log(_.instanceof(a,Object));
 console.log(a.methods());
+

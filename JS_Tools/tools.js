@@ -38,7 +38,7 @@
   };
   /* define a class and support multiple extends */
   // extends
-  var extend=function (dad){
+  Function.prototype.extends=function (dad){
 	var argslen=arguments.length;
 	var tmpproto=this.prototype;
 	if(typeof dad === "function"){
@@ -76,7 +76,7 @@
 	return this;
   };
   // implements
-  var implement=function (interfaces){
+  Function.prototype.implements=function (interfaces){
 	for(var i=0,len=arguments.length;i<len;i++){
 	  var interf=arguments[i];
 	  if(!interf._name) continue;
@@ -117,8 +117,8 @@
 	// static property bind to Class
 	Class.init=init;
 	Class._name=className;
-	Class.extends=extend;
-	Class.implements=implement;
+	// Class.extends=extend;
+	// Class.implements=implement;
 	Class.abstract=member.abstract||[];
 	if(member.static){
 	  for(var m in member.static)
