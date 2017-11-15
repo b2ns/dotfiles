@@ -1,3 +1,5 @@
+var timer=new _.Timer();
+timer.start();
 // Interface
 var Fly=_.interface("Fly",["fly"]),
 	Speak=_.interface("Speak",["speak"]);
@@ -73,7 +75,7 @@ var FlySpeakDog=_.class("FlySpeakDog",{
 
 console.log(new Animal());
 console.log(new Dog);
-console.log(new FlyDog());
+// console.log(new FlyDog());
 console.log(new FlySpeakDog());
 
 var a=new FlySpeakDog("Jack",2,"dsp");
@@ -84,6 +86,8 @@ console.log(_.instanceof(a,Animal));
 console.log(_.instanceof(a,Dog));
 console.log(_.instanceof(a,FlyDog));
 console.log(_.instanceof(a,FlySpeakDog));
-console.log(_.instanceof(a,Object));
+console.log(_.instanceof({},RegExp));
 console.log(a.methods());
-
+console.log(_.typeof(12.3));
+timer.end();
+console.log(timer);

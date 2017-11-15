@@ -43,10 +43,10 @@
 	  if(!interf._name) continue;
 	  for(var j=0,len2=interf._methods.length;j<len2;j++){
 		var method=interf._methods[j];
-		if(!this.prototype[method] || typeof this.prototype[method]!=="function")
+		if(typeof this.prototype[method]!=="function")
 		  throw new Error("Class '"+this.prototype.className+"' does not implements Method '"+method+"' in Interface '"+interf._name+"'!");
 	  }
-	  this.prototype.interfaceName.push(interf._name);
+	  this._interfaceName.push(interf._name);
 	}
 	return this
   };
@@ -57,7 +57,6 @@
   };
   ClassRoot.prototype={
 	constructor: ClassRoot,
-	className: "ClassRoot",
 	super: Object.prototype,
 	methods:function (){
 	  var arr=[];
@@ -74,34 +73,29 @@
 	if(arguments.length!==2)
 	  throw new Error("_.class needs two arguments!");
 
-	var Class;
+	var Class=function (){
+	  if(Class._abstract){
+		throw new Error("Abstract Class '"+Class._name+"' can not make an instance!");
+	  }
+	  Class.init.apply(this,arguments);
+	};
+	// all custom class will extends from ClassRoot
+	Class.prototype=new ClassRoot(Class);
 
 	// static property bind to Class
-	if(member.abstract){
-	  Class=function (){
-		throw new Error("Abstract Class '"+Class._name+"' can not make an instance!");
-	  };
-	  Class._abstract=member.abstract;
-	}else{
-	  Class=function (){
-		Class.init.apply(this,arguments);
-	  };
-	}
 	Class.init=member.init||function (){};
 	Class._name=className;
+	Class._superClassName=[];
+	Class._interfaceName=[];
+	if(member.abstract)
+	  Class._abstract=member.abstract;
 	if(member.static){
 	  for(var m in member.static)
 		if(member.static.hasOwnProperty(m) && !Class[m])
 		  Class[m]=member.static[m];
 	}
 
-	// all custom class will extends from ClassRoot
-	Class.prototype=new ClassRoot(Class);
-
 	// default property for Class
-	Class.prototype.className=className;
-	Class.prototype.superClassName=[];
-	Class.prototype.interfaceName=[];
 	Class.prototype.super=ClassRoot.prototype;
 
 	for(var m in member){
@@ -112,31 +106,31 @@
   };
   // extends
   Function.prototype.extends=function (dad){
-	var argslen=arguments.length;
-	var tmpproto=this.prototype;
+	var argsLen=arguments.length;
+	var tmpProto=this.prototype;
 	if(typeof dad === "function"){
 	  var F=function (){};
 	  F.prototype=dad.prototype;
 	  this.prototype=new F();
 
-	  for(var m in tmpproto){
-		if(tmpproto.hasOwnProperty(m))
-		  this.prototype[m]=tmpproto[m];
+	  for(var m in tmpProto){
+		if(tmpProto.hasOwnProperty(m))
+		  this.prototype[m]=tmpProto[m];
 	  }
 
 	  this.prototype.super=dad.prototype;
-	  this.prototype.superClassName.push(dad._name||dad.name);
+	  this._superClassName.push(dad._name||dad.name);
 	}
 	// multiple extends using mixin
-	if(argslen>1){
-	  for(var i=1;i<argslen;i++){
+	if(argsLen>1){
+	  for(var i=1;i<argsLen;i++){
 		var dad=arguments[i];
 		if(typeof dad !== "function") continue;
 		for(var m in dad.prototype){
 		  if(!this.prototype[m])
 			this.prototype[m]=dad.prototype[m];
 		}
-		this.prototype.superClassName.push(dad._name||dad.name);
+		this._superClassName.push(dad._name||dad.name);
 	  }
 	}
 	// check for abstract method
@@ -144,13 +138,15 @@
 	if(superClass._abstract)
 	  for(var i=0,len=superClass._abstract.length;i<len;i++){
 		var method=superClass._abstract[i];
-		if(!this.prototype[method] || typeof this.prototype[method]!=="function")
-		  throw new Error("Class '"+this.prototype.className+"' does not implements Abstract Method '"+method+"' in SuperClass '"+superClass._name+"'!");
+		if(typeof method!=="string") continue;
+		if(typeof this.prototype[method]!=="function"){
+		  this._abstract=superClass._abstract;break;
+		}
 	  }
 	return this;
   };
 
-  /***** Class *****/
+  /***** Object *****/
   /* clone an object */
   _.clone=function (obj){
 	if(!obj) return;
@@ -170,6 +166,36 @@
 		}
 	  };
 	}
+  };
+
+  /***** Other Stuff Related To Javascript *****/
+  /* return exact type of variable */
+  _.typeof=function (obj){
+	if(obj && obj.constructor._name)
+	  return obj.constructor._name;
+	return Object.prototype.toString.call(obj).slice(8, -1);
+  };
+  /* is instance of a class or implements a interface*/
+  _.instanceof=function (obj,type){
+	var objtype=typeof obj;
+	if(objtype==="object" || objtype==="function"){
+	  if(obj instanceof type)
+		return true;
+	  if(obj && obj.constructor._interfaceName)
+		for(var o=obj;o!==Object.prototype;o=o.super)
+          if(o.constructor._interfaceName.indexOf(type._name||type.name)!==-1 || o.constructor._superClassName.indexOf(type._name||type.name)!==-1)
+		return true;
+	}
+	else if(objtype!=="undefined" && new Object(obj) instanceof type)
+	  return true;
+
+	return false;
+  };
+  /* bind 'this' to a certain object */
+  _.bind=function (that,fn){
+	return function (){
+	  return fn.apply(that,arguments);
+	};
   };
 
   /***** normal use *****/
@@ -199,7 +225,7 @@
   };
   /* timer */
   _.Timer=_.class("Timer",{
-	_init: function (){
+	init: function (){
 	  this._time=0;
 	},
 	start: function (){
@@ -213,7 +239,7 @@
   });
   /* counter */
   _.Counter=_.class("Counter",{
-	_init: function (num){
+	init: function (num){
 	  this._count=num||0;
 	},
 	show: function (){
@@ -234,35 +260,6 @@
 	},
   });
 
-  /***** Other Stuff Related To Javascript *****/
-  /* return exact type of variable */
-  _.typeof=function (obj){
-	if(obj && obj.className)
-	  return obj.className;
-	return Object.prototype.toString.call(obj).slice(8, -1);
-  };
-  /* is instance of a class or implements a interface*/
-  _.instanceof=function (obj,type){
-	var objtype=typeof obj;
-	if(objtype==="object" || objtype==="function"){
-	  if(obj instanceof type)
-		return true;
-	  if(obj && obj.interfaceName)
-		for(var o=obj;o!==Object.prototype;o=o.super)
-          if(o.interfaceName.indexOf(type._name||type.name)!==-1 || o.superClassName.indexOf(type._name||type.name)!==-1)
-		return true;
-	}
-	else if(objtype!=="undefined" && new Object(obj) instanceof type)
-	  return true;
-
-	return false;
-  };
-  /* bind 'this' to a certain object */
-  _.bind=function (that,fn){
-	return function (){
-	  return fn.apply(that,arguments);
-	};
-  };
 
 
   
