@@ -62,8 +62,11 @@
 	  var arr=[];
 	  for(var m in this){
 		var method=this[m];
-		if(typeof method==="function" && method.name.search(/^_[a-z0-9_$]*/gi)===-1 && method.name!=="methods" && method.name!=="Class")
-		  arr.push(method.name);
+		if(typeof method==="function"){
+		  var name=method.name;
+		  if(name!=="" && name.search(/^_[a-z0-9_$]*/gi)===-1 && name!=="Class")
+			arr.push(method.name);
+		}
 	  }
 	  return arr;
 	},
@@ -99,7 +102,7 @@
 	Class.prototype.super=ClassRoot.prototype;
 
 	for(var m in member){
-	  if(member.hasOwnProperty(m) && !Class.prototype[m] && m!=="init" && m!=="static" && m!=="abstract")
+	  if(member.hasOwnProperty(m) && m!=="constructor" && m!=="super" && m!=="init" && m!=="static" && m!=="abstract")
 		Class.prototype[m]=member[m];
 	}
 	return Class;
@@ -228,11 +231,20 @@
 	init: function (){
 	  this._time=0;
 	},
+	_now: (function (){
+	  if(Date.now)
+		return function _now(){
+		  return Date.now();
+		};
+	  return function _now(){
+	    return (new Date()).getTime();
+	  };
+	})(),
 	start: function (){
-	  this._time=Date.now();
+	  this._time=this._now();
 	},
 	end: function (){
-	  var tmp=Date.now()-this._time;
+	  var tmp=this._now()-this._time;
 	  console.log(tmp+" ms");
 	  return tmp;
 	},
@@ -259,7 +271,6 @@
 	  return this._count=num||0;
 	},
   });
-
 
 
   

@@ -91,3 +91,4 @@ console.log(a.methods());
 console.log(_.typeof(12.3));
 timer.end();
 console.log(timer);
+console.log(timer.methods());
