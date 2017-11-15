@@ -9,7 +9,7 @@
   var _=function (){};
   /* save previous _ */
   var previous_=exports._;
-  /* export to global */
+  /* export to the global */
   exports.Tools=exports._=_;
   /* when conflict with others */
   _.noConflict=function (name){
@@ -19,7 +19,7 @@
 
   /********** TOOLS DEFINE AFTER THIS LINE **********/
 
-  /***** Class And Object *****/
+  /***** Class *****/
   /* to define a interface and support implements check */
   _.interface=function (name,methodArr){
 	if(arguments.length!==2)
@@ -52,7 +52,9 @@
   };
   /* to define a class and support multiple extends */
   // all custom class will extends from this root class
-  var ClassRoot=function (){};
+  var ClassRoot=function (son){
+	this.constructor=son;
+  };
   ClassRoot.prototype={
 	constructor: ClassRoot,
 	className: "ClassRoot",
@@ -79,7 +81,7 @@
 	// static property bind to Class
 	Class.init=member.init||function (){};
 	Class._name=className;
-	Class.abstract=member.abstract||[];
+	Class._abstract=member.abstract||[];
 	if(member.static){
 	  for(var m in member.static)
 		if(member.static.hasOwnProperty(m) && !Class[m])
@@ -87,9 +89,7 @@
 	}
 
 	// all custom class will extends from ClassRoot
-	var F=function (){this.constructor=Class;};
-	F.prototype=ClassRoot.prototype;
-	Class.prototype=new F();
+	Class.prototype=new ClassRoot(Class);
 
 	// default property for Class
 	Class.prototype.className=className;
@@ -133,13 +133,15 @@
 	  }
 	}
 	// check for abstract method
-	for(var i=0,superClass=this.prototype.super.constructor,len=superClass.abstract.length;i<len;i++){
-	  var method=superClass.abstract[i];
+	for(var i=0,superClass=this.prototype.super.constructor,len=superClass._abstract.length;i<len;i++){
+	  var method=superClass._abstract[i];
 	  if(!this.prototype[method] || typeof this.prototype[method]!=="function")
 		throw new Error("Class '"+this.prototype.className+"' does not implements Abstract Method '"+method+"' in SuperClass '"+superClass._name+"'!");
 	}
 	return this;
   };
+
+  /***** Class *****/
   /* clone an object */
   _.clone=function (obj){
 	if(!obj) return;
@@ -223,8 +225,8 @@
 	},
   });
 
-  /***** Other Stuff Related To JavaScript *****/
-  /* return exact type of var */
+  /***** Other Stuff Related To Javascript *****/
+  /* return exact type of variable */
   _.typeof=function (obj){
 	if(obj && obj.className)
 	  return obj.className;
