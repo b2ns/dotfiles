@@ -103,6 +103,9 @@ let g:user_emmet_install_global = 0               " 全局关闭
 
 " Multiple-cursors配置
 
+" Nerdcommenter配置
+let g:NERDSpaceDelims=1                           " 注释间增加空格
+let g:NERDRemoveExtraSpaces=1                     " 取消注释时移除空格
 
 " UltiSnips配置
 "let g:UltiSnipsExpandTrigger="<leader><tab>"
