@@ -39,7 +39,7 @@
   /* define a class and support multiple extends */
   // extends
   var extend=function (dad){
-	var len=arguments.length;
+	var argslen=arguments.length;
 	var tmpproto=this.prototype;
 	if(typeof dad === "function"){
 	  var F=function (){};
@@ -56,8 +56,8 @@
 	  this.prototype.superClassName.push(dad._name||dad.name);
 	}
 	// multiple extends using mixin
-	if(len>1){
-	  for(var i=1;i<len;i++){
+	if(argslen>1){
+	  for(var i=1;i<argslen;i++){
 		var dad=arguments[i];
 		if(typeof dad !== "function") continue;
 		for(var m in dad.prototype){
@@ -66,6 +66,12 @@
 		}
 		this.prototype.superClassName.push(dad._name||dad.name);
 	  }
+	}
+	// check for abstract method
+	for(var i=0,superClass=this.prototype.super.constructor,len=superClass.abstract.length;i<len;i++){
+	  var method=superClass.abstract[i];
+	  if(!this.prototype[method] || typeof this.prototype[method]!=="function")
+		throw new Error("Class '"+this.prototype.className+"' does not implements Abstract Method '"+method+"' in SuperClass '"+superClass._name+"'!");
 	}
 	return this;
   };
@@ -83,15 +89,20 @@
 	}
 	return this
   };
-  // show all the public methods
-  var methods=function (){
-    var arr=[];
-	for(var m in this){
-	  var method=this[m];
-	  if(typeof method==="function" && method.name.search(/^_[a-z0-9_$]*/gi)===-1 && method.name!=="methods" && method.name!=="Class")
-		arr.push(method.name);
-	}
-	return arr;
+  // all custom class will extends from this root class
+  var ClassRoot=function (){};
+  ClassRoot.prototype={
+	constructor: ClassRoot,
+	super: Object.prototype,
+	methods:function (){
+	  var arr=[];
+	  for(var m in this){
+		var method=this[m];
+		if(typeof method==="function" && method.name.search(/^_[a-z0-9_$]*/gi)===-1 && method.name!=="methods" && method.name!=="Class")
+		  arr.push(method.name);
+	  }
+	  return arr;
+	},
   };
   // class
   _.class=function (className,member){
@@ -103,24 +114,31 @@
 	  Class.init.apply(this,arguments);
 	};
 
+	// static property bind to Class
 	Class.init=init;
 	Class._name=className;
 	Class.extends=extend;
 	Class.implements=implement;
+	Class.abstract=member.abstract||[];
 	if(member.static){
 	  for(var m in member.static)
 		if(member.static.hasOwnProperty(m) && !Class[m])
 		  Class[m]=member.static[m];
 	}
 
+	// all custom class will extends from ClassRoot
+	var F=function (){this.constructor=Class;};
+	F.prototype=ClassRoot.prototype;
+	Class.prototype=new F();
+
+	// default property for Class
 	Class.prototype.className=className;
 	Class.prototype.superClassName=[];
 	Class.prototype.interfaceName=[];
-	Class.prototype.super=Object.prototype;
-	Class.prototype.methods=methods;
+	Class.prototype.super=ClassRoot.prototype;
 
 	for(var m in member){
-	  if(member.hasOwnProperty(m) && !Class.prototype[m] && m!=="init" && m!=="static")
+	  if(member.hasOwnProperty(m) && !Class.prototype[m] && m!=="init" && m!=="static" && m!=="abstract")
 		Class.prototype[m]=member[m];
 	}
 	return Class;

@@ -15,6 +15,7 @@ var Animal=_.class("Animal",{
     console.log("shout");
   },
 });
+
 var Tiger=_.class("Tiger",{
   init: function (name,age){
     Animal.init.apply(this,arguments);
@@ -42,6 +43,7 @@ var FlyDog=_.class("FlyDog",{
   fly: function (){
     console.log("flying");
   },
+  abstract: ["one","two"],
 }).extends(Dog).implements(Fly);
 
 
@@ -60,7 +62,13 @@ var FlySpeakDog=_.class("FlySpeakDog",{
 	  console.log(this._name);
 	  console.log("static bar");
 	},
-  }
+  },
+  one: function (){
+    
+  },
+  two:function (){
+    
+  },
 }).extends(FlyDog).implements(Speak);
 
 console.log(new Animal());
@@ -68,8 +76,7 @@ console.log(new Dog);
 console.log(new FlyDog());
 console.log(new FlySpeakDog());
 
-var a=new FlySpeakDog("Jack",2,"丁世鹏");
-console.log(a);
+var a=new FlySpeakDog("Jack",2,"dsp");
 FlySpeakDog.foo();
 FlySpeakDog.bar();
 
