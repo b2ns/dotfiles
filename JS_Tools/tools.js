@@ -20,7 +20,7 @@
   /********** TOOLS DEFINE AFTER THIS LINE **********/
 
   /***** Class And Object *****/
-  /* define a interface */
+  /* to define a interface and support implements check */
   _.interface=function (name,methodArr){
 	if(arguments.length!==2)
 	  throw new Error("_.interface needs two arguments!");
@@ -36,45 +36,6 @@
 	interfaces._methods=methods;
 	return interfaces;
   };
-  /* define a class and support multiple extends */
-  // extends
-  Function.prototype.extends=function (dad){
-	var argslen=arguments.length;
-	var tmpproto=this.prototype;
-	if(typeof dad === "function"){
-	  var F=function (){};
-	  F.prototype=dad.prototype;
-	  this.prototype=new F();
-
-	  for(var m in tmpproto){
-		if(tmpproto.hasOwnProperty(m))
-		  this.prototype[m]=tmpproto[m];
-	  }
-
-	  this.prototype.constructor=tmpproto.constructor;
-	  this.prototype.super=dad.prototype;
-	  this.prototype.superClassName.push(dad._name||dad.name);
-	}
-	// multiple extends using mixin
-	if(argslen>1){
-	  for(var i=1;i<argslen;i++){
-		var dad=arguments[i];
-		if(typeof dad !== "function") continue;
-		for(var m in dad.prototype){
-		  if(!this.prototype[m])
-			this.prototype[m]=dad.prototype[m];
-		}
-		this.prototype.superClassName.push(dad._name||dad.name);
-	  }
-	}
-	// check for abstract method
-	for(var i=0,superClass=this.prototype.super.constructor,len=superClass.abstract.length;i<len;i++){
-	  var method=superClass.abstract[i];
-	  if(!this.prototype[method] || typeof this.prototype[method]!=="function")
-		throw new Error("Class '"+this.prototype.className+"' does not implements Abstract Method '"+method+"' in SuperClass '"+superClass._name+"'!");
-	}
-	return this;
-  };
   // implements
   Function.prototype.implements=function (interfaces){
 	for(var i=0,len=arguments.length;i<len;i++){
@@ -89,10 +50,12 @@
 	}
 	return this
   };
+  /* to define a class and support multiple extends */
   // all custom class will extends from this root class
   var ClassRoot=function (){};
   ClassRoot.prototype={
 	constructor: ClassRoot,
+	className: "ClassRoot",
 	super: Object.prototype,
 	methods:function (){
 	  var arr=[];
@@ -109,16 +72,13 @@
 	if(arguments.length!==2)
 	  throw new Error("_.class needs two arguments!");
 
-	var init=member.init||function (){};
 	var Class=function (){
 	  Class.init.apply(this,arguments);
 	};
 
 	// static property bind to Class
-	Class.init=init;
+	Class.init=member.init||function (){};
 	Class._name=className;
-	// Class.extends=extend;
-	// Class.implements=implement;
 	Class.abstract=member.abstract||[];
 	if(member.static){
 	  for(var m in member.static)
@@ -142,6 +102,43 @@
 		Class.prototype[m]=member[m];
 	}
 	return Class;
+  };
+  // extends
+  Function.prototype.extends=function (dad){
+	var argslen=arguments.length;
+	var tmpproto=this.prototype;
+	if(typeof dad === "function"){
+	  var F=function (){};
+	  F.prototype=dad.prototype;
+	  this.prototype=new F();
+
+	  for(var m in tmpproto){
+		if(tmpproto.hasOwnProperty(m))
+		  this.prototype[m]=tmpproto[m];
+	  }
+
+	  this.prototype.super=dad.prototype;
+	  this.prototype.superClassName.push(dad._name||dad.name);
+	}
+	// multiple extends using mixin
+	if(argslen>1){
+	  for(var i=1;i<argslen;i++){
+		var dad=arguments[i];
+		if(typeof dad !== "function") continue;
+		for(var m in dad.prototype){
+		  if(!this.prototype[m])
+			this.prototype[m]=dad.prototype[m];
+		}
+		this.prototype.superClassName.push(dad._name||dad.name);
+	  }
+	}
+	// check for abstract method
+	for(var i=0,superClass=this.prototype.super.constructor,len=superClass.abstract.length;i<len;i++){
+	  var method=superClass.abstract[i];
+	  if(!this.prototype[method] || typeof this.prototype[method]!=="function")
+		throw new Error("Class '"+this.prototype.className+"' does not implements Abstract Method '"+method+"' in SuperClass '"+superClass._name+"'!");
+	}
+	return this;
   };
   /* clone an object */
   _.clone=function (obj){
@@ -227,7 +224,7 @@
   });
 
   /***** Other Stuff Related To JavaScript *****/
-  /* exact type */
+  /* return exact type of var */
   _.typeof=function (obj){
 	if(obj && obj.className)
 	  return obj.className;

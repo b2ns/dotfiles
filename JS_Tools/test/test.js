@@ -49,7 +49,7 @@ var FlyDog=_.class("FlyDog",{
 
 var FlySpeakDog=_.class("FlySpeakDog",{
   init: function (name,age,host){
-    FlyDog.init.apply(this,arguments);
+	FlyDog.init.apply(this,arguments);
   },
   speak: function (){
     console.log("speaking");
