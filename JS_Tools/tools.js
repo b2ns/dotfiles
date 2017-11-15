@@ -30,7 +30,7 @@
 		methods.push(methodArr[i]);
 
 	var interfaces=function (){
-	  throw new Error("Interface '"+interfaces._name+"' can not make an instance");
+	  throw new Error("Interface '"+interfaces._name+"' can not make an instance!");
 	};
 	interfaces._name=name;
 	interfaces._methods=methods;
@@ -74,14 +74,21 @@
 	if(arguments.length!==2)
 	  throw new Error("_.class needs two arguments!");
 
-	var Class=function (){
-	  Class.init.apply(this,arguments);
-	};
+	var Class;
 
 	// static property bind to Class
+	if(member.abstract){
+	  Class=function (){
+		throw new Error("Abstract Class '"+Class._name+"' can not make an instance!");
+	  };
+	  Class._abstract=member.abstract;
+	}else{
+	  Class=function (){
+		Class.init.apply(this,arguments);
+	  };
+	}
 	Class.init=member.init||function (){};
 	Class._name=className;
-	Class._abstract=member.abstract||[];
 	if(member.static){
 	  for(var m in member.static)
 		if(member.static.hasOwnProperty(m) && !Class[m])
@@ -133,11 +140,13 @@
 	  }
 	}
 	// check for abstract method
-	for(var i=0,superClass=this.prototype.super.constructor,len=superClass._abstract.length;i<len;i++){
-	  var method=superClass._abstract[i];
-	  if(!this.prototype[method] || typeof this.prototype[method]!=="function")
-		throw new Error("Class '"+this.prototype.className+"' does not implements Abstract Method '"+method+"' in SuperClass '"+superClass._name+"'!");
-	}
+	var superClass=this.prototype.super.constructor;
+	if(superClass._abstract)
+	  for(var i=0,len=superClass._abstract.length;i<len;i++){
+		var method=superClass._abstract[i];
+		if(!this.prototype[method] || typeof this.prototype[method]!=="function")
+		  throw new Error("Class '"+this.prototype.className+"' does not implements Abstract Method '"+method+"' in SuperClass '"+superClass._name+"'!");
+	  }
 	return this;
   };
 
