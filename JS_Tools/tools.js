@@ -58,15 +58,25 @@
   ClassRoot.prototype={
 	constructor: ClassRoot,
 	super: Object.prototype,
-	methods:function (){
+	__type: function (){
+	  return _.typeof(this);
+	},
+	__instanceof: function (Class){
+	  return _.instanceof(this,Class);
+	},
+	__attributes: function (){
+	  var arr=[];
+	  for(var a in this){
+		if(typeof this[a]!=="function" && a!=="super" && a.search(/^_[a-z0-9_$]*/gi)===-1)
+		  arr.push(a);
+	  }
+	  return arr;
+	},
+	__methods:function (){
 	  var arr=[];
 	  for(var m in this){
-		var method=this[m];
-		if(typeof method==="function"){
-		  var name=method.name;
-		  if(name!=="" && name.search(/^_[a-z0-9_$]*/gi)===-1 && name!=="Class")
-			arr.push(method.name);
-		}
+		if(typeof this[m]==="function" && m!=="constructor" && m.search(/^_[a-z0-9_$]*/gi)===-1)
+		  arr.push(m);
 	  }
 	  return arr;
 	},
@@ -102,7 +112,7 @@
 	Class.prototype.super=ClassRoot.prototype;
 
 	for(var m in member){
-	  if(member.hasOwnProperty(m) && m!=="constructor" && m!=="super" && m!=="init" && m!=="static" && m!=="abstract")
+	  if(member.hasOwnProperty(m) && !Class.prototype[m] && m!=="init" && m!=="static" && m!=="abstract")
 		Class.prototype[m]=member[m];
 	}
 	return Class;
@@ -179,17 +189,17 @@
 	return Object.prototype.toString.call(obj).slice(8, -1);
   };
   /* is instance of a class or implements a interface*/
-  _.instanceof=function (obj,type){
+  _.instanceof=function (obj,Class){
 	var objtype=typeof obj;
 	if(objtype==="object" || objtype==="function"){
-	  if(obj instanceof type)
+	  if(obj instanceof Class)
 		return true;
 	  if(obj && obj.constructor._interfaceName)
 		for(var o=obj;o!==Object.prototype;o=o.super)
-          if(o.constructor._interfaceName.indexOf(type._name||type.name)!==-1 || o.constructor._superClassName.indexOf(type._name||type.name)!==-1)
+          if(o.constructor._interfaceName.indexOf(Class._name||Class.name)!==-1 || o.constructor._superClassName.indexOf(Class._name||Class.name)!==-1)
 		return true;
 	}
-	else if(objtype!=="undefined" && new Object(obj) instanceof type)
+	else if(objtype!=="undefined" && new Object(obj) instanceof Class)
 	  return true;
 
 	return false;
@@ -233,10 +243,10 @@
 	},
 	_now: (function (){
 	  if(Date.now)
-		return function _now(){
+		return function (){
 		  return Date.now();
 		};
-	  return function _now(){
+	  return function (){
 	    return (new Date()).getTime();
 	  };
 	})(),
