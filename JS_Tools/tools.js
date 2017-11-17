@@ -87,10 +87,19 @@
 	  throw new Error("_.class needs two arguments!");
 
 	var Class=function (){
-	  if(Class._abstract){
+	  if(Class._abstract){// check for abstract class
 		throw new Error("Abstract Class '"+Class._name+"' can not make an instance!");
 	  }
-	  Class.init.apply(this,arguments);
+
+	  // extends attributes from superClass automatically
+	  var args=[];
+	  for(var i=0,len=arguments.length;i<len;++i)
+		args[i]=arguments[i];
+	  var superInit=this.super.constructor.init,
+	      superLen=superInit.length;
+	  superInit.apply(this,args.slice(0,superLen));
+
+	  Class.init.apply(this,args.slice(superLen)); // call own init
 	};
 	// all custom class will extends from ClassRoot
 	Class.prototype=new ClassRoot(Class);
@@ -108,7 +117,7 @@
 		  Class[m]=member.static[m];
 	}
 
-	// default property for Class
+	// default property in Class.prototype
 	Class.prototype.super=ClassRoot.prototype;
 
 	for(var m in member){
