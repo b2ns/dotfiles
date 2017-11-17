@@ -259,6 +259,18 @@
 	  return fn.apply(that,arguments);
 	};
   };
+  /* sniff the environment to use certain function */
+  _.sniffer=function (fnArr,argsArr,that){
+	if(!argsArr) argsArr=[];
+	for(var i=0,len=fnArr.length;i<len;i++){
+	  try{
+		fnArr[i].apply(that,argsArr);
+	  }catch(e){
+		continue;
+	  }
+	  return fnArr[i];
+	}
+  };
 
   /***** normal use *****/
   /* loop */
@@ -290,15 +302,14 @@
 	init: function (){
 	  this._time=0;
 	},
-	_now: (function (){
-	  if(Date.now)
-		return function (){
-		  return Date.now();
-		};
-	  return function (){
+	_now:_.sniffer([
+	  function (){
+	    return Date.now();
+	  },
+	  function (){
 	    return (new Date()).getTime();
-	  };
-	})(),
+	  },
+	]),
 	start: function (){
 	  this._time=this._now();
 	},
