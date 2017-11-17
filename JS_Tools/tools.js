@@ -90,16 +90,18 @@
 	  if(Class._abstract){// check for abstract class
 		throw new Error("Abstract Class '"+Class._name+"' can not make an instance!");
 	  }
-
 	  // extends attributes from superClass automatically
 	  var args=[];
 	  for(var i=0,len=arguments.length;i<len;++i)
 		args[i]=arguments[i];
-	  var superInit=this.super.constructor.init,
-	      superLen=superInit.length;
-	  superInit.apply(this,args.slice(0,superLen));
-
-	  Class.init.apply(this,args.slice(superLen)); // call own init
+	  var superInitArr=[];
+	  for(var superProto=this.super;superProto!==ClassRoot.prototype;superProto=superProto.super)
+		superInitArr.push(superProto.constructor.init);
+	  while(superInitArr.length){
+		var superInit=superInitArr.pop();
+		superInit.apply(this,args.splice(0,superInit.length));
+	  }
+	  Class.init.apply(this,args);// call own init
 	};
 	// all custom class will extends from ClassRoot
 	Class.prototype=new ClassRoot(Class);
