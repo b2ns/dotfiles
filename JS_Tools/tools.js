@@ -192,6 +192,44 @@
 	}
   };
 
+  /***** String *****/
+  var upperOrLowerCase=function (str,start,end,isUpper){
+	if(typeof str!=="string") return;
+
+	var strLen=str.length;
+	var startType=typeof start,
+	    endType=typeof end;
+
+	if(startType!=="number" && endType!=="number")
+	  return (isUpper)?str.toUpperCase():str.toLowerCase();
+	else if(startType==="number" && endType!=="number")
+	  end=strLen;
+
+	if(start<0) start=0;
+	if(start>strLen-1) start=strLen-1;
+	if(end<0) end+=strLen;
+	if(end<=start) return;
+	if(end>strLen) end=strLen;
+
+	var arr=str.split("");
+	if(isUpper){
+	  for(var i=start;i<end;i++)
+		arr[i]=arr[i].toUpperCase();
+	}else{
+	  for(var i=start;i<end;i++)
+		arr[i]=arr[i].toLowerCase();
+	}
+	return arr.join("");
+  };
+  /* upper case */
+  _.upperCase=function (str,start,end){
+    return upperOrLowerCase(str,start,end,true);
+  },
+  /* lower case */
+  _.lowerCase=function (str,start,end){
+    return upperOrLowerCase(str,start,end,false);
+  };
+
   /***** Other Stuff Related To Javascript *****/
   /* return exact type of variable */
   _.typeof=function (obj){
