@@ -229,6 +229,44 @@
   _.lowerCase=function (str,start,end){
     return upperOrLowerCase(str,start,end,false);
   };
+  /* random string */
+  _.randomStr=function (length){
+    var length=length||5;
+	var arr=new Array(length);
+	while(length--){
+	  arr[length]=String.fromCharCode(Math.floor(Math.random()*95)+32);
+	}
+	return arr.join("");
+  };
+
+  /***** Math *****/
+  /* if integer */
+  _.isInteger=function (num){
+    if(typeof num!=="number") return false;
+	if(Math.trunc(num)===num) return true;
+	return false;
+  };
+  /* mod */
+  _.mod=function (a,b){
+	if(a===0 || a===b) return 0;
+    if(b===0 || !_.isInteger(a) || !_.isInteger(b)) return;
+	var c=Math.trunc(a/b);
+	return a-c*b;
+  };
+  /* if even */
+  _.isEven=function (num){
+	if(!_.isInteger(num)) return false;
+	return _.mod(num,2)===0;
+  };
+  /* random number */
+  _.random=function (a,b){
+	switch(arguments.length){
+	  case 0: a=0,b=100;break;
+	  case 1: b=a,a=0;break;
+	  default: ;
+	}
+	return a+Math.floor(Math.random()*(b-a+1));//include right num
+  };
 
   /***** Other Stuff Related To Javascript *****/
   /* return exact type of variable */
@@ -278,24 +316,6 @@
     N=N||1;
 	for(var i=0;i<N;i++)
 	  fn(i);
-  };
-  /* random number */
-  _.random=function (a,b){
-	switch(arguments.length){
-	  case 0: a=0,b=100;break;
-	  case 1: b=a,a=0;break;
-	  default: ;
-	}
-	return a+Math.floor(Math.random()*(b-a+1));//include right num
-  };
-  /* random string */
-  _.randomStr=function (length){
-    var length=length||5;
-	var arr=new Array(length);
-	while(length--){
-	  arr[length]=String.fromCharCode(Math.floor(Math.random()*95)+32);
-	}
-	return arr.join("");
   };
   /* timer */
   _.Timer=_.class("Timer",{
