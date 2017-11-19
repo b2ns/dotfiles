@@ -1,2 +1,2 @@
-# Tools
-## just some home use tools
+# Config
+## configuration for some tools I use
