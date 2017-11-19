@@ -1763,7 +1763,7 @@ let s:emmet_settings = {
 \                    ."<html lang=\"${lang}\">\n"
 \                    ."<head>\n"
 \                    ."\t<meta charset=\"${charset}\">\n"
-\                    ."\t<title>html5</title>\n"
+\                    ."\t<title>b2ns</title>\n"
 \                    ."\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
 \                    ."\t<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">\n"
 \                    ."</head>\n"
