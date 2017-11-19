@@ -6,7 +6,9 @@
 (function (root){
   "use strict";
   /* every thing bind to the function '_' */
-  var _=function (){};
+  var _=function (){
+	return this;
+  };
 
   /********** TOOLS DEFINE AFTER THIS LINE **********/
   /***** Class *****/
@@ -81,17 +83,20 @@
 		throw new Error("Abstract Class '"+Class._name+"' can not make an instance!");
 	  }
 	  // extends attributes from superClass automatically
-	  var args=[];
-	  for(var i=0,len=arguments.length;i<len;++i)
-		args[i]=arguments[i];
-	  var superInitArr=[];
-	  for(var superProto=this.super;superProto!==ClassRoot.prototype;superProto=superProto.super)
-		superInitArr.push(superProto.constructor.init);
-	  while(superInitArr.length){
-		var superInit=superInitArr.pop();
-		superInit.apply(this,args.splice(0,superInit.length));
-	  }
-	  Class.init.apply(this,args);// call own init
+	  if(this.super!==ClassRoot.prototype){
+		var args=[];
+		for(var i=0,len=arguments.length;i<len;++i)
+		  args[i]=arguments[i];
+		var superInitArr=[];
+		for(var superProto=this.super;superProto!==ClassRoot.prototype;superProto=superProto.super)
+		  superInitArr.push(superProto.constructor.init);
+		while(superInitArr.length){
+		  var superInit=superInitArr.pop();
+		  superInit.apply(this,args.splice(0,superInit.length));
+		}
+		Class.init.apply(this,args);// call own init
+	  }else
+		Class.init.apply(this,arguments);// call own init
 	};
 	// all custom class will extends from ClassRoot
 	Class.prototype=new ClassRoot(Class);
@@ -212,10 +217,10 @@
 	}
 	return arr.join("");
   };
-  _.upperCase=function (str,start,end){
+  _.toUpperCase=function (str,start,end){
     return upperOrLowerCase(str,start,end,true);
   },
-  _.lowerCase=function (str,start,end){
+  _.toLowerCase=function (str,start,end){
     return upperOrLowerCase(str,start,end,false);
   };
   /* random string */
@@ -307,7 +312,7 @@
 	  fn(i);
   };
   /* timer */
-  _.Timer=_.class("Timer",{
+  var Timer=_.class("Timer",{
 	init: function (){
 	  this._time=0;
 	},
@@ -328,8 +333,11 @@
 	  return tmp;
 	},
   });
+  _.timer=function (){
+    return new Timer();
+  };
   /* counter */
-  _.Counter=_.class("Counter",{
+  var Counter=_.class("Counter",{
 	init: function (num){
 	  this._count=num||0;
 	},
@@ -350,6 +358,9 @@
 	  return this._count=num||0;
 	},
   });
+  _.counter=function (num){
+    return new Counter(num);
+  };
 
 
   /********** EXPOSE TO THE GLOBAL **********/
