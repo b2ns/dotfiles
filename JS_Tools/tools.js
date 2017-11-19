@@ -207,15 +207,10 @@
 	if(end<=start) return;
 	if(end>strLen) end=strLen;
 
-	var arr=str.split("");
-	if(isUpper){
-	  for(var i=start;i<end;i++)
-		arr[i]=arr[i].toUpperCase();
-	}else{
-	  for(var i=start;i<end;i++)
-		arr[i]=arr[i].toLowerCase();
-	}
-	return arr.join("");
+	var a=str.slice(0,start),
+	    b=str.slice(start,end),
+		c=str.slice(end,strLen);
+	return a.concat((isUpper)?b.toUpperCase():b.toLowerCase(),c);
   };
   _.toUpperCase=function (str,start,end){
     return upperOrLowerCase(str,start,end,true);
