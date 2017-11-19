@@ -3,22 +3,12 @@
  *Author: b2ns
  */
 
-(function (exports){
+(function (root){
   "use strict";
   /* every thing bind to the function '_' */
   var _=function (){};
-  /* save previous _ */
-  var previous_=exports._;
-  /* export to the global */
-  exports.Tools=exports._=_;
-  /* when conflict with others */
-  _.noConflict=function (name){
-	exports._=previous_;
-	exports[name]=this;
-  };
 
   /********** TOOLS DEFINE AFTER THIS LINE **********/
-
   /***** Class *****/
   /* to define a interface and support implements check */
   _.interface=function (name,methodArr){
@@ -193,6 +183,7 @@
   };
 
   /***** String *****/
+  /* to upper and lower case */
   var upperOrLowerCase=function (str,start,end,isUpper){
 	if(typeof str!=="string") return;
 
@@ -221,11 +212,9 @@
 	}
 	return arr.join("");
   };
-  /* upper case */
   _.upperCase=function (str,start,end){
     return upperOrLowerCase(str,start,end,true);
   },
-  /* lower case */
   _.lowerCase=function (str,start,end){
     return upperOrLowerCase(str,start,end,false);
   };
@@ -363,5 +352,27 @@
   });
 
 
-  
-})(window);
+  /********** EXPOSE TO THE GLOBAL **********/
+  /* save previous _ */
+  var previous_=root._,
+      previousTools=root.Tools;
+  // deal with conflict
+  _.noConflict=function (all){
+    root._=previous_;
+	if(all)
+	  root.Tools=previousTools;
+	return _;
+  };
+  // exprot to the global,the exports in Node.js or the window in Browser
+  if(typeof exports!=='undefined' && typeof module!=='undefined' && module.exports){
+	exports=module.exports=_;
+  }else{
+    root.Tools=root._=_;
+  } 
+  // if use AMD
+  if(typeof define==='function' && define.amd){
+    define('mylib',[],function(){
+      return _;
+    });
+  } 
+})(this);
