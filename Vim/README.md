@@ -1,1 +1,1 @@
-# My configration for Vim and it's plugins
+# My configuration for Vim and it's plugins

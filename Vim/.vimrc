@@ -238,9 +238,10 @@ set cindent
 set smartindent
 
 " 缩进宽度
+set shiftwidth=2
 set tabstop=4
 set softtabstop=4
-set shiftwidth=2
+set expandtab
 
 " 基于缩进或语法进行代码折叠
 "set foldmethod=indent
