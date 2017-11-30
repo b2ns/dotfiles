@@ -1712,12 +1712,12 @@ let s:emmet_settings = {
 \            '!xf': "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Frameset//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd\">",
 \            '!xxs': "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n",
 \
-\            'c': "<!-- |${child} -->",
-\            'c:ie6': "<!--[if IE 6]>\n\t${child}|\n<![endif]-->",
-\            'c:ie9': "<!--[if lte IE 9]>\n\t${child}|\n<![endif]-->",
-\            'c:ie': "<!--[if IE]>\n\t${child}|\n<![endif]-->",
-\            'c:noie': "<!--[if ! IE]><!-->\n\t${child}|\n<!--<![endif]-->",
-\            'c:js': "<script>\n<!--\n|\n//-->\n</script>",
+\            'cc': "<!-- |${child} -->",
+\            'cc:ie6': "<!--[if IE 6]>\n\t${child}|\n<![endif]-->",
+\            'cc:ie9': "<!--[if lte IE 9]>\n\t${child}|\n<![endif]-->",
+\            'cc:ie': "<!--[if IE]>\n\t${child}|\n<![endif]-->",
+\            'cc:noie': "<!--[if ! IE]><!-->\n\t${child}|\n<!--<![endif]-->",
+\            'cc:js': "<script>\n<!--\n|\n//-->\n</script>",
 \
 \            'html:4t': "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n"
 \                    ."<html lang=\"${lang}\">\n"
