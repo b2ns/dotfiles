@@ -92,7 +92,7 @@ let g:ycm_enable_diagnostic_signs = 0             " 错误诊断侧向标记
 let g:ycm_cache_omnifunc=1                        " 缓存匹配项
 
 " Tern.js配置
-let g:tern_show_signature_in_pum=1               " 显示函数参数提示
+let g:tern_show_signature_in_pum=1                " 显示函数参数提示
 
 " Emmet配置
 let g:user_emmet_leader_key = '<leader>'          " Emmet触发按键(<c-y>)
@@ -100,6 +100,13 @@ let g:emmet_html5 = 1                             " 使用HTML5标准风格
 let g:user_emmet_install_global = 0               " 全局关闭
 
 " Easymotion配置
+let g:EasyMotion_leader_key='<leader>w'
+let g:EasyMotion_smartcase = 1
+" map <leader> <Plug>(easymotion-prefix)          " prefix
+map <leader>w <Plug>(easymotion-W)
+map <leader>e <Plug>(easymotion-E)
+map <leader>b <Plug>(easymotion-B)
+
 
 " Multiple-cursors配置
 

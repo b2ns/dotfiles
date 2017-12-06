@@ -110,6 +110,10 @@ snippet fnp "自执行函数包装" i
 endsnippet
 
 #######################  输入输出  #######################
+snippet al "弹窗输出"
+alert($1);$0
+endsnippet
+
 snippet log "控制台log输出"
 console.log($1);$0
 endsnippet
@@ -119,9 +123,14 @@ console.log("hello world");$0
 endsnippet
 
 #######################  jQuery  #######################
-snippet jq "$('selector')" i
+snippet jj "$('selector')" i
 $("$1")$0
 endsnippet
+
+snippet jt "$('selector')" i
+$(this)$0
+endsnippet
+
 
 #######################  其他  #######################
 snippet inc "include.js"
