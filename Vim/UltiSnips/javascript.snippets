@@ -123,14 +123,31 @@ console.log("hello world");$0
 endsnippet
 
 #######################  jQuery  #######################
-snippet jj "$('selector')" i
+snippet $$ "$(function(){})" i
+$(function (){
+  $1
+});$0
+endsnippet
+
+snippet jq "$('selector')" i
 $("$1")$0
 endsnippet
 
-snippet jt "$('selector')" i
+snippet jt "$(this)" i
 $(this)$0
 endsnippet
 
+snippet jb "$('body')" i
+$("body")$0
+endsnippet
+
+snippet jw "$(window)" i
+$(window)$0
+endsnippet
+
+snippet jd "$(document)" i
+$(document)$0
+endsnippet
 
 #######################  其他  #######################
 snippet inc "include.js"

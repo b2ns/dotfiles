@@ -1210,7 +1210,7 @@ let s:emmet_settings = {
 \"边框": "",
 \           "bd": "border:|;",
 \           "bd:n": "border:none;",
-\           "bd+": "border:thin solid red;",
+\           "bd+": "border:thin solid #eee;",
 \           "bdw": "border-width:|;",
 \           "bds": "border-style:|;",
 \           "bdc": "border-color:|;",
@@ -1367,7 +1367,7 @@ let s:emmet_settings = {
 \"文本": "",
 \           "lh": "line-height:|;",
 \
-\           "ta": "text-align:|;",
+\           "ta": "text-align:center;",
 \           "ta:l": "text-align:left;",
 \           "ta:c": "text-align:center;",
 \           "ta:r": "text-align:right;",
@@ -1412,7 +1412,7 @@ let s:emmet_settings = {
 \           "tt:u": "text-transform:uppercase;",
 \           "tt:l": "text-transform:lowercase;",
 \
-\           "td": "text-decoration:none|;",
+\           "td": "text-decoration:none;",
 \           "td:n": "text-decoration:none;",
 \           "td:u": "text-decoration:underline;",
 \           "td:o": "text-decoration:overline;",
@@ -1439,7 +1439,7 @@ let s:emmet_settings = {
 \
 \
 \"列表": "",
-\           "lis": "list-style:none|;",
+\           "lis": "list-style:none;",
 \           "lis:n": "list-style:none;",
 \           "lis?": "/*list-style:type pos img*/;",
 \
@@ -1542,64 +1542,64 @@ let s:emmet_settings = {
 \
 \
 \"过渡": "",
-\           "trs": "transition:all 0.5s|;",
-\           "trs+": "transition:all 0.5s ease-in 0.1s|;",
-\           "trs?": "/*transition：<single-transition>[,<single-transition>]*\n<single-transition> = [ none | <single-transition-property> ] || <duration-time> || <single-transition-timing-function> || <delay-time>*/",
+\           "tri": "transition:all 0.5s|;",
+\           "tri+": "transition:all 0.5s ease-in 0.1s|;",
+\           "tri?": "/*transition：<single-transition>[,<single-transition>]*\n<single-transition> = [ none | <single-transition-property> ] || <duration-time> || <single-transition-timing-function> || <delay-time>*/",
 \
-\           "trspro": "transition-property:|;",
+\           "tripro": "transition-property:|;",
 \
-\           "trsdur": "transition-duration:|;",
+\           "tridur": "transition-duration:|;",
 \
-\           "trstf": "transition-timing-function:|;",
-\           "trstf:l": "transition-timing-function:linear|;",
-\           "trstf:e": "transition-timing-function:ease;",
-\           "trstf:ei": "transition-timing-function:ease-in;",
-\           "trstf:eo": "transition-timing-function:ease-out;",
-\           "trstf:eio": "transition-timing-function:ease-in-out;",
-\           "trstf:ss": "transition-timing-function:step-start;",
-\           "trstf:se": "transition-timing-function:step-end;",
-\           "trstf:steps": "transition-timing-function:steps(int|,end);",
-\           "trstf:cb": "transition-timing-function:cubic-bezier(${1:0.1}, ${2:0.7}, ${3:1.0}, ${3:0.1});",
+\           "tritf": "transition-timing-function:|;",
+\           "tritf:l": "transition-timing-function:linear|;",
+\           "tritf:e": "transition-timing-function:ease;",
+\           "tritf:ei": "transition-timing-function:ease-in;",
+\           "tritf:eo": "transition-timing-function:ease-out;",
+\           "tritf:eio": "transition-timing-function:ease-in-out;",
+\           "tritf:ss": "transition-timing-function:step-start;",
+\           "tritf:se": "transition-timing-function:step-end;",
+\           "tritf:steps": "transition-timing-function:steps(int|,end);",
+\           "tritf:cb": "transition-timing-function:cubic-bezier(${1:0.1}, ${2:0.7}, ${3:1.0}, ${3:0.1});",
 \
-\           "trsdel": "transition-delay:|;",
+\           "tridel": "transition-delay:|;",
 \
 \
 \"动画": "",
-\           "anim": "animation:|;",
-\           "anim?": "/*animation:name duration timing-function delay iteration-count direction fill-mode play-state;*/",
+\           "ani": "animation:|;",
+\           "ani?": "/*animation:name duration timing-function delay iteration-count direction fill-mode play-state;*/",
 \
-\           "animn": "animation-name:|;",
+\           "anin": "animation-name:|;",
 \
-\           "animdur": "animation-duration:|s;",
+\           "anidur": "animation-duration:|s;",
 \
-\           "animtf": "animation-timing-function:|;",
-\           "animtf:l": "animation-timing-function:linear;",
-\           "animtf:e": "animation-timing-function:ease;",
-\           "animtf:ei": "animation-timing-function:ease-in;",
-\           "animtf:eo": "animation-timing-function:ease-out;",
-\           "animtf:eio": "animation-timing-function:ease-in-out;",
-\           "animtf:ss": "animation-timing-function:step-start;",
-\           "animtf:se": "animation-timing-function:step-end;",
-\           "animtf:steps": "animation-timing-function:steps(int|,end);",
-\           "animtf:cb": "animation-timing-function:cubic-bezier(0.1, 0.7, 1.0, 0.1);",
+\           "anitf": "animation-timing-function:|;",
+\           "anitf:l": "animation-timing-function:linear;",
+\           "anitf:e": "animation-timing-function:ease;",
+\           "anitf:ei": "animation-timing-function:ease-in;",
+\           "anitf:eo": "animation-timing-function:ease-out;",
+\           "anitf:eio": "animation-timing-function:ease-in-out;",
+\           "anitf:ss": "animation-timing-function:step-start;",
+\           "anitf:se": "animation-timing-function:step-end;",
+\           "anitf:steps": "animation-timing-function:steps(int|,end);",
+\           "anitf:cb": "animation-timing-function:cubic-bezier(0.1, 0.7, 1.0, 0.1);",
 \
-\           "animdel": "animation-delay:|s;",
+\           "anidel": "animation-delay:|s;",
 \
-\           "animic": "animation-iteration-count:infinite|;",
+\           "aniic": "animation-iteration-count:infinite|;",
 \
-\           "animdir": "animation-direction:|;",
-\           "animdir:n": "animation-direction:normal;",
-\           "animdir:r": "animation-direction:reverse;",
-\           "animdir:a": "animation-direction:alternate;",
-\           "animdir:ar": "animation-direction:alternate-reverse;",
+\           "anidir": "animation-direction:|;",
+\           "anidir:n": "animation-direction:normal;",
+\           "anidir:r": "animation-direction:reverse;",
+\           "anidir:a": "animation-direction:alternate;",
+\           "anidir:ar": "animation-direction:alternate-reverse;",
 \
-\           "animfm": "animation-fill-mode:|;",
-\           "animfm:f": "animation-fill-mode:forwards;",
-\           "animfm:b": "animation-fill-mode:backwards;",
+\           "anifm": "animation-fill-mode:|;",
+\           "anifm:f": "animation-fill-mode:forwards;",
+\           "anifm:b": "animation-fill-mode:backwards;",
 \
-\           "animps": "animation-play-state:|;",
-\           "animps:p": "animation-play-state:paused;",
-\           "animps:r": "animation-play-state:running;",
+\           "anips": "animation-play-state:|;",
+\           "anips:p": "animation-play-state:paused;",
+\           "anips:r": "animation-play-state:running;",
 \
 \
 \"用户界面": "",
