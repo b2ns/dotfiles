@@ -294,15 +294,10 @@ func! Bracket()
 	inoremap " ""<left>
 	inoremap ' ''<left>
 	inoremap <S-Tab> <right>
-
-	if &filetype == 'html'  
-      inoremap { {}<left>
-      inoremap } {}<left>
-      inoremap < <><left>
-    endif
 endfunc
-autocmd FileType c,cpp,sh,html,css,scss,javascript,json call Bracket()
-autocmd FileType html,css,scss,jsx EmmetInstall       " 仅html,css,scss等开启
+
+autocmd FileType c,cpp,sh,css,scss,javascript,json call Bracket()
+autocmd FileType html,css,scss EmmetInstall       " 仅html,css,scss等开启
 
 " 上下左右按键
 nnoremap i k

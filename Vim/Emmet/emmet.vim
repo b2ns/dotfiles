@@ -1035,8 +1035,7 @@ let s:emmet_settings = {
 \           "d:b": "display:block;",
 \           "d:ib": "display:inline-block;",
 \           "d:ib@ie": "display: inline-block;\n*display: inline;\n*zoom: 1;",
-\           "d:li": "display:list-item;",
-\           "d:ili": "display:inline-list-item;",
+\           "d:l": "display:list-item;",
 \
 \           "d:tb": "display:table;",
 \           "d:itb": "display:inline-table;",
@@ -1049,12 +1048,12 @@ let s:emmet_settings = {
 \           "d:tbhg": "display:table-header-group;",
 \           "d:tbfg": "display:table-footer-group;",
 \
-\           "d:ri": "display:run-in;",
+\           "d:r": "display:run-in;",
 \
 \           "d:f": "display:flex;",
 \           "d:if": "display:inline-flex;",
 \
-\           "d:grid": "display:grid;",
+\           "d:g": "display:grid;",
 \
 \           "fl": "float:|;",
 \           "fl:n": "float:none;",
@@ -1112,11 +1111,27 @@ let s:emmet_settings = {
 \
 \
 \"伸缩盒子": "",
-\           "fx": "flex:|;",
-\           "fx?": "/*flex:grow shrink basis;*/",
-\           "fxg": "flex-grow:|;",
-\           "fxs": "flex-shrink:|;",
-\           "fxb": "flex-basis:|;",
+\           "jc": "justify-content:|;",
+\           "jc:fs": "justify-content:flex-start;",
+\           "jc:fe": "justify-content:flex-end;",
+\           "jc:c": "justify-content:center;",
+\           "jc:sb": "justify-content:space-between;",
+\           "jc:sa": "justify-content:space-around;",
+\
+\           "ai": "align-items:|;",
+\           "ai:fs": "align-items:flex-start;",
+\           "ai:fe": "align-items:flex-end;",
+\           "ai:c": "align-items:center;",
+\           "ai:b": "align-items:baseline;",
+\           "ai:s": "align-items:stretch;",
+\
+\           "ac": "align-content:|;",
+\           "ac:fs": "align-content:flex-start;",
+\           "ac:fe": "align-content:flex-end;",
+\           "ac:c": "align-content:center;",
+\           "ac:sb": "align-content:space-between;",
+\           "ac:sa": "align-content:space-around;",
+\           "ac:s": "align-content:stretch;",
 \
 \           "fxf": "flex-flow:|;",
 \           "fxf?": "/*flex-flow:direction wrap|;*/",
@@ -1130,21 +1145,6 @@ let s:emmet_settings = {
 \           "fxw:w": "flex-wrap:wrap;",
 \           "fxw:wr": "flex-wrap:wrap-reverse;",
 \
-\           "ac": "align-content:|;",
-\           "ac:fs": "align-content:flex-start;",
-\           "ac:fe": "align-content:flex-end;",
-\           "ac:c": "align-content:center;",
-\           "ac:sb": "align-content:space-between;",
-\           "ac:sa": "align-content:space-around;",
-\           "ac:s": "align-content:stretch;",
-\
-\           "ai": "align-items:|;",
-\           "ai:fs": "align-items:flex-start;",
-\           "ai:fe": "align-items:flex-end;",
-\           "ai:c": "align-items:center;",
-\           "ai:b": "align-items:baseline;",
-\           "ai:s": "align-items:stretch;",
-\
 \           "as": "align-self:|;",
 \           "as:a": "align-self:auto;",
 \           "as:fs": "align-self:flex-start;",
@@ -1153,14 +1153,13 @@ let s:emmet_settings = {
 \           "as:b": "align-self:baseline;",
 \           "as:s": "align-self:stretch;",
 \
-\           "jc": "justify-content:|;",
-\           "jc:fs": "justify-content:flex-start;",
-\           "jc:fe": "justify-content:flex-end;",
-\           "jc:c": "justify-content:center;",
-\           "jc:sb": "justify-content:space-between;",
-\           "jc:sa": "justify-content:space-around;",
-\
 \           "ord": "order:|;",
+\
+\           "fx": "flex:|;",
+\           "fx?": "/*flex:grow shrink basis;*/",
+\           "fxg": "flex-grow:|;",
+\           "fxs": "flex-shrink:|;",
+\           "fxb": "flex-basis:|;",
 \
 \
 \"定位": "",
@@ -1193,6 +1192,7 @@ let s:emmet_settings = {
 \"外边距": "",
 \           "m": "margin:|;",
 \           "m:0a": "margin:0 auto;",
+\           "m:a0": "margin:auto 0;",
 \           "mt": "margin-top:|;",
 \           "mr": "margin-right:|;",
 \           "mb": "margin-bottom:|;",
@@ -1210,7 +1210,7 @@ let s:emmet_settings = {
 \"边框": "",
 \           "bd": "border:|;",
 \           "bd:n": "border:none;",
-\           "bd+": "border:thin solid #eee;",
+\           "bd+": "border:thin solid red;",
 \           "bdw": "border-width:|;",
 \           "bds": "border-style:|;",
 \           "bdc": "border-color:|;",
@@ -1240,8 +1240,8 @@ let s:emmet_settings = {
 \           "bdls": "border-left-style:|;",
 \           "bdlc": "border-left-color:|;",
 \
-\           "bdrad": "border-radius:5%|;",
-\           "bdrad:v": "border-radius:5% / 10%|;",
+\           "bdrad": "border-radius:|;",
+\           "bdrad:v": "border-radius:5px / 10px|;",
 \           "bdtlrad": "border-top-left-radius:5px 10px|;",
 \           "bdtrrad": "border-top-right-radius:5px 10px|;",
 \           "bdbrrad": "border-bottom-right-radius:5px 10px|;",
@@ -1281,8 +1281,7 @@ let s:emmet_settings = {
 \           "bga:s": "background-attachment:scroll;",
 \           "bga:l": "background-attachment:local;",
 \
-\           "bgp": "background-position:xoff yoff|;",
-\           "bgp+": "background-position:right xoff bottom yoff|;",
+\           "bgp": "background-position:|;",
 \           "bgp:c": "background-position:center;",
 \
 \           "bgsz": "background-size:|;",
@@ -1291,15 +1290,15 @@ let s:emmet_settings = {
 \           "bgsz:cov": "background-size:cover;",
 \
 \           "bgo": "background-origin:padding|-box;",
-\           "bgo:bb": "background-origin:border-box;",
-\           "bgo:pb": "background-origin:padding-box;",
-\           "bgo:cb": "background-origin:content-box;",
+\           "bgo:b": "background-origin:border-box;",
+\           "bgo:p": "background-origin:padding-box;",
+\           "bgo:c": "background-origin:content-box;",
 \
 \           "bgcp": "background-clip:padding|-box;",
 \           "bgcp:n": "background-clip:no-clip;",
-\           "bgcp:bb": "background-clip:border-box;",
-\           "bgcp:pb": "background-clip:padding-box;",
-\           "bgcp:cb": "background-clip:content-box;",
+\           "bgcp:b": "background-clip:border-box;",
+\           "bgcp:p": "background-clip:padding-box;",
+\           "bgcp:c": "background-clip:content-box;",
 \
 \           "bgc": "background-color:red|;",
 \
@@ -1367,6 +1366,8 @@ let s:emmet_settings = {
 \"文本": "",
 \           "lh": "line-height:|;",
 \
+\           "ti": "text-indent:|;",
+\
 \           "ta": "text-align:center;",
 \           "ta:l": "text-align:left;",
 \           "ta:c": "text-align:center;",
@@ -1395,7 +1396,6 @@ let s:emmet_settings = {
 \
 \           "wos": "word-spacing:|;",
 \           "les": "letter-spacing:|;",
-\           "ti": "text-indent:|;",
 \
 \           "wob": "word-break:|;",
 \           "wob:n": "word-break:normal;",
@@ -1419,7 +1419,11 @@ let s:emmet_settings = {
 \           "td:l": "text-decoration:line-through;",
 \           "td?": "/*text-decoration：<' text-decoration-line '> || <' text-decoration-style '> || <' text-decoration-color '>*/",
 \
-\           "tsh": "text-shadow:hoff voff blur gray|;",
+\           "tdl": "text-decoration-line:|;",
+\           "tds": "text-decoration-style:|;",
+\           "tdc": "text-decoration-color:|;",
+\
+\           "tsh": "text-shadow:5px 5px 5px gray|;",
 \           "tsh:n": "text-shadow:none;",
 \           "tsh?": "/*text-shadow：none | <shadow> [ , <shadow> ]*\n<shadow> = <length>{2,3} && <color>?*/",
 \
@@ -1485,18 +1489,18 @@ let s:emmet_settings = {
 \
 \
 \"内容": "",
-\           "cont": "content:'|';",
-\           "cont:n": "content:normal;",
-\           "cont:a": "content:attr(|);",
-\           "cont:c": "content:counter(|);",
-\           "cont:cs": "content:counters(|);",
-\           "cont:oq": "content:open-quote;",
-\           "cont:noq": "content:no-open-quote;",
-\           "cont:cq": "content:close-quote;",
-\           "cont:ncq": "content:no-close-quote;",
+\           "cnt": "content:'|';",
+\           "cnt:n": "content:normal;",
+\           "cnt:a": "content:attr(|);",
+\           "cnt:c": "content:counter(|);",
+\           "cnt:cs": "content:counters(|);",
+\           "cnt:oq": "content:open-quote;",
+\           "cnt:noq": "content:no-open-quote;",
+\           "cnt:cq": "content:close-quote;",
+\           "cnt:ncq": "content:no-close-quote;",
 \
-\           "ctri": "counter-increment:|;",
 \           "ctrr": "counter-reset:|;",
+\           "ctri": "counter-increment:|;",
 \
 \           "q": "quotes:str1 str2|;",
 \           "q:n": "quotes:none;",
@@ -1509,24 +1513,24 @@ let s:emmet_settings = {
 \           "trf?": "/*transform：none | <transform-function>+\ntransform-function list:\nmatrix() = matrix(<number>[,<number>]{5,5})\nmatrix3d() = matrix3d(<number>[,<number>]{15,15})\ntranslate() = translate(<translation-value>[,<translation-value>]?)\ntranslate3d() = translate3d(<translation-value>,<translation-value>,<length>)\ntranslatex() = translatex(<translation-value>)\ntranslatey() = translatey(<translation-value>)\ntranslatez() = translatez(<length>)\nrotate() = rotate(<angle>)\nrotate3d() = rotate3d(<number>,<number>,<number>,<angle>)\nrotatex() = rotatex(<angle>)\nrotatey() = rotatey(<angle>)\nrotatez() = rotatez(<angle>)\nscale() = scale(<number>[,<number>]?)\nscale3d() = scale3d(<number>,<number>,<number>)\nscalex() = scalex(<number>)\nscaley() = scaley(<number>)\nscalez() = scalez(<number>)\nskew() = skew(<angle>[,<angle>]?)\nskewx() = skewx(<angle>)\nskewy() = skewy(<angle>)\nperspective() = perspective(<length>)\n<translation-value> = <length> | <percentage>*/",
 \           "trf:m": "transform: matrix(|);",
 \           "trf:m3": "transform: matrix3d(|);",
-\           "trf:t": "transform: translate(x,y|);",
+\           "trf:t": "transform: translate(|,);",
 \           "trf:tx": "transform: translateX(|);",
 \           "trf:ty": "transform: translateY(|);",
 \           "trf:tz": "transform: translateZ(|);",
-\           "trf:t3": "transform: translate3d(x,y,z|);",
-\           "trf:r": "transform: rotate(angle|);",
-\           "trf:rx": "transform: rotateX(angle|);",
-\           "trf:ry": "transform: rotateY(angle|);",
-\           "trf:rz": "transform: rotateZ(angle|);",
+\           "trf:t3": "transform: translate3d(|,,);",
+\           "trf:r": "transform: rotate(|deg,);",
+\           "trf:rx": "transform: rotateX(|deg);",
+\           "trf:ry": "transform: rotateY(|deg);",
+\           "trf:rz": "transform: rotateZ(|deg);",
 \           "trf:r3": "transform: rotate3d(|);",
-\           "trf:sc": "transform: scale(x,y);",
-\           "trf:scx": "transform: scaleX(x);",
-\           "trf:scy": "transform: scaleY(y);",
-\           "trf:scz": "transform: scaleZ(z);",
-\           "trf:sc3": "transform: scale3d(x,y,z);",
-\           "trf:sk": "transform: skew(anglex,angley);",
-\           "trf:skx": "transform: skewX(angle);",
-\           "trf:sky": "transform: skewY(angle);",
+\           "trf:sc": "transform: scale(|,);",
+\           "trf:scx": "transform: scaleX(|);",
+\           "trf:scy": "transform: scaleY(|);",
+\           "trf:scz": "transform: scaleZ(|);",
+\           "trf:sc3": "transform: scale3d(|,,);",
+\           "trf:sk": "transform: skew(|deg,);",
+\           "trf:skx": "transform: skewX(|deg);",
+\           "trf:sky": "transform: skewY(|deg);",
 \
 \           "trfo": "transform-origin:50% 50%;",
 \
@@ -1609,20 +1613,20 @@ let s:emmet_settings = {
 \           "cur:d": "cursor:default;",
 \           "cur:url": "cursor:url(|) x y;",
 \           "cur:p": "cursor:pointer;",
+\           "cur:ha": "cursor:hand;",
 \           "cur:c": "cursor:crosshair;",
 \           "cur:t": "cursor:text;",
 \           "cur:w": "cursor:wait;",
-\           "cur:he": "cursor:help;",
-\           "cur:ha": "cursor:hand;",
 \           "cur:pro": "cursor:progress;",
+\           "cur:he": "cursor:help;",
 \           "cur:m": "cursor:move;",
 \           "cur:nd": "cursor:no-drop;",
 \           "cur:na": "cursor:not-allow;",
-\           "cur:alias": "cursor:alias;",
+\           "cur:as": "cursor:alias;",
 \           "cur:cell": "cursor:cell;",
 \           "cur:cp": "cursor:copy;",
 \           "cur:cm": "cursor:context-menu;",
-\           "cur:resize": "cursor:|-resize;",
+\           "cur:re": "cursor:|-resize;",
 \           "cur:zi": "cursor:zoom-in;",
 \           "cur:zo": "cursor:zoom-out;",
 \           "cur:grab": "cursor:grab;",
@@ -1637,9 +1641,9 @@ let s:emmet_settings = {
 \           "olo": "outline-offset:|;",
 \
 \
-\           "bxz": "box-sizing:|;",
-\           "bxz:cb": "box-sizing:content-box;",
-\           "bxz:bb": "box-sizing:border-box;",
+\           "boxsz": "box-sizing:|;",
+\           "boxsz:cb": "box-sizing:content-box;",
+\           "boxsz:bb": "box-sizing:border-box;",
 \
 \           "zoom": "zoom:1;",
 \
@@ -1765,7 +1769,7 @@ let s:emmet_settings = {
 \                    ."\t<meta charset=\"${charset}\">\n"
 \                    ."\t<title>b2ns</title>\n"
 \                    ."\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
-\                    ."\t<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">\n"
+\                    ."\t<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge,chrome=1\">\n"
 \                    ."</head>\n"
 \                    ."<body>\n\t${child}|\n</body>\n"
 \                    ."</html>",
@@ -1793,7 +1797,7 @@ let s:emmet_settings = {
 \            'meta:key': [{'name': 'keywords'}, {'content': '|'}],
 \            'meta:aut': [{'name': 'author'}, {'content': '|'}],
 \            'meta:view': [{'name': 'viewport'}, {'content': 'width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0'}],
-\            'meta:com': [{'http-equiv': 'X-UA-Compatible'}, {'content': 'IE=edge'}],
+\            'meta:com': [{'http-equiv': 'X-UA-Compatible'}, {'content': 'ie=edge,chrome=1'}],
 \            'meta:ref': [{'http-equiv': 'refresh'}, {'content': '3|'}],
 \            'meta:exp': [{'http-equiv': 'expires'}, {'content': 'GMT|'}],
 \            'meta:cache': [{'http-equiv': 'Cache-Control'}, {'content': '|'}],
@@ -2015,8 +2019,8 @@ let s:emmet_settings = {
 \
 \            'bq': 'blockquote',
 \            'hea': 'header',
-\            'foot': 'footer',
-\            'sect': 'section',
+\            'foo': 'footer',
+\            'sec': 'section',
 \            'art': 'article',
 \            'tb': 'table',
 \            'lab': 'label',
@@ -2037,7 +2041,7 @@ let s:emmet_settings = {
 \            'adr': 'address',
 \            'dlg': 'dialog',
 \            'str': 'strong',
-\            'prog': 'progress',
+\            'pro': 'progress',
 \            'datal': 'datalist',
 \            'out': 'output',
 \            'det': 'details',
@@ -2059,7 +2063,7 @@ let s:emmet_settings = {
 \            'ul': 'ul>li',
 \            'dl': 'dl>dt+dd',
 \            'map': 'map>area',
-\            'table': 'table>caption+(colgroup>col)+(thead>tr>th)+(tfoot>tr>td)+tbody>tr>td',
+\            'table': 'table>caption+(colgroup>col)+(thead>tr>th)+(tbody>tr>td)+tfoot>tr>td',
 \            'colgroup': 'colgroup>col',
 \            'colg': 'colgroup>col',
 \            'tr': 'tr>td',
