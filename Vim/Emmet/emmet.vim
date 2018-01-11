@@ -1009,7 +1009,7 @@ let s:emmet_settings = {
 \  "媒体查询": "",
 \           "@media": "@media screen| {\n\t|\n}",
 \           "@m": "@media screen| {\n\t|\n}",
-\           "@m+": "@media screen and (max-width:720px|) {\n\t|\n}",
+\           "@m+": "@media screen and (max-width: 380|px) {\n\t|\n}",
 \
 \  "外部字体": "",
 \           "@font-face": "@font-face {\n\tfont-family:|;\n\tsrc:url(|);\n}",
@@ -1767,9 +1767,9 @@ let s:emmet_settings = {
 \                    ."<html lang=\"${lang}\">\n"
 \                    ."<head>\n"
 \                    ."\t<meta charset=\"${charset}\">\n"
-\                    ."\t<title>b2ns</title>\n"
+\                    ."\t<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge, chrome=1\">\n"
 \                    ."\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
-\                    ."\t<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge,chrome=1\">\n"
+\                    ."\t<title>b2ns</title>\n"
 \                    ."</head>\n"
 \                    ."<body>\n\t${child}|\n</body>\n"
 \                    ."</html>",
@@ -2017,35 +2017,43 @@ let s:emmet_settings = {
 \            'nojs': 'noscript',
 \            'css': 'style',
 \
-\            'bq': 'blockquote',
+\            'tb': 'table',
+\            'cap': 'caption',
+\            'colg': 'colgroup',
+\            'the': 'thead',
+\            'tbo': 'tbody',
+\            'tfo': 'tfoot',
+\
+\            'str': 'strong',
+\
 \            'hea': 'header',
 \            'foo': 'footer',
 \            'sec': 'section',
 \            'art': 'article',
-\            'tb': 'table',
+\            'asi': 'aside',
+\            'bq': 'blockquote',
+\
 \            'lab': 'label',
+\            'fie': 'fieldset',
+\            'leg': 'legend',
 \            'inp': 'input',
 \            'btn': 'button',
-\            'colg': 'colgroup',
-\            'fie': 'fieldset',
+\            'txt': 'textarea',
 \            'optg': 'optgroup',
 \            'opt': 'option',
-\            'txt': 'textarea',
-\            'leg': 'legend',
+\            'datal': 'datalist',
+\
 \            'ifr': 'iframe',
+\            'emb': 'embed',
+\            'cmd': 'command',
+\            'obj': 'object',
 \            'fig': 'figure',
 \            'src': 'source',
-\            'cap': 'caption',
-\            'emb': 'embed',
-\            'obj': 'object',
 \            'adr': 'address',
 \            'dlg': 'dialog',
-\            'str': 'strong',
 \            'pro': 'progress',
-\            'datal': 'datalist',
 \            'out': 'output',
 \            'det': 'details',
-\            'cmd': 'command',
 \
 \            'html:*': 'html',
 \            'link:*': 'link',
@@ -2066,6 +2074,9 @@ let s:emmet_settings = {
 \            'table': 'table>caption+(colgroup>col)+(thead>tr>th)+(tbody>tr>td)+tfoot>tr>td',
 \            'colgroup': 'colgroup>col',
 \            'colg': 'colgroup>col',
+\            'thead': 'thead>tr>th',
+\            'tbody': 'tbody>tr>td',
+\            'tfoot': 'tfoot>tr>td',
 \            'tr': 'tr>td',
 \            'select': 'select>option',
 \            'optgroup': 'optgroup>option',
