@@ -1845,8 +1845,8 @@ let s:emmet_settings = {
 \            'mark': [],
 \
 \            'del': [{'datetime': '${datetime}'}],
-\            'ins': [{'datetime': '${datetime}'}],
 \            's': [],
+\            'ins': [{'datetime': '${datetime}'}],
 \            'u': [],
 \            'small': [],
 \
@@ -1857,9 +1857,9 @@ let s:emmet_settings = {
 \            'cite': [],
 \
 \            'pre': [],
-\            'var': [],
 \            'code': [],
 \            'kbd': [],
+\            'var': [],
 \            'samp': [],
 \            'dfn': [],
 \
