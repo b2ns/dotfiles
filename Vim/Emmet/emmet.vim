@@ -1248,7 +1248,7 @@ let s:emmet_settings = {
 \           "bdblrad": "border-bottom-left-radius:5px 10px|;",
 \           "bdrad?": "/*border-radius：水平半径[ <length> <percentage> ]{1,4} [ / 垂直半径[ <length> <percentage> ]{1,4} ]?*/",
 \
-\           "boxsh": "box-shadow:5px 5px gray;",
+\           "boxsh": "box-shadow:5px 5px 10px gray;",
 \           "boxsh:n": "box-shadow:none;",
 \           "boxsh?": "/*box-shadow:inset? xoff yoff blur spread color;*/",
 \
@@ -1304,11 +1304,11 @@ let s:emmet_settings = {
 \
 \
 \"颜色": "",
-\           "c": "color:red|;",
+\           "c": "color:#|;",
 \           "c:#": "color:#fff|;",
 \           "c:tr": "color:transparent;",
 \           "c:r": "color:rgb(0, 0, 0|);",
-\           "c:ra": "color:rgba(0, 0, 0, 0.5|);",
+\           "c:ra": "color:rgba(0, 0, 0, 0.8|);",
 \           "c:h": "color:hsl(色调(0-360), 饱和度(0%-100%), 亮度(0%-100%)|);",
 \           "c:ha": "color:hsla(色调(0-360), 饱和度(0%-100%), 亮度(0%-100%), 不透明度(0-1.0)|);",
 \
@@ -1321,7 +1321,7 @@ let s:emmet_settings = {
 \
 \
 \"字体": "",
-\           "f": "font:1em serif|;",
+\           "f": "font:1em sans-serif|;",
 \           "f+": "font:italic small-caps bold 1em/1 sans-serif|;",
 \           "f?": "/*font：[ [ <' font-style '> || <' font-variant '> || <' font-weight '> ]? <' font-size '> [ / <' line-height '> ]? <' font-family '> ] | caption | icon | menu | message-box | small-caption | status-bar*/",
 \
@@ -1718,7 +1718,7 @@ let s:emmet_settings = {
 \
 \            'cc': "<!-- |${child} -->",
 \            'cc:ie6': "<!--[if IE 6]>\n\t${child}|\n<![endif]-->",
-\            'cc:ie9': "<!--[if lte IE 9]>\n\t${child}|\n<![endif]-->",
+\            'cc:ie9': "<!--[if lt IE 9]>\n\t${child}|\n<![endif]-->",
 \            'cc:ie': "<!--[if IE]>\n\t${child}|\n<![endif]-->",
 \            'cc:noie': "<!--[if ! IE]><!-->\n\t${child}|\n<!--<![endif]-->",
 \            'cc:js': "<script>\n<!--\n|\n//-->\n</script>",

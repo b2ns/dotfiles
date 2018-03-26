@@ -297,7 +297,7 @@ func! Bracket()
 endfunc
 
 autocmd FileType c,cpp,sh,css,scss,javascript,json call Bracket()
-autocmd FileType html,css,scss EmmetInstall       " 仅html,css,scss等开启
+autocmd FileType html,css,scss,javascript EmmetInstall       " 仅html,css,scss,js等开启
 
 " 上下左右按键
 nnoremap i k
