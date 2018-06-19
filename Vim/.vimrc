@@ -22,6 +22,8 @@ Plugin 'majutsushi/tagbar'        " 函数列表
 Plugin 'kovisoft/slimv'           " Lisp
 Plugin 'Valloric/YouCompleteMe'   " C/C++自动补全
 Plugin 'marijnh/tern_for_vim'     " javascript补全引擎
+Plugin 'pangloss/vim-javascript'  " javascript语法高亮
+Plugin 'mxw/vim-jsx'              " react-jsx语法高亮
 Plugin 'mattn/emmet-vim'          " html、css、xml等补全
 Plugin 'davidhalter/jedi-vim'     " python补全引擎
 Plugin 'klen/python-mode'         " python高亮
@@ -97,7 +99,7 @@ let g:tern_show_signature_in_pum=1                " 显示函数参数提示
 " Emmet配置
 let g:user_emmet_leader_key = '<leader>'          " Emmet触发按键(<c-y>)
 let g:emmet_html5 = 1                             " 使用HTML5标准风格
-let g:user_emmet_install_global = 0               " 全局关闭
+"let g:user_emmet_install_global = 0              " 全局关闭
 
 " Easymotion配置
 let g:EasyMotion_leader_key='<leader>w'
@@ -283,21 +285,25 @@ nnoremap <F11> <c-w>\|
 nnoremap <F12> <c-w>=
 
 " 自动补全括号
-func! Bracket()
+" func! Bracket()
 	inoremap ( ()<left>
 	inoremap ) ();<left><left>
 	inoremap [ []<left>
 	inoremap ] [];<left><left>
 	"inoremap { {}<left><left><CR><right><CR><up><right><CR>
-	inoremap { {}<left><CR><up><esc>o
+	"inoremap { {}<left><CR><up><esc>o
+    inoremap { {}<left>
 	inoremap } {};<left><left>
+    inoremap <S-CR> <CR><up><esc>o
 	inoremap " ""<left>
 	inoremap ' ''<left>
 	inoremap <S-Tab> <right>
-endfunc
+	inoremap ` ``<left>
 
-autocmd FileType c,cpp,sh,css,scss,javascript,json call Bracket()
-autocmd FileType html,css,scss,javascript EmmetInstall       " 仅html,css,scss,js等开启
+" endfunc
+
+" autocmd FileType c,cpp,sh,html,css,scss,javascript,json call Bracket()
+"autocmd FileType html,css,scss,javascript EmmetInstall       " 仅html,css,scss,js等开启emmet
 
 " 上下左右按键
 nnoremap i k
@@ -319,11 +325,9 @@ func! Compile()
 		"exec "!clear && gcc % -o ~/bin/bin/c/%<"  
 		exec "! gcc % -o ~/bin/bin/c/%<"  
 	elseif &filetype == 'cpp'  
-		exec "!clear && g++ % -o ~/bin/bin/cpp/%<"  
+		exec "! g++ % -o ~/bin/bin/cpp/%<"  
 	"elseif &filetype == 'java'   
 		"exec "!clear &&  javac %"   
-	"elseif &filetype == 'py'  
-		"exec "! python %"  
 	elseif &filetype == 'sh'  
 		exec "! chmod a+x %"
 	endif  
@@ -337,6 +341,8 @@ func! Run()
 		exec "! ~/bin/bin/c/%<"       
 	elseif &filetype == 'cpp'  
 		exec "! ~/bin/bin/cpp/%<"  
+  elseif &filetype == 'js'  
+		exec "! node ./%"  
 	"elseif &filetype == 'java'   
 		"exec "!clear && java ~/bin/bin/java/%<"  
 	"elseif &filetype == 'py'  

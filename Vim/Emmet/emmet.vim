@@ -1017,10 +1017,10 @@ let s:emmet_settings = {
 \           "@f+": "@font-face {\n\tfont-family:'fontName|';\n\tsrc:url('file.eot');\n\tsrc:url('file.eot?#iefix') format('embedded-opentype'),\n\t\t   url('file.woff') format('woff'),\n\t\t   url('file.ttf') format('truetype'),\n\t\t   url('file.svg#fontName') format('svg');\n}",
 \
 \  "动画框架": "",
-\           "@keyframes": "@keyframes identifier| {\n\tfrom {}\n\tto {}\n}",
-\           "@k": "@keyframes identifier| {\n\tfrom {}\n\tto {}\n}",
-\           "@k+": "@keyframes identifier| {\n\t0% {}\n\t50% {}\n\t100% {}\n}",
-\           "@-k": "@-webkit-keyframes identifier| {\n\tfrom {}\n\tto {}\n}\n@keyframes identifier| {\n\tfrom {}\n\tto {}\n}",
+\           "@keyframes": "@keyframes name| {\n\tfrom {}\n\tto {}\n}",
+\           "@k": "@keyframes name| {\n\tfrom {}\n\tto {}\n}",
+\           "@k+": "@keyframes name| {\n\t0% {}\n\t50% {}\n\t100% {}\n}",
+\           "@-k": "@-webkit-keyframes name| {\n\tfrom {}\n\tto {}\n}\n@keyframes name| {\n\tfrom {}\n\tto {}\n}",
 \
 \  "不常用的": "",
 \           "@charset": "@charset \"utf-8\"",
@@ -1354,9 +1354,9 @@ let s:emmet_settings = {
 \
 \           "ff": "font-family:|;",
 \           "ff:s": "font-family:serif;",
-\           "ff:s+": "font-family: \"Times New Roman\", Times, Georgia, serif;",
+\           "ff:s+": "font-family:\"Times New Roman\", Times, Georgia, serif;",
 \           "ff:ss": "font-family:sans-serif;",
-\           "ff:ss+": "font-family: Arial, Helvetica, Verdana, Geneva, sans-serif;",
+\           "ff:ss+": "font-family:Arial, Helvetica, Verdana, Geneva, sans-serif;",
 \           "ff:m": "font-family:monospace;",
 \           "ff:m+": "font-family:\"Courier New\", Courier, monospace;",
 \           "ff:c": "font-family:cursive;",

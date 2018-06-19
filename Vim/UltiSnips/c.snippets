@@ -31,7 +31,7 @@ struct $1{
 endsnippet
 
 #######################  main模板  #######################
-snippet main "#include <stdio.h> ... main(void)"
+snippet ! "#include <stdio.h> ... main(void)"
 #include <stdio.h>
 
 int main(void)
@@ -116,11 +116,11 @@ ${1:void} ${2:foo}(${3:void}){
 endsnippet
 
 #######################  输入输出  #######################
-snippet sca "scanf('',&);"
+snippet sf "scanf('',&);"
 scanf("${1:%d}",&$2);$0
 endsnippet
 
-snippet pri "printf('',);"
+snippet pf "printf('',);"
 printf("${1:%d\n}",$2);$0
 endsnippet
 
