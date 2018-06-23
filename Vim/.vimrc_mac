@@ -242,8 +242,8 @@ endif
 
 """""""""""""""""""""""""""  文本格式化  """""""""""""""""""""""""""
 " 缩进
-" set autoindent	
-" set cindent
+set autoindent	
+set cindent
 set smartindent
 
 " 缩进宽度

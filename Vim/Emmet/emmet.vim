@@ -988,13 +988,13 @@ let s:emmet_settings = {
 \      'charset': "UTF-8",
 \      'newline': "\n",
 \      'use_selection': 0,
+\      'indentation': '    ',
 \    },
 \    'custom_expands' : {
 \      '^\%(lorem\|lipsum\)\(\d*\)$' : function('emmet#lorem#en#expand'),
 \    },
 \    'css': {
 \        'filters': 'fc',
-\        'indentation': '  ',
 \        'snippets': {
 \
 \"语法及高级特性": "",
@@ -1706,6 +1706,13 @@ let s:emmet_settings = {
 \    },
 \    'html': {
 \        'filters': 'html',
+\        'quote_char': '"',
+\        'empty_element_suffix': g:emmet_html5 ? '>' : ' />',
+\        'indent_blockelement': 0,
+\        'block_all_childless': 0,
+\        'empty_elements': 'area,base,basefont,br,col,iframe,hr,img,input,link,meta,param,embed,keygen,command',
+\        'block_elements': 'address,applet,blockquote,button,center,dd,del,dir,div,dl,dt,fieldset,form,frameset,hr,iframe,ins,isindex,li,link,map,menu,noframes,noscript,object,ol,p,pre,script,table,tbody,td,tfoot,th,thead,tr,ul,h1,h2,h3,h4,h5,h6,header,footer,nav,main,article,section,aside',
+\        'inline_elements': 'a,abbr,acronym,applet,b,basefont,bdo,big,br,button,cite,code,del,dfn,em,font,i,iframe,img,input,ins,kbd,label,map,object,q,s,samp,script,small,span,strike,strong,sub,sup,textarea,tt,u,var',
 \        'snippets': {
 \            '!5': "<!DOCTYPE html>\n",
 \            '!4t': "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n",
@@ -1765,13 +1772,13 @@ let s:emmet_settings = {
 \                    ."</html>",
 \            'html:5': "<!DOCTYPE html>\n"
 \                    ."<html lang=\"${lang}\">\n"
-\                    ."<head>\n"
-\                    ."\t<meta charset=\"${charset}\">\n"
-\                    ."\t<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge, chrome=1\">\n"
-\                    ."\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
-\                    ."\t<title>b2ns</title>\n"
-\                    ."</head>\n"
-\                    ."<body>\n\t${child}|\n</body>\n"
+\                    ."\t<head>\n"
+\                    ."\t\t<meta charset=\"${charset}\">\n"
+\                    ."\t\t<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge, chrome=1\">\n"
+\                    ."\t\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+\                    ."\t\t<title>|</title>\n"
+\                    ."\t</head>\n"
+\                    ."\t<body>\n\t\t|\n\t</body>\n"
 \                    ."</html>",
 \            '!': "html:5",
 \        },
@@ -2082,14 +2089,6 @@ let s:emmet_settings = {
 \            'optgroup': 'optgroup>option',
 \            'optg': 'optgroup>option',
 \        },
-\        'empty_elements': 'area,base,basefont,br,col,iframe,hr,img,input,link,meta,param,embed,keygen,command',
-\        'block_elements': 'address,applet,blockquote,button,center,dd,del,dir,div,dl,dt,fieldset,form,frameset,hr,iframe,ins,isindex,li,link,map,menu,noframes,noscript,object,ol,p,pre,script,table,tbody,td,tfoot,th,thead,tr,ul,h1,h2,h3,h4,h5,h6,header,footer,nav,main,article,section,aside',
-\        'inline_elements': 'a,abbr,acronym,applet,b,basefont,bdo,big,br,button,cite,code,del,dfn,em,font,i,iframe,img,input,ins,kbd,label,map,object,q,s,samp,script,small,span,strike,strong,sub,sup,textarea,tt,u,var',
-\        'empty_element_suffix': g:emmet_html5 ? '>' : ' />',
-\        'indent_blockelement': 0,
-\        'block_all_childless': 0,
-\        'indentation': '  ',
-\        'quote_char': '"',
 \    },
 \    'elm': {
 \        'indentation': '    ',
