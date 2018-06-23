@@ -1,9 +1,11 @@
 {
+  "ecmaVersion": 6,
   "libs": [
 	"browser",
 	"jquery",
-	"ecmascript",
-	"bootstrap"
+	"ecma6",
+	"underscore",
+    "chai"
   ],
   "loadEagerly": [
 
@@ -13,6 +15,10 @@
   ],
   "plugins": {
 	"node":{
+	},
+	"require":{
+	},
+	"es_modules":{
 	}
 
   }
