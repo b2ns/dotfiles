@@ -56,7 +56,7 @@ filetype plugin indent on         " required
 nmap nt :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif  "自动关闭
 let g:NERDTreeWinSize=20                          " 窗口宽度(31)
-let g:NERDTreeQuitOnOpen=1                        " 打开文件后自动关闭
+" let g:NERDTreeQuitOnOpen=1                        " 打开文件后自动关闭
 
 " Ctrlp配置
 let g:ctrlp_by_filename = 0                       " 只通过文件名搜索
@@ -283,10 +283,10 @@ nnoremap <c-v> "+gP
 vnoremap <c-c> "+y
 
 " buffer窗口最大化
-nnoremap <F11> <c-w>\|
+nnoremap <c-\> <c-w>\|
 
 " buffer窗口等宽度排列
-nnoremap <F12> <c-w>=
+nnoremap <c-=> <c-w>=
 
 " 自动补全括号
 " func! Bracket()
@@ -307,7 +307,7 @@ nnoremap <F12> <c-w>=
 " endfunc
 
 " autocmd FileType c,cpp,sh,html,css,scss,javascript,json call Bracket()
-autocmd FileType html,css,scss,less,vue EmmetInstall       " 仅html,css,scss,js等开启emmet
+autocmd FileType html,css,scss,less,vue,markdown EmmetInstall       " 仅html,css,scss,js等开启emmet
 
 " 上下左右按键
 nnoremap i k
