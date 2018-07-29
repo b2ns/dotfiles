@@ -1,7 +1,7 @@
-"""""""""""""""""""""""""""""""""""""""""""
-"Description: my configration for Vim     "
-"Author: b2ns                             "
-"""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"Description: my configration for Vim on Mac    "
+"Author: b2ns                                   "
+"""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 """""""""""""""""""""""""""  Vundle插件管理器  """""""""""""""""""""""""""
@@ -19,7 +19,7 @@ Plugin 'scrooloose/nerdtree'      " 文件浏览
 Plugin 'kien/ctrlp.vim'           " 文件查找
 Plugin 'majutsushi/tagbar'        " 函数列表
 
-"Plugin 'kovisoft/slimv'           " Lisp
+Plugin 'kovisoft/slimv'           " Lisp
 Plugin 'Valloric/YouCompleteMe'   " C/C++自动补全
 Plugin 'marijnh/tern_for_vim'     " javascript补全引擎
 Plugin 'pangloss/vim-javascript'  " javascript语法高亮
@@ -42,9 +42,7 @@ Plugin 'honza/vim-snippets'       " 片段库
 Plugin 'bling/vim-airline'        " 状态栏
 "Plugin 'tpope/vim-fugitive'       " git
 
-" Plugin 'skywind3000/asyncrun.vim' " 异步运行
-" Plugin 'eshion/vim-sync'          " 本地和远程服务器文件同步
-Plugin 's10g/vim-syncr'
+Plugin 's10g/vim-syncr'           " 本地和远程服务器文件同步
 
 "插件安装结束#######################################################
 
@@ -70,7 +68,8 @@ nmap tb :TagbarToggle<CR>
 let g:tagbar_width = 20                           " 窗口宽度(40)
 
 " Lisp配置
-let g:slimv_swank_cmd = '! xterm -e sbcl --load /home/ding/.vim/bundle/slimv/slime/start-swank.lisp &'
+"let g:slimv_swank_cmd = '! xterm -e sbcl --load /home/ding/.vim/bundle/slimv/slime/start-swank.lisp &'
+let g:slimv_swank_cmd = '!osascript -e "tell application \"Terminal\" to do script \"sbcl --load ~/.vim/bundle/slimv/slime/start-swank.lisp\""'
 let g:slimv_impl = 'sbcl'
 let g:slimv_preferred = 'sbcl'
 let g:paredit_electric_return=0                   "禁止此功能
