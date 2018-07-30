@@ -175,6 +175,9 @@ set mouse=a
 set selection=exclusive
 set selectmode=mouse,key
 
+" 解决backspace不能删除字符的bug
+set backspace=indent,eol,start
+
 """""""""""""""""""""""""""  结束  """""""""""""""""""""""""""
 
 
