@@ -21,6 +21,7 @@ Plugin 'majutsushi/tagbar'        " 函数列表
 Plugin 'ryanoasis/vim-devicons'   " 文件icon
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'   " 高亮nerdtree文件及图标
 
+" Plugin 'ervandew/supertab'        " YCM不可用时
 Plugin 'kovisoft/slimv'           " Lisp
 Plugin 'Valloric/YouCompleteMe'   " C/C++自动补全
 Plugin 'marijnh/tern_for_vim'     " javascript补全引擎
