@@ -16,8 +16,10 @@ Plugin 'VundleVim/Vundle.vim'     " let Vundle manage Vundle, required
 
 "插件安装#######################################################
 Plugin 'scrooloose/nerdtree'      " 文件浏览
-Plugin 'kien/ctrlp.vim'           " 文件查找
+Plugin 'ctrlpvim/ctrlp.vim'           " 文件查找
 Plugin 'majutsushi/tagbar'        " 函数列表
+Plugin 'ryanoasis/vim-devicons'   " 文件icon
+Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'   " 高亮nerdtree文件及图标
 
 Plugin 'kovisoft/slimv'           " Lisp
 Plugin 'Valloric/YouCompleteMe'   " C/C++自动补全
@@ -25,22 +27,26 @@ Plugin 'marijnh/tern_for_vim'     " javascript补全引擎
 Plugin 'pangloss/vim-javascript'  " javascript语法高亮
 Plugin 'mxw/vim-jsx'              " react-jsx语法高亮
 Plugin 'mattn/emmet-vim'          " html、css、xml等补全
-Plugin 'davidhalter/jedi-vim'     " python补全引擎
-Plugin 'klen/python-mode'         " python高亮
+" Plugin 'davidhalter/jedi-vim'     " python补全引擎
+" Plugin 'klen/python-mode'         " python高亮
 "Plugin 'scrooloose/syntastic'    " 语法检查
+
+Plugin 'SirVer/ultisnips'         " 片段引擎
+Plugin 'honza/vim-snippets'       " 片段库
 
 Plugin 'easymotion/vim-easymotion' " 快速跳转
 Plugin 'terryma/vim-multiple-cursors' " 多重选择
 Plugin 'scrooloose/nerdcommenter' " 快速注释
 Plugin 'tpope/vim-repeat'         " 重复上次操作
-"Plugin 'godlygeek/tabular'       " 快速对齐
-"Plugin 'tpope/vim-surround'      " 快速引号包围
-
-Plugin 'SirVer/ultisnips'         " 片段引擎
-Plugin 'honza/vim-snippets'       " 片段库
+Plugin 'godlygeek/tabular'       " 快速对齐
+Plugin 'tpope/vim-surround'      " 快速引号包围
+Plugin 'roman/golden-ratio'      " 窗口大小自动调整
 
 Plugin 'bling/vim-airline'        " 状态栏
 "Plugin 'tpope/vim-fugitive'       " git
+
+" Plugin 's10g/vim-syncr'           " 本地和远程服务器文件同步
+"
 
 "插件安装结束#######################################################
 
@@ -55,10 +61,6 @@ let g:NERDTreeWinSize=20                          " 窗口宽度(31)
 let g:NERDTreeQuitOnOpen=1                        " 打开文件后自动关闭
 
 " Ctrlp配置
-let g:ctrlp_by_filename = 0                       " 只通过文件名搜索
-let g:ctrlp_regexp = 0                            " 关闭正则表达式
-let g:ctrlp_user_command = ''                     " 自定义系统命令
-let g:ctrlp_follow_symlinks = 1                   " 查询链接目录
 
 
 " Tagbar配置
@@ -87,7 +89,7 @@ let g:ycm_min_num_of_chars_for_completion=2       " 从第n个键入字符就开
 let g:ycm_seed_identifiers_with_syntax=1          " 语法关键字补全
 let g:ycm_complete_in_comments = 1                " 在注释输入中补全
 let g:ycm_complete_in_strings = 1                 " 在字符串输入中补全
-let g:ycm_collect_identifiers_from_comments_and_strings = 0 " 注释和字符串中的文字收入补全
+let g:ycm_collect_identifiers_from_comments_and_strings = 1 " 注释和字符串中的文字收入补全
 let g:ycm_collect_identifiers_from_tags_files=1   " 标签引擎
 let g:ycm_confirm_extra_conf=0                    " 加载.ycm_extra_conf.py提示 
 let g:ycm_enable_diagnostic_signs = 0             " 错误诊断侧向标记 
@@ -99,7 +101,14 @@ let g:tern_show_signature_in_pum=1                " 显示函数参数提示
 " Emmet配置
 let g:user_emmet_leader_key = '<leader>'          " Emmet触发按键(<c-y>)
 let g:emmet_html5 = 1                             " 使用HTML5标准风格
-"let g:user_emmet_install_global = 0              " 全局关闭
+let g:user_emmet_install_global = 0              " 全局关闭
+
+" UltiSnips配置
+"let g:UltiSnipsExpandTrigger="<leader><tab>"
+let g:UltiSnipsJumpForwardTrigger='<leader>n'
+let g:UltiSnipsJumpBackwardTrgger='<leader>N'
+"let g:UltiSnipsListSnippets="<c-e>"
+let g:UltiSnipsEnableSnipMate=0                   "不使用snipMate的代码片段
 
 " Easymotion配置
 let g:EasyMotion_leader_key='<leader>w'
@@ -109,25 +118,36 @@ map <leader>w <Plug>(easymotion-W)
 map <leader>e <Plug>(easymotion-E)
 map <leader>b <Plug>(easymotion-B)
 
-
 " Multiple-cursors配置
 
 " Nerdcommenter配置
 let g:NERDSpaceDelims=1                           " 注释间增加空格
 let g:NERDRemoveExtraSpaces=1                     " 取消注释时移除空格
 
-" UltiSnips配置
-"let g:UltiSnipsExpandTrigger="<leader><tab>"
-let g:UltiSnipsJumpForwardTrigger='<leader>n'
-let g:UltiSnipsJumpBackwardTrgger='<leader>N'
-"let g:UltiSnipsListSnippets="<c-e>"
-let g:UltiSnipsEnableSnipMate=0                   "不使用snipMate的代码片段
+" Tabularize配置
+inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+function! s:align()
+  let p = '^\s*|\s.*\s|\s*$'
+  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+    Tabularize/|/l1
+    normal! 0
+    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+  endif
+endfunction
+
+" airline配置
+let g:airline_powerline_fonts = 1
 
 "插件配置结束#######################################################
 """""""""""""""""""""""""""  结束  """""""""""""""""""""""""""
 
 
 """""""""""""""""""""""""""  系统  """""""""""""""""""""""""""
+" 设置字符编码
+set encoding=UTF-8
+
 " 取消自动备份
 "set noundofile
 "set nobackup
@@ -173,6 +193,7 @@ else
 endif
 
 " 字体
+set guifont=Hack\ Nerd\ Font\ Mono\ 18
 set guifont=Monospace\ 14
 "set guifont=CourierNew\ 16
 "set guifont=Monospace:h14    "for Windows
