@@ -172,6 +172,7 @@ set completeopt=longest,menu
 
 " 鼠标操作
 set mouse=a
+set mousehide               " Hide the mouse cursor while typing
 set selection=exclusive
 set selectmode=mouse,key
 
@@ -188,6 +189,7 @@ if has("gui_running")
 	"colorscheme monokai
 	colorscheme solarized
 else 
+    set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
 	let g:solarized_termcolors=256
 	let g:solarized_termtrans=1
 	"colorscheme monokai
@@ -198,9 +200,8 @@ endif
 
 " 字体
 "set guifont=Monospace\ 14
-"set guifont=CourierNew\ 16
 " set guifont=Menlo:h18   "for Windows and Mac
-set guifont=Hack\ Nerd\ Font\ Mono:h18   "for Windows and Mac
+set guifont=InconsolataLGC\ Nerd\ Font\ Mono:h18   "for Windows and Mac
 
 " 行号
 set number
@@ -211,8 +212,22 @@ set laststatus=2
 " 高亮光标所在行
 set cursorline
 
+" 高亮配对的符号
+set showmatch                   " Show matching brackets/parenthesis
+
 " 高亮显示搜索结果
-set hlsearch
+set incsearch                   " Find as you type search
+set hlsearch                    " Highlight search terms
+set ignorecase                  " Case insensitive search
+
+" 补全列表
+set wildmenu                    " Show list instead of just completing
+set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
+set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
+
+" 显示控制符
+set list
+set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
 
 " 禁止折行
 "set nowrap
@@ -284,6 +299,12 @@ set foldmethod=syntax
 " 启动 vim 时关闭折叠代码
 set nofoldenable
 
+" 多行合并时没有空格
+set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
+
+" 去除空行的多余空格
+set linespace=0                 " No extra spaces between rows
+
 """""""""""""""""""""""""""  结束  """""""""""""""""""""""""""
 
 
@@ -319,11 +340,12 @@ nnoremap <c-=> <c-w>=
 	"inoremap { {}<left><CR><up><esc>o
     inoremap { {}<left>
 	inoremap } {};<left><left>
-    inoremap <S-CR> <CR><up><esc>o
 	inoremap " ""<left>
 	inoremap ' ''<left>
-	inoremap <S-Tab> <right>
 	inoremap ` ``<left>
+    inoremap <S-CR> <CR><up><esc>o
+	inoremap <S-space> <right>
+	inoremap <S-Tab> <left>
 
 " endfunc
 
@@ -331,16 +353,11 @@ nnoremap <c-=> <c-w>=
 autocmd FileType html,css,scss,less,vue,markdown EmmetInstall       " 仅html,css,scss,js等开启emmet
 
 " 上下左右按键
-nnoremap i k
-nnoremap k j
-nnoremap j h
-nnoremap h i
-nnoremap H I
-vnoremap i k
-vnoremap k j
-vnoremap j h
-vnoremap h i
-vnoremap H I
+noremap i <up>
+noremap k <down>
+noremap j <left>
+noremap h i
+noremap H I
 
 " 一键编译
 map <F5> :call Compile()<CR>
