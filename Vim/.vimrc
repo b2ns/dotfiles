@@ -198,8 +198,8 @@ else
 endif
 
 " 字体
-set guifont=InconsolataLGC\ Nerd\ Font\ Mono\ h18
-set guifont=Monospace\ 14
+set guifont=InconsolataLGC\ Nerd\ Font\ Mono\ 13
+" set guifont=Monospace\ 14
 "set guifont=Monospace:h14    "for Windows
 
 " 行号
