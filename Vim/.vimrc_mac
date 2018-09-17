@@ -28,6 +28,7 @@ Plugin 'marijnh/tern_for_vim'     " javascript补全引擎
 Plugin 'pangloss/vim-javascript'  " javascript语法高亮
 Plugin 'mxw/vim-jsx'              " react-jsx语法高亮
 Plugin 'mattn/emmet-vim'          " html、css、xml等补全
+Plugin 'chemzqm/wxapp.vim'        " 小程序开发
 "Plugin 'davidhalter/jedi-vim'     " python补全引擎
 "Plugin 'klen/python-mode'         " python高亮
 "Plugin 'scrooloose/syntastic'    " 语法检查
@@ -103,6 +104,7 @@ let g:tern_show_signature_in_pum=1                " 显示函数参数提示
 let g:user_emmet_leader_key = '<leader>'          " Emmet触发按键(<c-y>)
 let g:emmet_html5 = 1                             " 使用HTML5标准风格
 let g:user_emmet_install_global = 0              " 全局关闭
+autocmd FileType html,css,scss,less,vue,markdown,wxml,wxss EmmetInstall       " 特定文件开启emmet
 
 " UltiSnips配置
 "let g:UltiSnipsExpandTrigger="<leader><tab>"
@@ -350,7 +352,6 @@ nnoremap <c-=> <c-w>=
 " endfunc
 
 " autocmd FileType c,cpp,sh,html,css,scss,javascript,json call Bracket()
-autocmd FileType html,css,scss,less,vue,markdown EmmetInstall       " 仅html,css,scss,js等开启emmet
 
 " 上下左右按键
 noremap i <up>
