@@ -57,7 +57,7 @@ filetype plugin indent on         " required
 
 "插件配置#######################################################
 " NERDTree配置
-nmap nt :NERDTreeToggle<CR>
+nmap mt :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif  "自动关闭
 let g:NERDTreeWinSize=20                          " 窗口宽度(31)
 let g:NERDTreeQuitOnOpen=1                        " 打开文件后自动关闭
@@ -93,8 +93,8 @@ let g:ycm_complete_in_comments = 1                " 在注释输入中补全
 let g:ycm_complete_in_strings = 1                 " 在字符串输入中补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 1 " 注释和字符串中的文字收入补全
 let g:ycm_collect_identifiers_from_tags_files=1   " 标签引擎
-let g:ycm_confirm_extra_conf=0                    " 加载.ycm_extra_conf.py提示 
-let g:ycm_enable_diagnostic_signs = 0             " 错误诊断侧向标记 
+let g:ycm_confirm_extra_conf=0                    " 加载.ycm_extra_conf.py提示
+let g:ycm_enable_diagnostic_signs = 0             " 错误诊断侧向标记
 let g:ycm_cache_omnifunc=1                        " 缓存匹配项
 
 " Tern.js配置
@@ -129,16 +129,6 @@ let g:NERDRemoveExtraSpaces=1                     " 取消注释时移除空格
 
 " Tabularize配置
 inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
-function! s:align()
-  let p = '^\s*|\s.*\s|\s*$'
-  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
-    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
-    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
-    Tabularize/|/l1
-    normal! 0
-    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
-  endif
-endfunction
 
 " airline配置
 let g:airline_powerline_fonts = 1
@@ -159,9 +149,6 @@ set noswapfile
 " 失去焦点自动保存当前文件
 au FocusLost * :up
 "au FocusLost * silent! up 
-
-" 让配置变更立即生效
-autocmd! BufWritePost ~/.vimrc source %
 
 " 设置tags
 set autochdir
@@ -186,17 +173,17 @@ set backspace=indent,eol,start
 """""""""""""""""""""""""""  ui  """""""""""""""""""""""""""
 " 配色
 set background=dark
-if has("gui_running")  
-	"colorscheme monokai
-	colorscheme solarized
-else 
+if has("gui_running")
+    "colorscheme monokai
+    colorscheme solarized
+else
     set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
-	let g:solarized_termcolors=256
-	let g:solarized_termtrans=1
-	"colorscheme monokai
-	colorscheme Tsolarized
-	"colorscheme torte
-	"colorscheme industry
+    let g:solarized_termcolors=256
+    let g:solarized_termtrans=1
+    "colorscheme monokai
+    colorscheme Tsolarized
+    "colorscheme torte
+    "colorscheme industry
 endif
 
 " 字体
@@ -252,30 +239,30 @@ syntax on
 
 " 默认启动窗口最大化
 if has("gui_running")
-	set lines=999 columns=999
+    set lines=999 columns=999
 else
-	if exists("+lines")
-		set lines=50
-	endif
-	if exists("+columns")
-		set columns=100
-	endif
+    if exists("+lines")
+        set lines=50
+    endif
+    if exists("+columns")
+        set columns=100
+    endif
 endif
 
 " 终端光标闪烁
-if has("gui_running") 
+if has("gui_running")
 
 else
-	if has("autocmd")
-		au VimEnter,InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
-		au InsertEnter,InsertChange *
-					\ if v:insertmode == 'i' | 
-					\   silent execute '!echo -ne "\e[5 q"' | redraw! |
-					\ elseif v:insertmode == 'r' |
-					\   silent execute '!echo -ne "\e[3 q"' | redraw! |
-					\ endif
-		au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
-	endif
+    if has("autocmd")
+        au VimEnter,InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
+        au InsertEnter,InsertChange *
+                    \ if v:insertmode == 'i' |
+                    \   silent execute '!echo -ne "\e[5 q"' | redraw! |
+                    \ elseif v:insertmode == 'r' |
+                    \   silent execute '!echo -ne "\e[3 q"' | redraw! |
+                    \ endif
+        au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
+    endif
 endif
 
 """""""""""""""""""""""""""  结束  """""""""""""""""""""""""""
@@ -283,7 +270,7 @@ endif
 
 """""""""""""""""""""""""""  文本格式化  """""""""""""""""""""""""""
 " 缩进
-set autoindent	
+set autoindent
 set cindent
 set smartindent
 
@@ -313,40 +300,31 @@ set linespace=0                 " No extra spaces between rows
 " 修改<Leader>，默认为'\'
 let mapleader=","
 
-" 多文件之间切换
-" nnoremap <silent> <F8> :bn!<CR> 
-" 
 " 全选
 nnoremap <c-a> ggVG
 
 " 从系统剪贴板粘贴
 nnoremap <c-v> "+gP
 
-" 复制到系统剪切板 
+" 复制到系统剪切板
 vnoremap <c-c> "+y
-
-" buffer窗口最大化
-nnoremap <F11> <c-w>\|
-
-" buffer窗口等宽度排列
-nnoremap <F12> <c-w>=
 
 " 自动补全括号
 " func! Bracket()
-	inoremap ( ()<left>
-	inoremap ) ();<left><left>
-	inoremap [ []<left>
-	inoremap ] [];<left><left>
-	"inoremap { {}<left><left><CR><right><CR><up><right><CR>
-	"inoremap { {}<left><CR><up><esc>o
+    inoremap ( ()<left>
+    inoremap ) ();<left><left>
+    inoremap [ []<left>
+    inoremap ] [];<left><left>
+    "inoremap { {}<left><left><CR><right><CR><up><right><CR>
+    "inoremap { {}<left><CR><up><esc>o
     inoremap { {}<left>
-	inoremap } {};<left><left>
-	inoremap " ""<left>
-	inoremap ' ''<left>
-	inoremap ` ``<left>
+    inoremap } {};<left><left>
+    inoremap " ""<left>
+    inoremap ' ''<left>
+    inoremap ` ``<left>
     inoremap <S-CR> <CR><up><esc>o
-	inoremap <S-space> <right>
-	inoremap <S-Tab> <left>
+    inoremap <S-space> <right>
+    inoremap <S-Tab> <left>
 
 " endfunc
 
@@ -361,46 +339,46 @@ noremap H I
 
 " 一键编译
 map <F5> :call Compile()<CR>
-func! Compile()  
-	exec "w"  
-	if &filetype == 'c'  
-		"exec "!clear && gcc % -o ~/bin/bin/c/%<"  
-		exec "! gcc % -o ~/bin/bin/c/%<"  
-	elseif &filetype == 'cpp'  
-		exec "! g++ % -o ~/bin/bin/cpp/%<"  
-	"elseif &filetype == 'java'   
-		"exec "!clear &&  javac %"   
-	elseif &filetype == 'sh'  
-		exec "! chmod a+x %"
-	endif  
+func! Compile()
+    exec "w"
+    if &filetype == 'c'
+        "exec "!clear && gcc % -o ~/bin/bin/c/%<"
+        exec "! gcc % -o ~/bin/bin/c/%<"
+    elseif &filetype == 'cpp'
+        exec "! g++ % -o ~/bin/bin/cpp/%<"
+    "elseif &filetype == 'java'
+        "exec "!clear &&  javac %"
+    elseif &filetype == 'sh'
+        exec "! chmod a+x %"
+    endif
 endfunc
 
 " 一键运行
-map <F6> :call Run()<CR>  
-func! Run()  
-	exec "w"      
-	if &filetype == 'c'  
-		exec "! ~/bin/bin/c/%<"       
-	elseif &filetype == 'cpp'  
-		exec "! ~/bin/bin/cpp/%<"  
-  elseif &filetype == 'js'  
-		exec "! node ./%"  
-	"elseif &filetype == 'java'   
-		"exec "!clear && java ~/bin/bin/java/%<"  
-	"elseif &filetype == 'py'  
-		"exec "! python ./%"  
-	elseif &filetype == 'sh'  
-		exec "! ./%"  
-	endif  
-endfunc  
+map <F6> :call Run()<CR>
+func! Run()
+    exec "w"
+    if &filetype == 'c'
+        exec "! ~/bin/bin/c/%<"
+    elseif &filetype == 'cpp'
+        exec "! ~/bin/bin/cpp/%<"
+      elseif &filetype == 'js'
+        exec "! node ./%"
+    "elseif &filetype == 'java'
+        "exec "!clear && java ~/bin/bin/java/%<"
+    "elseif &filetype == 'py'
+        "exec "! python ./%"
+    elseif &filetype == 'sh'
+        exec "! ./%"
+    endif
+endfunc
 
 " 一键debug
-map <F7> :call RunGdb()<CR>  
-func! RunGdb()  
-	exec "w"  
-	exec "! gcc % -g -o ~/bin/bin/c/%<"  
-	exec "! gdb ~/bin/bin/c/%<" 
-endfunc  
+map <F7> :call Debug()<CR>
+func! RunGdb()
+    exec "w"
+    exec "! gcc % -g -o ~/bin/bin/c/%<"
+    exec "! gdb ~/bin/bin/c/%<"
+endfunc
 
 """""""""""""""""""""""""""  结束  """""""""""""""""""""""""""
 
