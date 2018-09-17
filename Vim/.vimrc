@@ -187,9 +187,8 @@ else
 endif
 
 " 字体
-set guifont=InconsolataLGC\ Nerd\ Font\ Mono\ 13
-" set guifont=Monospace\ 14
-"set guifont=Monospace:h14    "for Windows
+set guifont=InconsolataLGC\ Nerd\ Font\ Mono\ 14  "for linux
+"set guifont=InconsolataLGC\ Nerd\ Font\ Mono:h18   "for Windows and Mac
 
 " 行号
 set number
