@@ -16,7 +16,7 @@ Plugin 'VundleVim/Vundle.vim'     " let Vundle manage Vundle, required
 
 "插件安装#######################################################
 Plugin 'scrooloose/nerdtree'      " 文件浏览
-Plugin 'ctrlpvim/ctrlp.vim'           " 文件查找
+" Plugin 'ctrlpvim/ctrlp.vim'           " 文件查找
 Plugin 'majutsushi/tagbar'        " 函数列表
 Plugin 'ryanoasis/vim-devicons'   " 文件icon
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'   " 高亮nerdtree文件及图标
