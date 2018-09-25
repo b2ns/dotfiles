@@ -128,7 +128,6 @@ let g:NERDSpaceDelims=1                           " 注释间增加空格
 let g:NERDRemoveExtraSpaces=1                     " 取消注释时移除空格
 
 " Tabularize配置
-inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
 
 " airline配置
 let g:airline_powerline_fonts = 1
