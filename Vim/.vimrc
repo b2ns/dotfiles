@@ -70,7 +70,7 @@ nmap tb :TagbarToggle<CR>
 let g:tagbar_width = 20                           " 窗口宽度(40)
 
 " Lisp配置
-let g:slimv_swank_cmd = '! xterm -e sbcl --load /home/ding/.vim/bundle/slimv/slime/start-swank.lisp &'
+let g:slimv_swank_cmd = '! gnome-terminal -e "sbcl --load /home/ding/.vim/bundle/slimv/slime/start-swank.lisp &"'
 let g:slimv_impl = 'sbcl'
 let g:slimv_preferred = 'sbcl'
 let g:paredit_electric_return=0                   "禁止此功能
@@ -186,7 +186,7 @@ else
 endif
 
 " 字体
-set guifont=InconsolataLGC\ Nerd\ Font\ Mono\ 14  "for linux
+set guifont=InconsolataLGC\ Nerd\ Font\ Mono\ 16  "for linux
 "set guifont=InconsolataLGC\ Nerd\ Font\ Mono:h18   "for Windows and Mac
 
 " 行号
@@ -232,7 +232,7 @@ set guioptions-=r
 set guioptions-=R
 
 " 禁止显示菜单和工具条
-set guioptions-=m
+"set guioptions-=m
 set guioptions-=T
 
 " 默认启动窗口最大化
@@ -240,10 +240,10 @@ if has("gui_running")
     set lines=999 columns=999
 else
     if exists("+lines")
-        set lines=50
+        set lines=40
     endif
     if exists("+columns")
-        set columns=100
+        set columns=120
     endif
 endif
 
@@ -329,8 +329,7 @@ autocmd FileType lisp,cl call ResetKeyMapping()
 
 " 插入模式下移动光标
 inoremap <S-CR> <CR><up><esc>o
-inoremap <S-space> <right>
-inoremap <S-Tab> <left>
+inoremap <S-Tab> <right>
 
 " 上下左右按键
 noremap i <up>
@@ -344,11 +343,11 @@ map <F5> :call Compile()<CR>
 func! Compile()
     exec "w"
     if &filetype == 'c'
-        exec "! gcc % -o ~/bin/bin/c/%<"
+        exec "! clear && gcc % -o ~/bin/c/%<"
     elseif &filetype == 'cpp'
-        exec "! g++ % -o ~/bin/bin/cpp/%<"
+        exec "! clear && g++ % -o ~/bin/cpp/%<"
     elseif &filetype == 'sh'
-        exec "! chmod a+x %"
+        exec "! clear && chmod a+x %"
     endif
 endfunc
 
@@ -357,15 +356,15 @@ map <F6> :call Run()<CR>
 func! Run()
     exec "w"
     if &filetype == 'c'
-        exec "! ~/bin/bin/c/%<"
+        exec "! clear && ~/bin/c/%<"
     elseif &filetype == 'cpp'
-        exec "! ~/bin/bin/cpp/%<"
-      elseif &filetype == 'js'
-        exec "! node ./%"
+        exec "! clear && ~/bin/cpp/%<"
+    elseif &filetype == 'javascript.jsx'
+        exec "! clear && node ./%"
     elseif &filetype == 'sh'
-        exec "! ./%"
+        exec "! clear && ./%"
     elseif &filetype == 'py'
-        exec "! python ./%"
+        exec "! clear && python ./%"
     endif
 endfunc
 
@@ -373,8 +372,8 @@ endfunc
 map <F7> :call Debug()<CR>
 func! Debug()
     exec "w"
-    exec "! gcc % -g -o ~/bin/bin/c/%<"
-    exec "! gdb ~/bin/bin/c/%<"
+    exec "! clear && gcc % -g -o ~/bin/c/%<"
+    exec "! clear && gdb ~/bin/c/%<"
 endfunc
 
 """""""""""""""""""""""""""  结束  """""""""""""""""""""""""""
