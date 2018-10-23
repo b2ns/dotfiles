@@ -343,11 +343,11 @@ map <F5> :call Compile()<CR>
 func! Compile()
     exec "w"
     if &filetype == 'c'
-        exec "! clear && gcc % -o ~/bin/c/%<"
+        exec "! gcc % -o ~/bin/c/%<"
     elseif &filetype == 'cpp'
-        exec "! clear && g++ % -o ~/bin/cpp/%<"
+        exec "! g++ % -o ~/bin/cpp/%<"
     elseif &filetype == 'sh'
-        exec "! clear && chmod a+x %"
+        exec "! chmod a+x %"
     endif
 endfunc
 
@@ -356,15 +356,15 @@ map <F6> :call Run()<CR>
 func! Run()
     exec "w"
     if &filetype == 'c'
-        exec "! clear && ~/bin/c/%<"
+        exec "! ~/bin/c/%<"
     elseif &filetype == 'cpp'
-        exec "! clear && ~/bin/cpp/%<"
+        exec "! ~/bin/cpp/%<"
     elseif &filetype == 'javascript.jsx'
-        exec "! clear && node ./%"
+        exec "! node ./%"
     elseif &filetype == 'sh'
-        exec "! clear && ./%"
+        exec "! ./%"
     elseif &filetype == 'py'
-        exec "! clear && python ./%"
+        exec "! python ./%"
     endif
 endfunc
 
@@ -372,8 +372,8 @@ endfunc
 map <F7> :call Debug()<CR>
 func! Debug()
     exec "w"
-    exec "! clear && gcc % -g -o ~/bin/c/%<"
-    exec "! clear && gdb ~/bin/c/%<"
+    exec "! gcc % -g -o ~/bin/c/%<"
+    exec "! gdb ~/bin/c/%<"
 endfunc
 
 """""""""""""""""""""""""""  结束  """""""""""""""""""""""""""
