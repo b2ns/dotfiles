@@ -19,13 +19,13 @@ typedef $1;$0
 endsnippet
 
 snippet typs "typedef struct ... ;"
-typedef struct{
+typedef struct {
 	$1
-}$2;$0
+} $2;$0
 endsnippet
 
 snippet st "struct定义 ;"
-struct $1{
+struct $1 {
 	$2
 };$0
 endsnippet
@@ -34,8 +34,7 @@ endsnippet
 snippet ! "#include <stdio.h> ... main(void)"
 #include <stdio.h>
 
-int main(void)
-{
+int main(void) {
 	$1
 
 	getchar();
@@ -44,8 +43,7 @@ int main(void)
 endsnippet
 
 snippet mainv "main(void)"
-int main(void)
-{
+int main(void) {
 	${VISUAL}$0
 	getchar();
 	return 0;
@@ -53,8 +51,7 @@ int main(void)
 endsnippet
 
 snippet mainc "main(int argc,char *argv[])"
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
 	${VISUAL}$0
 	return 0;
 }
@@ -62,44 +59,46 @@ endsnippet
 
 #######################  控制  #######################
 snippet if "if ..."
-if($1){
+if ($1) {
 	$2
 }$0
 endsnippet
 
 snippet ife "if ... else ..."
-if($1){
+if ($1) {
 	$2
-}else{
+} else {
 	$3
 }$0
 endsnippet
 
 snippet eli "else ... if ..." w
-else if($1){
+else if ($1) {
 	$2
 }$0
 endsnippet
 
 snippet ?: "(cond)?true:false" i
-($1)?$2:$3;$0
+($1) ? $2 : $3;$0
 endsnippet
 
 snippet swi "switch ... case ..."
-switch($1){
-	case 1$2: $3 break;
+switch ($1) {
+	case 1$2:
+		$3
+		break;
 	default: $4;
 }$0
 endsnippet
 
 snippet for "for loop"
-for(i=0$1;i<N$2;i++$3){
+for (int i = 0$1; i < 5$2; i++$3) {
 	$4
 }$0
 endsnippet
 
 snippet whi "while loop"
-while($1){
+while ($1) {
 	$2
 }$0
 endsnippet
@@ -110,18 +109,18 @@ ${1:void} ${2:foo}(${3:void});$0
 endsnippet
 
 snippet fnc "函数实现"
-${1:void} ${2:foo}(${3:void}){
+${1:void} ${2:foo}(${3:void}) {
 	$4
 }$0
 endsnippet
 
 #######################  输入输出  #######################
 snippet sf "scanf('',&);"
-scanf("${1:%d}",&$2);$0
+scanf("${1:%d}", &$2);$0
 endsnippet
 
 snippet pf "printf('',);"
-printf("${1:%d\n}",$2);$0
+printf("${1:%d\n}", $2);$0
 endsnippet
 
 snippet get "getchar();"
