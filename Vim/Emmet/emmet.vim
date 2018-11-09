@@ -1704,6 +1704,9 @@ let s:emmet_settings = {
 \    'wxss': {
 \        'extends': 'css',
 \    },
+\    'vue': {
+\        'extends': 'css',
+\    },
 \    'css.drupal': {
 \        'extends': 'css',
 \    },

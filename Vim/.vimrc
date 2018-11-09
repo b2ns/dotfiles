@@ -29,6 +29,7 @@ Plugin 'pangloss/vim-javascript'  " javascript语法高亮
 Plugin 'mxw/vim-jsx'              " react-jsx语法高亮
 Plugin 'mattn/emmet-vim'          " html、css、xml等补全
 Plugin 'chemzqm/wxapp.vim'        " 小程序开发
+Plugin 'posva/vim-vue'             " vue文件高亮
 " Plugin 'davidhalter/jedi-vim'     " python补全引擎
 " Plugin 'klen/python-mode'         " python高亮
 "Plugin 'scrooloose/syntastic'    " 语法检查
@@ -106,6 +107,11 @@ let g:emmet_html5 = 1                             " 使用HTML5标准风格
 let g:user_emmet_install_global = 0              " 全局关闭
 autocmd FileType html,css,scss,less,vue,markdown,wxml,wxss EmmetInstall       " 特定文件开启emmet
 
+" Vue配置
+" autocmd FileType vue syntax sync fromstart
+" autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+" let g:vue_disable_pre_processors=1
+
 " UltiSnips配置
 "let g:UltiSnipsExpandTrigger="<leader><tab>"
 let g:UltiSnipsJumpForwardTrigger='<leader>n'
@@ -126,6 +132,25 @@ map <leader>b <Plug>(easymotion-B)
 " Nerdcommenter配置
 let g:NERDSpaceDelims=1                           " 注释间增加空格
 let g:NERDRemoveExtraSpaces=1                     " 取消注释时移除空格
+let g:ft = ''                                     " 针对vue文件
+function! NERDCommenter_before()
+  if &ft == 'vue'
+    let g:ft = 'vue'
+    let stack = synstack(line('.'), col('.'))
+    if len(stack) > 0
+      let syn = synIDattr((stack)[0], 'name')
+      if len(syn) > 0
+        exe 'setf ' . substitute(tolower(syn), '^vue_', '', '')
+      endif
+    endif
+  endif
+endfunction
+function! NERDCommenter_after()
+  if g:ft == 'vue'
+    setf vue
+    let g:ft = ''
+  endif
+endfunction
 
 " Tabularize配置
 
