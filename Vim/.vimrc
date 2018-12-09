@@ -18,8 +18,8 @@ Plugin 'VundleVim/Vundle.vim'     " let Vundle manage Vundle, required
 Plugin 'scrooloose/nerdtree'      " 文件浏览
 " Plugin 'ctrlpvim/ctrlp.vim'           " 文件查找
 Plugin 'majutsushi/tagbar'        " 函数列表
-Plugin 'ryanoasis/vim-devicons'   " 文件icon
-Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'   " 高亮nerdtree文件及图标
+" Plugin 'ryanoasis/vim-devicons'   " 文件icon
+" Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'   " 高亮nerdtree文件及图标
 
 " Plugin 'ervandew/supertab'        " YCM不可用时
 Plugin 'kovisoft/slimv'           " Lisp
@@ -110,7 +110,7 @@ autocmd FileType html,css,scss,less,vue,markdown,wxml,wxss EmmetInstall       " 
 " Vue配置
 " autocmd FileType vue syntax sync fromstart
 " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
-" let g:vue_disable_pre_processors=1
+let g:vue_disable_pre_processors=1
 
 " UltiSnips配置
 "let g:UltiSnipsExpandTrigger="<leader><tab>"
