@@ -1300,7 +1300,7 @@ let s:emmet_settings = {
 \           "bgcp:p": "background-clip:padding-box;",
 \           "bgcp:c": "background-clip:content-box;",
 \
-\           "bgc": "background-color:red|;",
+\           "bgc": "background-color:#|;",
 \
 \
 \"颜色": "",
@@ -1546,8 +1546,8 @@ let s:emmet_settings = {
 \
 \
 \"过渡": "",
-\           "tri": "transition:all .5s|;",
-\           "tri+": "transition:all .5s ease-in .1s|;",
+\           "tri": "transition:all .3s|;",
+\           "tri+": "transition:all .3s ease-in .1s|;",
 \           "tri?": "/*transition：<single-transition>[,<single-transition>]*\n<single-transition> = [ none | <single-transition-property> ] || <duration-time> || <single-transition-timing-function> || <delay-time>*/",
 \
 \           "tripro": "transition-property:|;",
@@ -1632,7 +1632,7 @@ let s:emmet_settings = {
 \           "cur:grab": "cursor:grab;",
 \
 \           "ol": "outline:|;",
-\           "ol+": "outline:1px solid red|;",
+\           "ol+": "outline:1px solid #|;",
 \           "ol:n": "outline:none;",
 \           "olw": "outline-width:|;",
 \           "ols": "outline-style:|;",

@@ -2,10 +2,6 @@ priority -50
 
 #######################  选择器  #######################
 # 属性
-snippet = "attr='abc'" i
-[$1="$2"]$0
-endsnippet
-
 snippet ~ "attr='abc' or attr='abc b c" i
 [$1~="$2"]$0
 endsnippet
@@ -147,7 +143,7 @@ endsnippet
 
 ####################### scss #######################
 snippet @im "@import" i
-@import '$1';$0
+@import "$1";$0
 endsnippet
 
 # vim:ft=snippets:
