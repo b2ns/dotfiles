@@ -25,7 +25,10 @@ Plugin 'majutsushi/tagbar'        " 函数列表
 Plugin 'kovisoft/slimv'           " Lisp
 Plugin 'Valloric/YouCompleteMe'   " C/C++自动补全
 Plugin 'marijnh/tern_for_vim'     " javascript补全引擎
-Plugin 'pangloss/vim-javascript'  " javascript语法高亮
+" Plugin 'pangloss/vim-javascript'  " javascript语法高亮
+Plugin 'othree/yajs.vim'
+" Plugin 'leafgarland/typescript-vim' " typescript高亮
+Plugin 'herringtondarkholme/yats.vim'
 Plugin 'mxw/vim-jsx'              " react-jsx语法高亮
 Plugin 'mattn/emmet-vim'          " html、css、xml等补全
 Plugin 'chemzqm/wxapp.vim'        " 小程序开发
