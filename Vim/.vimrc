@@ -24,7 +24,6 @@ Plugin 'majutsushi/tagbar'        " 函数列表
 " Plugin 'ervandew/supertab'        " YCM不可用时
 Plugin 'kovisoft/slimv'           " Lisp
 Plugin 'Valloric/YouCompleteMe'   " C/C++自动补全
-Plugin 'marijnh/tern_for_vim'     " javascript补全引擎
 " Plugin 'pangloss/vim-javascript'  " javascript语法高亮
 Plugin 'othree/yajs.vim'
 " Plugin 'leafgarland/typescript-vim' " typescript高亮
@@ -100,9 +99,6 @@ let g:ycm_collect_identifiers_from_tags_files=1   " 标签引擎
 let g:ycm_confirm_extra_conf=0                    " 加载.ycm_extra_conf.py提示
 let g:ycm_enable_diagnostic_signs = 0             " 错误诊断侧向标记
 let g:ycm_cache_omnifunc=1                        " 缓存匹配项
-
-" Tern.js配置
-let g:tern_show_signature_in_pum=1                " 显示函数参数提示
 
 " Emmet配置
 let g:user_emmet_leader_key = '<leader>'          " Emmet触发按键(<c-y>)
