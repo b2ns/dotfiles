@@ -8,8 +8,6 @@ alias rm='rm -i'
 alias q='exit'
 alias s='shutdown now'
 
-# alias xmind='cd /home/ding/Downloads/xmind/XMind_amd64 && ./XMind'
-
 alias v='gvim'
 alias e='gedit'
 
