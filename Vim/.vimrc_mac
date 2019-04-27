@@ -50,7 +50,7 @@ Plugin 'roman/golden-ratio'      " 窗口大小自动调整
 Plugin 'bling/vim-airline'        " 状态栏
 "Plugin 'tpope/vim-fugitive'       " git
 
-Plugin 's10g/vim-syncr'           " 本地和远程服务器文件同步
+Plugin 'b2ns/vim-syncr'           " 本地和远程服务器文件同步
 
 
 "插件安装结束#######################################################
