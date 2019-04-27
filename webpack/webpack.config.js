@@ -1,19 +1,19 @@
-module.exports=(ENV={NODE_ENV: 'dev'}) => {
-/***** set environment *****/
-  let env=ENV.NODE_ENV;
-  env=(env==='prod'||env==='production'||env==='dist')?'prod':'dev';
-
-/***** base *****/
-const path=require('path');
-const webpack=require('webpack');
-const merge=require('webpack-merge');
+const path = require('path');
+const webpack = require('webpack');
+const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const UglifyJSWebpackPlugin=require('uglifyjs-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const UglifyJSWebpackPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-let base={
-  entry: path.join(__dirname,'src/index.js'),
+module.exports = (ENV = {NODE_ENV: 'dev'}) => {
+/** *** set environment *****/
+  let env = ENV.NODE_ENV;
+  env = (env === 'prod' || env === 'production' || env === 'dist') ? 'prod' : 'dev';
+
+/** *** base *****/
+let base = {
+  entry: path.join(__dirname, 'src/index.js'),
   output: {
     // path: path.resolve(__dirname,'dist'),
     // publicPath: 'http://127.0.0.1:8888/',
@@ -42,7 +42,7 @@ let base={
             loader: 'html-loader',
             options: {
               // attrs: false,
-              attrs: ['img:src','img:data-src','link:href'],
+              attrs: ['img:src', 'img:data-src', 'link:href'],
               // root: '/',
             },
           },
@@ -62,7 +62,7 @@ let base={
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './src/index.html',
-      favicon:  './src/img/favicon.png',
+      favicon: './src/img/favicon.png',
       meta: {},
       // title: env==='dev'?'development':'production',
       // hash: true,
@@ -76,11 +76,11 @@ let base={
   ],
 };
 
-/***** development *****/
-let dev=merge(base,{
+/** *** development *****/
+let dev = merge(base, {
   mode: 'development',
   output: {
-    path: path.resolve(__dirname,'dev'),
+    path: path.resolve(__dirname, 'dev'),
   },
   module: {
     rules: [
@@ -91,7 +91,7 @@ let dev=merge(base,{
           {
             loader: 'babel-loader?cacheDirectory=true',
             options: {
-              presets: ['env','react'],
+              presets: ['env', 'react'],
             },
           },
         ],
@@ -159,17 +159,17 @@ let dev=merge(base,{
     }),
   ],
   devServer: {
-    contentBase: path.resolve(__dirname,'dev'),
+    contentBase: path.resolve(__dirname, 'dev'),
   },
   // devtool: 'inline-source-map',
   devtool: 'inline-cheap-module-source-map',
 });
 
-/***** production *****/
-let prod=merge(base,{
+/** *** production *****/
+let prod = merge(base, {
   mode: 'production',
   output: {
-    path: path.resolve(__dirname,'dist'),
+    path: path.resolve(__dirname, 'dist'),
   },
   module: {
     rules: [
@@ -180,7 +180,7 @@ let prod=merge(base,{
           {
             loader: 'babel-loader?cacheDirectory=true',
             options: {
-              presets: ['env','react'],
+              presets: ['env', 'react'],
             },
           },
         ],
@@ -203,7 +203,7 @@ let prod=merge(base,{
             loader: 'postcss-loader',
             options: {
               ident: 'postcss',
-              plugins: (loader) => [
+              plugins: loader => [
                 require('autoprefixer')(),
               ], 
             },
@@ -237,9 +237,9 @@ let prod=merge(base,{
             loader: 'postcss-loader',
             options: {
               ident: 'postcss',
-              plugins: (loader) => [
+              plugins: loader => [
                 require('autoprefixer')(),
-              ], 
+              ],
             },
           },
           {
@@ -288,8 +288,8 @@ let prod=merge(base,{
       'process.env.NODE_ENV': JSON.stringify('production'),
     }),
     new MiniCssExtractPlugin({
-      filename: "bundle-[chunkhash].css",
-      chunkFilename: "[name].css",
+      filename: 'bundle-[chunkhash].css',
+      chunkFilename: '[name].css',
     }),
   ],
   externals: {
@@ -317,6 +317,6 @@ let prod=merge(base,{
   },
 });
 
-/***** exports *****/
-return (env==='prod')?prod:dev;
+/** *** exports *****/
+return (env === 'prod') ? prod : dev;
 };
