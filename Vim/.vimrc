@@ -1,8 +1,32 @@
 """""""""""""""""""""""""""""""""""""""""""
-"Description: my configration for Vim     "
-"Author: b2ns                             "
+" Description: my configration for Vim    "
+" Author: b2ns                            "
 """""""""""""""""""""""""""""""""""""""""""
 
+"""""""""""""""""""""""""""  不同环境配置  """""""""""""""""""""""""""
+if !exists("g:os")
+    if has("win64") || has("win32") || has("win16")
+        let g:os = "Windows"
+    else
+        let g:os = substitute(system('uname -s'), '\n', '', '')
+    endif
+endif
+
+if has("gui_running")
+    if g:os == "Darwin" "for Mac
+        let s:slimv_swank_cmd = '!osascript -e "tell application \"Terminal\" to do script \"sbcl --load ~/.vim/bundle/slimv/slime/start-swank.lisp\""'
+        let s:guifont = "InconsolataLGC\ Nerd\ Font\ Mono:h18"
+        let s:shiftwidth = 4
+
+    elseif g:os == "Linux"
+        let s:slimv_swank_cmd = '! gnome-terminal -e "sbcl --load /home/ding/.vim/bundle/slimv/slime/start-swank.lisp &"'
+        let s:guifont = "InconsolataLGC\ Nerd\ Font\ Mono\ 16"
+        let s:shiftwidth = 4
+
+    elseif g:os == "Windows"
+
+    endif
+endif
 
 """""""""""""""""""""""""""  Vundle插件管理器  """""""""""""""""""""""""""
 set nocompatible                   " required
@@ -73,7 +97,7 @@ nmap tb :TagbarToggle<CR>
 let g:tagbar_width = 20                           " 窗口宽度(40)
 
 " Lisp配置
-let g:slimv_swank_cmd = '! gnome-terminal -e "sbcl --load /home/ding/.vim/bundle/slimv/slime/start-swank.lisp &"'
+let g:slimv_swank_cmd = s:slimv_swank_cmd
 let g:slimv_impl = 'sbcl'
 let g:slimv_preferred = 'sbcl'
 let g:paredit_electric_return=0                   "禁止此功能
@@ -210,8 +234,7 @@ else
 endif
 
 " 字体
-set guifont=InconsolataLGC\ Nerd\ Font\ Mono\ 16  "for linux
-"set guifont=InconsolataLGC\ Nerd\ Font\ Mono:h18   "for Windows and Mac
+let &guifont = s:guifont
 
 " 行号
 set number
@@ -297,7 +320,7 @@ set cindent
 set smartindent
 
 " 缩进宽度
-set shiftwidth=2
+let &shiftwidth = s:shiftwidth
 set tabstop=4
 set softtabstop=4
 set expandtab
