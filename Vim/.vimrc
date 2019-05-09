@@ -12,20 +12,18 @@ if !exists("g:os")
     endif
 endif
 
-if has("gui_running")
-    if g:os == "Darwin" "for Mac
-        let s:slimv_swank_cmd = '!osascript -e "tell application \"Terminal\" to do script \"sbcl --load ~/.vim/bundle/slimv/slime/start-swank.lisp\""'
-        let s:guifont = "InconsolataLGC\ Nerd\ Font\ Mono:h18"
-        let s:shiftwidth = 4
+if g:os == "Darwin" "for Mac
+    let s:slimv_swank_cmd = '!osascript -e "tell application \"Terminal\" to do script \"sbcl --load ~/.vim/bundle/slimv/slime/start-swank.lisp\""'
+    let s:guifont = "InconsolataLGC\ Nerd\ Font\ Mono:h18"
+    let s:shiftwidth = 4
 
-    elseif g:os == "Linux"
-        let s:slimv_swank_cmd = '! gnome-terminal -e "sbcl --load /home/ding/.vim/bundle/slimv/slime/start-swank.lisp &"'
-        let s:guifont = "InconsolataLGC\ Nerd\ Font\ Mono\ 16"
-        let s:shiftwidth = 4
+elseif g:os == "Linux"
+    let s:slimv_swank_cmd = '! gnome-terminal -e "sbcl --load /home/ding/.vim/bundle/slimv/slime/start-swank.lisp &"'
+    let s:guifont = "InconsolataLGC\ Nerd\ Font\ Mono\ 16"
+    let s:shiftwidth = 4
 
-    elseif g:os == "Windows"
+elseif g:os == "Windows"
 
-    endif
 endif
 
 """""""""""""""""""""""""""  Vundle插件管理器  """""""""""""""""""""""""""
@@ -42,16 +40,12 @@ Plugin 'VundleVim/Vundle.vim'     " let Vundle manage Vundle, required
 Plugin 'scrooloose/nerdtree'      " 文件浏览
 " Plugin 'ctrlpvim/ctrlp.vim'           " 文件查找
 Plugin 'majutsushi/tagbar'        " 函数列表
-" Plugin 'ryanoasis/vim-devicons'   " 文件icon
-" Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'   " 高亮nerdtree文件及图标
 
 " Plugin 'ervandew/supertab'        " YCM不可用时
 Plugin 'kovisoft/slimv'           " Lisp
 Plugin 'Valloric/YouCompleteMe'   " C/C++自动补全
 Plugin 'pangloss/vim-javascript'  " javascript语法高亮
-" Plugin 'othree/yajs.vim'
 Plugin 'leafgarland/typescript-vim' " typescript高亮
-" Plugin 'herringtondarkholme/yats.vim'
 Plugin 'mxw/vim-jsx'              " react-jsx语法高亮
 Plugin 'mattn/emmet-vim'          " html、css、xml等补全
 Plugin 'chemzqm/wxapp.vim'        " 小程序开发
@@ -72,7 +66,6 @@ Plugin 'tpope/vim-surround'      " 快速引号包围
 Plugin 'roman/golden-ratio'      " 窗口大小自动调整
 
 Plugin 'bling/vim-airline'        " 状态栏
-"Plugin 'tpope/vim-fugitive'       " git
 
 Plugin 'b2ns/vim-syncr'           " 本地和远程服务器文件同步
 "
@@ -127,8 +120,14 @@ let g:ycm_cache_omnifunc=1                        " 缓存匹配项
 " Emmet配置
 let g:user_emmet_leader_key = '<leader>'          " Emmet触发按键(<c-y>)
 let g:emmet_html5 = 1                             " 使用HTML5标准风格
-let g:user_emmet_install_global = 0              " 全局关闭
-autocmd FileType html,css,scss,less,vue,markdown,wxml,wxss EmmetInstall       " 特定文件开启emmet
+let g:user_emmet_install_global = 1              " 全局开启
+" autocmd FileType html,css,sass,scss,less,vue,jsx,markdown,wxml,wxss EmmetInstall       " 特定文件开启emmet
+
+" javascript配置
+let g:javascript_plugin_jsdoc = 1
+
+" typescript配置
+let g:typescript_ignore_browserwords = 1
 
 " Vue配置
 " autocmd FileType vue syntax sync fromstart
@@ -217,7 +216,7 @@ set backspace=indent,eol,start
 """""""""""""""""""""""""""  结束  """""""""""""""""""""""""""
 
 
-"""""""""""""""""""""""""""  ui  """""""""""""""""""""""""""
+"""""""""""""""""""""""""""  UI  """""""""""""""""""""""""""
 " 配色
 set background=dark
 if has("gui_running")
@@ -228,9 +227,9 @@ else
     let g:solarized_termcolors=256
     let g:solarized_termtrans=1
     "colorscheme monokai
-    colorscheme Tsolarized
-    "colorscheme torte
-    "colorscheme industry
+    colorscheme solarized
+    " colorscheme torte
+    " colorscheme industry
 endif
 
 " 字体
@@ -295,9 +294,7 @@ else
 endif
 
 " 终端光标闪烁
-if has("gui_running")
-
-else
+if !has("gui_running")
     if has("autocmd")
         au VimEnter,InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
         au InsertEnter,InsertChange *
@@ -359,9 +356,8 @@ inoremap ( ()<left>
 inoremap ) ();<left><left>
 inoremap [ []<left>
 inoremap ] [];<left><left>
-"inoremap { {}<left><left><CR><right><CR><up><right><CR>
-"inoremap { {}<left><CR><up><esc>o
-inoremap { {}<left>
+inoremap { {}<left><CR><up><esc>o
+" inoremap { {}<left>
 inoremap } {};<left><left>
 inoremap " ""<left>
 inoremap ' ''<left>
@@ -393,6 +389,8 @@ func! Compile()
         exec "! gcc % -o ~/bin/c/%<"
     elseif &filetype == 'cpp'
         exec "! g++ % -o ~/bin/cpp/%<"
+    elseif &filetype == 'typescript'
+        exec "! tsc % --outFile ~/bin/js/%<.js"
     elseif &filetype == 'sh'
         exec "! chmod a+x %"
     endif
@@ -408,6 +406,8 @@ func! Run()
         exec "! ~/bin/cpp/%<"
     elseif &filetype == 'javascript.jsx'
         exec "! node ./%"
+    elseif &filetype == 'typescript'
+        exec "! node ~/bin/js/%<.js"
     elseif &filetype == 'sh'
         exec "! ./%"
     elseif &filetype == 'py'
@@ -424,4 +424,3 @@ func! Debug()
 endfunc
 
 """""""""""""""""""""""""""  结束  """""""""""""""""""""""""""
-
