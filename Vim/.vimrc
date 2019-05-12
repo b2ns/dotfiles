@@ -191,6 +191,7 @@ set encoding=UTF-8
 "set noundofile
 "set nobackup
 set noswapfile
+set backupcopy=yes " 安全写入
 
 " 失去焦点自动保存当前文件
 au FocusLost * :up
@@ -356,8 +357,8 @@ inoremap ( ()<left>
 inoremap ) ();<left><left>
 inoremap [ []<left>
 inoremap ] [];<left><left>
-inoremap { {}<left><CR><up><esc>o
-" inoremap { {}<left>
+" inoremap { {}<left><CR><up><esc>o
+inoremap { {}<left>
 inoremap } {};<left><left>
 inoremap " ""<left>
 inoremap ' ''<left>
