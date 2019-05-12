@@ -116,6 +116,7 @@ let g:ycm_collect_identifiers_from_tags_files=1   " 标签引擎
 let g:ycm_confirm_extra_conf=0                    " 加载.ycm_extra_conf.py提示
 let g:ycm_enable_diagnostic_signs = 0             " 错误诊断侧向标记
 let g:ycm_cache_omnifunc=1                        " 缓存匹配项
+let g:ycm_filepath_blacklist = {}                 " enable filepath completion in all file
 
 " Emmet配置
 let g:user_emmet_leader_key = '<leader>'          " Emmet触发按键(<c-y>)
