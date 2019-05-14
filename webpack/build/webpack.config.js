@@ -10,12 +10,12 @@ const Terser = require('terser-webpack-plugin');
 const OptimizeCSS = require("optimize-css-assets-webpack-plugin");
 const MiniCssExtract = require('mini-css-extract-plugin');
 
-function r(dir = '') {
-    return path.resolve(dir);
+function r(...args) {
+    return path.resolve(...args);
 }
 
 module.exports = function (env = {}, argv) {
-    const prod = env.prod = env.prod || env === 'prod';
+    const prod = env.prod || env === 'prod';
 
     const cssLoaders = ['css-loader'];
     if (prod) {
