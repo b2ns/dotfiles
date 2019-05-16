@@ -38,7 +38,8 @@ module.exports = function (env = {}, argv) {
             pathinfo: false,
             // publicPath: '/public/',
             // library: 'math',
-            // libraryTarget: 'umd2',
+            // libraryTarget: 'umd',
+            // globalObject: 'this',
         },
         resolve: {
             modules: [r('node_modules'), r('src')],
