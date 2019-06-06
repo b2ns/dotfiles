@@ -65,6 +65,7 @@ Plugin 'godlygeek/tabular'       " 快速对齐
 Plugin 'tpope/vim-surround'      " 快速引号包围
 Plugin 'roman/golden-ratio'      " 窗口大小自动调整
 
+Plugin 'yggdroot/indentline'      " 缩进标识
 Plugin 'bling/vim-airline'        " 状态栏
 
 Plugin 'b2ns/vim-syncr'           " 本地和远程服务器文件同步
@@ -177,6 +178,9 @@ endfunction
 
 " Tabularize配置
 
+" indentline配置
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+
 " airline配置
 let g:airline_powerline_fonts = 1
 
@@ -185,6 +189,9 @@ let g:airline_powerline_fonts = 1
 
 
 """""""""""""""""""""""""""  系统  """""""""""""""""""""""""""
+" 让配置变更立即生效
+autocmd! BufWritePost $MYVIMRC source $MYVIMRC
+
 " 设置字符编码
 set encoding=UTF-8
 
