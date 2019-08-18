@@ -5,7 +5,7 @@ const merge = require('webpack-merge');
 
 /* plugins */
 const Html = require('html-webpack-plugin');
-const Clean = require('clean-webpack-plugin');
+const Clean = require('clean-webpack-plugin').CleanWebpackPlugin;
 const Terser = require('terser-webpack-plugin');
 const OptimizeCSS = require("optimize-css-assets-webpack-plugin");
 const MiniCssExtract = require('mini-css-extract-plugin');
@@ -17,11 +17,16 @@ function r(...args) {
 module.exports = function (env = {}, argv) {
     const prod = env.prod || env === 'prod';
 
-    const cssLoaders = ['css-loader'];
+    const cssLoaders = [{
+        loader: 'css-loader',
+        options: {importLoaders: 2}
+    }, {
+        loader: 'postcss-loader', // install require('postcss'); require('autoprefixer');
+    }];
     if (prod) {
         cssLoaders.unshift(MiniCssExtract.loader);
     } else {
-        cssLoaders.unshift('style-loader');
+        cssLoaders.unshift({loader: 'style-loader'});
     }
 
     /* common config */
@@ -36,7 +41,7 @@ module.exports = function (env = {}, argv) {
             filename: prod ? '[name]-[contenthash].js' : '[name].js',
             chunkFilename: '[name]-[contenthash].js',
             pathinfo: false,
-            // publicPath: '/public/',
+            // publicPath: 'assets/',
             // library: 'math',
             // libraryTarget: 'umd',
             // globalObject: 'this',
@@ -45,7 +50,7 @@ module.exports = function (env = {}, argv) {
             modules: [r('node_modules'), r('src')],
             extensions: ['.js', '.json', '.jsx', 'ts', 'tsx', 'vue', '.css', 'less', 'scss'],
             alias: {
-                // vue$: 'path/to/vue.js'
+                '@': r('src')
             }
         },
         externals: {
@@ -78,13 +83,38 @@ module.exports = function (env = {}, argv) {
                 test: /\.css$/,
                 use: cssLoaders
             }, {
-                test: /\.(png|jpg|jpeg|gif|svg|bmp|ico)$/,
+                test: /\.less$/,
+                use: [...cssLoaders, {
+                    loader: 'less-loader', // install require('less');
+                    options: {paths: [r('src/less')]}
+                }]
+            }, {
+                test: /\.jsx?$/,
+                include: r('src'),
+                exclude: /node_modules/,
+                use: [{
+                    // install require('@babel/core'); require('@babel/cli'); require('@babel/preset-env'); require('@babel/preset-react'); require('@babel/plugin-transform-runtime'); require('@babel/plugin-syntax-dynamic-import');
+                    loader: 'babel-loader',
+                }, {
+                    loader: 'eslint-loader' // install require('eslint');
+                }]
+            }, {
+                test: /\.(png|jpg|jpeg|gif|bmp|ico)$/,
                 use: [{
                     loader: 'url-loader',
                     options: {
                         limit: 1024 * (prod ? 8 : 250),
                         fallback: 'file-loader',
                         outputPath: 'images'
+                    }
+                }]
+            }, {
+                test: /\.(woff|woff2|svg|ttf|eot)$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: 'fonts'
                     }
                 }]
             }]
@@ -95,13 +125,13 @@ module.exports = function (env = {}, argv) {
               filename: 'index.html',
               template: './src/index.html',
             }),
-            new webpack.ProvidePlugin({
-                $: 'jquery',
-                jQuery: 'jquery',
-                React: 'react',
-                ReactDOM: 'react-dom',
-                Vue: 'vue'
-            })
+            // new webpack.ProvidePlugin({
+                // $: 'jquery',
+                // jQuery: 'jquery',
+                // React: 'react',
+                // ReactDOM: 'react-dom',
+                // Vue: 'vue'
+            // })
         ]
     };
 

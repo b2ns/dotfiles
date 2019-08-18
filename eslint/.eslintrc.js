@@ -1,31 +1,36 @@
 module.exports = {
     env: {
+        browser: true,
         es6: true
     },
     extends: 'eslint:recommended',
     globals: {
-        require: 'readonly',
-        module: 'readonly',
-        exports: 'readonly',
-        global: 'readonly',
-        wx: 'readonly',
-        App: 'readonly',
-        Page: 'readonly',
-        Component: 'readonly',
-        Behavior: 'readonly',
-        getApp: 'readonly',
-        getCurrentPages: 'readonly',
-        definePlugin: 'readonly',
-        requirePlugin: 'readonly',
-        console: 'readonly',
-        setTimeout: 'readonly',
-        clearTimeout: 'readonly',
-        setInterval: 'readonly',
-        clearInterval: 'readonly',
+        /* for weixin miniprogram */
+        // require: 'readonly',
+        // module: 'readonly',
+        // exports: 'readonly',
+        // global: 'readonly',
+        // wx: 'readonly',
+        // App: 'readonly',
+        // Page: 'readonly',
+        // Component: 'readonly',
+        // Behavior: 'readonly',
+        // getApp: 'readonly',
+        // getCurrentPages: 'readonly',
+        // definePlugin: 'readonly',
+        // requirePlugin: 'readonly',
+        // console: 'readonly',
+        // setTimeout: 'readonly',
+        // clearTimeout: 'readonly',
+        // setInterval: 'readonly',
+        // clearInterval: 'readonly',
     },
     parserOptions: {
         ecmaVersion: 2018,
-        sourceType: 'module'
+        sourceType: 'module',
+        ecmaFeatures: {
+            jsx: true
+        }
     },
     rules: {
         'no-constant-condition': [2, {checkLoops: false}],
@@ -44,7 +49,7 @@ module.exports = {
         'comma-dangle': [2, 'only-multiline'],
         'comma-spacing': 2,
         'comma-style': 2,
-        'implicit-arrow-linebreak': 2,
+        'implicit-arrow-linebreak': 0,
         'key-spacing': 2,
         'keyword-spacing': 2,
         'no-lonely-if': 2,

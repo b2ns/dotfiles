@@ -18,8 +18,8 @@ fs.readFile(webpackConfigPath, 'utf8', (err, data) => {
     }
     data = data.replace(/[\n\r\t]/gi, '');
 
-    let rPlugin = /require\(["']([\w-]+)["']\)/gi
-    let rLoader = /["']([\w-]+-loader)["']/gi
+    let rPlugin = /require\(["']([^"']+)["']\)/gi
+    let rLoader = /["']([^"']+-loader)["']/gi
     let arr;
     let plugins = new Set();
     let loaders = new Set();
