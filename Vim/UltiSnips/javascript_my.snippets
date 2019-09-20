@@ -204,13 +204,6 @@ constructor$0
 endsnippet
 
 #######################  React  #######################
-snippet react.ele "React.createElement" i
-React.createElement(
-	$1,
-	$2,
-	$3);$0
-endsnippet
-
 snippet react.ref "React.createRef();" i
 React.createRef();$0
 endsnippet
@@ -221,31 +214,16 @@ snippet react.fra "React.Fragment" i
 </React.Fragment>$0
 endsnippet
 
-snippet react.cla "React.createReactClass" i
-React.createReactClass({
-	mixins: [],
-	getDefaultProps: function (){
-		return {
-		$1
-		};
-	},
-	getInitialState: function (){
-		return {
-		$2
-	};
-	},
-	render: function (){
-		return (
-		$3
-	);
-	},
-});$0
+snippet react.fra "React.Suspend" i
+<React.Suspend fallback="loading...">
+	$1
+</React.Suspend>$0
 endsnippet
 
 snippet reactdom.rend "ReactDOM.render" i
 ReactDOM.render(
 	<App />$1
-	,root$2);$0
+	,document.getElementById('root')$2);$0
 endsnippet
 
 snippet reactdom.hy "ReactDOM.hydrate" i
@@ -268,108 +246,67 @@ snippet reactdom.unmount "ReactDOM.unmountComponentAtNode" i
 ReactDOM.unmountComponentAtNode($1);$0
 endsnippet
 
-snippet react.comf "component function" i
-function $1(props){
-	return (
-		$2
-	);
-};$0
-endsnippet
-
 snippet react.comp "component class" i
 class $1 extends React.Component{
-	constructor(props){
+	constructor(props) {
 		super(props);
 	}
-	render(){
+	render() {
 		return (
 			$2
 		);
 	}
 }$0
-endsnippet
-
-snippet react.pcomp "PureComponent" i
-class $1 extends React.PureComponent{
-	constructor(props){
-		super(props);
-	}
-	render(){
-		return (
-			$2
-		);
-	}
-}$0
-endsnippet
-
-snippet react.pro "this.props" i
-this.props$0
-endsnippet
-
-snippet react.sta "this.state" i
-this.state$0
 endsnippet
 
 snippet react.set "this.setState" i
 this.setState($1);$0
 endsnippet
 
-snippet react.willm "componentWillMount" i
-componentWillMount(){
-	$1
-}$0
-endsnippet
-
 snippet react.didm "componentDidMount" i
-componentDidMount(){
+componentDidMount() {
 	$1
 }$0
 endsnippet
 
 snippet react.willum "componentWillUnmount" i
-componentWillUnmount(){
-	$1
-}$0
-endsnippet
-
-snippet react.willr "componentWillReceiveProps" i
-componentWillReceiveProps(nextProps){
+componentWillUnmount() {
 	$1
 }$0
 endsnippet
 
 snippet react.getd "getDerivedStateFromProps" i
-static getDerivedStateFromProps(nextProps,prevState){
-	$1
-}$0
-endsnippet
-
-snippet react.sho "shouldComponentUpdate" i
-shouldComponentUpdate(nextProps,nextState){
-	$1
-}$0
-endsnippet
-
-snippet react.willup "componentWillUpdate" i
-componentWillUpdate(){
+static getDerivedStateFromProps(nextProps,prevState) {
 	$1
 }$0
 endsnippet
 
 snippet react.gets "getSnapshotBeforeUpdate" i
-getSnapshotBeforeUpdate(prevProps,prevState){
+getSnapshotBeforeUpdate(prevProps,prevState) {
+	$1
+}$0
+endsnippet
+
+snippet react.sho "shouldComponentUpdate" i
+shouldComponentUpdate(nextProps,nextState) {
 	$1
 }$0
 endsnippet
 
 snippet react.didup "componentDidUpdate" i
-componentDidUpdate(){
+componentDidUpdate() {
+	$1
+}$0
+endsnippet
+
+snippet react.getd "getDerivedStateFromError" i
+static getDerivedStateFromError(error) {
 	$1
 }$0
 endsnippet
 
 snippet react.didc "componentDidCatch" i
-componentDidCatch(error,info){
+componentDidCatch(error,info) {
 	$1
 }$0
 endsnippet
