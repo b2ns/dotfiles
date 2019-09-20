@@ -6,7 +6,7 @@ fi
 ### 设置别名 ###
 alias rm='rm -i'
 alias q='exit'
-alias s='shutdown now'
+alias ss='shutdown now'
 
 alias v='gvim'
 alias e='gedit'
