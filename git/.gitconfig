@@ -1,0 +1,15 @@
+[user]
+    name = b2ns
+    email = eminemdsp@163.com
+[credential]
+    helper = store
+[alias]
+    st = status
+    ci = commit
+    co = checkout
+    br = branch
+    df = diff
+[http]
+    ; proxy = socks5://127.0.0.1:1080
+[https]
+    ; proxy = socks5://127.0.0.1:1080

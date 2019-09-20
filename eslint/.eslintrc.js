@@ -67,7 +67,7 @@ module.exports = {
         'spaced-comment': 2,
         'switch-colon-spacing': 2,
         'arrow-body-style': 2,
-        'arrow-parens': [2, 'as-needed'],
+        'arrow-parens': [2, 'always'],
         'arrow-spacing': 2,
         'no-var': 2,
         'object-shorthand': 1,
