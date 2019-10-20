@@ -54,13 +54,13 @@ module.exports = function (env = {}, argv) {
             }
         },
         externals: {
-            // jquery: 'JQuery',
-            // lodash: {
-                // commonjs: 'lodash',
-                // commonjs2: 'lodash',
-                // amd: 'lodash',
-                // root: '_',
-            // }
+            /* jquery: 'JQuery',
+            lodash: {
+                commonjs: 'lodash',
+                commonjs2: 'lodash',
+                amd: 'lodash',
+                root: '_',
+            } */
         },
         performance: {
             hints: 'warning',
@@ -122,16 +122,19 @@ module.exports = function (env = {}, argv) {
         plugins: [
             new Clean(),
             new Html({
-              filename: 'index.html',
-              template: './src/index.html',
+                filename: 'index.html',
+                template: './src/index.html',
             }),
-            // new webpack.ProvidePlugin({
-                // $: 'jquery',
-                // jQuery: 'jquery',
-                // React: 'react',
-                // ReactDOM: 'react-dom',
-                // Vue: 'vue'
-            // })
+            new webpack.DefinePlugin({
+                'process.env.NODE_ENV': JSON.stringify(prod ? 'production' : 'development')
+            }),
+            new webpack.ProvidePlugin({
+                /* $: 'jquery',
+                jQuery: 'jquery',
+                React: 'react',
+                ReactDOM: 'react-dom',
+                Vue: 'vue' */
+            }),
         ]
     };
 
