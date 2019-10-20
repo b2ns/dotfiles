@@ -369,10 +369,10 @@ inoremap ' ''<left>
 inoremap ` ``<left>
 
 " lisp中取消某些按键绑定
-func! ResetKeyMapping()
+function! ResetKeyMapping()
     inoremap ' '
     inoremap ` `
-endfunc
+endfunction
 autocmd FileType lisp,cl call ResetKeyMapping()
 
 " 插入模式下移动光标
@@ -427,45 +427,59 @@ endfunction
 
 " 一键编译
 map <f5> :call Compile()<cr>
-func! Compile()
+function! Compile()
     execute "w"
     if &filetype ==? 'c'
-        execute "! gcc % -o ~/bin/c/%<"
+        execute "! gcc % -o ~/bin/c/%:r"
     elseif &filetype ==? 'cpp'
-        execute "! g++ % -o ~/bin/cpp/%<"
+        execute "! g++ % -o ~/bin/cpp/%:r"
     elseif &filetype ==? 'typescript'
-        execute "! tsc % --outFile ~/bin/js/%<.js"
+        execute "! tsc % --outFile ~/bin/js/%:r.js"
     elseif &filetype ==? 'sh'
         execute "! chmod a+x %"
     endif
-endfunc
+endfunction
 
 " 一键运行
 map <f6> :call Run()<cr>
-func! Run()
+function! Run()
     execute "w"
     if &filetype ==? 'c'
-        execute "! ~/bin/c/%<"
+        execute "! ~/bin/c/%:r"
     elseif &filetype ==? 'cpp'
-        execute "! ~/bin/cpp/%<"
+        execute "! ~/bin/cpp/%:r"
     elseif &filetype ==? 'javascript.jsx'
         execute "! node ./%"
     elseif &filetype ==? 'typescript'
-        execute "! node ~/bin/js/%<.js"
+        execute "! node ~/bin/js/%:r.js"
     elseif &filetype ==? 'sh'
         execute "! ./%"
     elseif &filetype ==? 'py'
         execute "! python ./%"
     endif
-endfunc
+endfunction
 
 " 一键debug
 map <f7> :call Debug()<cr>
-func! Debug()
+function! Debug()
     execute "w"
-    execute "! gcc % -g -o ~/bin/c/%<"
-    execute "! gdb ~/bin/c/%<"
-endfunc
+    execute "! gcc % -g -o ~/bin/c/%:r"
+    execute "! gdb ~/bin/c/%:r"
+endfunction
 
 " 缩略词
 " iabbrev dns domain name system
+
+"""""""""""""""""""""""""""  其他  """""""""""""""""""""""""""
+" 读取工程自定义.vimrc配置
+function! GetCustomVimrc()
+    let s:vimrcName = ".vimrc"
+    let s:vimrcPath = findfile(s:vimrcName, fnameescape(expand("%:p:h")) . ";" . $HOME . "/")
+    let s:vimrcPath = fnamemodify(s:vimrcPath, ":p")
+
+    if s:vimrcPath != "" && s:vimrcPath != s:vimrcName && s:vimrcPath != $HOME . "/" . s:vimrcName
+        echo "set"
+        execute "source ". s:vimrcPath
+    endif
+endfunction
+autocmd BufRead,BufNewFile * call GetCustomVimrc()
