@@ -477,7 +477,7 @@ function! GetCustomVimrc()
     let s:vimrcPath = findfile(s:vimrcName, fnameescape(expand("%:p:h")) . ";" . $HOME . "/")
     let s:vimrcPath = fnamemodify(s:vimrcPath, ":p")
 
-    if s:vimrcPath != "" && s:vimrcName != fnamemodify(s:vimrcPath, ":t") && s:vimrcPath != $HOME . "/" . s:vimrcName
+    if s:vimrcPath != "" && s:vimrcName != fnameescape(expand("%:t")) && s:vimrcPath != $HOME . "/" . s:vimrcName
         execute "source ". s:vimrcPath
     endif
 endfunction
