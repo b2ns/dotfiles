@@ -58,7 +58,8 @@ switch ($1) {
 	case 1$2:
 		$3
 		break;
-	default: break;$4
+	default:
+		break;$4
 }$0
 endsnippet
 
@@ -118,10 +119,6 @@ snippet fnp "自执行函数包装" i
 endsnippet
 
 #######################  输入输出  #######################
-snippet al "弹窗输出" i
-alert($1);$0
-endsnippet
-
 snippet log "控制台log输出" i
 console.log($1);$0
 endsnippet
@@ -131,34 +128,7 @@ console.dir($1);$0
 endsnippet
 
 snippet hel "hello world" i
-console.log("hello world");$0
-endsnippet
-
-#######################  jQuery  #######################
-snippet $$ "$(function(){})" i
-$(function () {
-	$1
-});$0
-endsnippet
-
-snippet jq "$('selector')" i
-$('$1')$0
-endsnippet
-
-snippet jt "$(this)" i
-$(this)$0
-endsnippet
-
-snippet jb "$('body')" i
-$('body')$0
-endsnippet
-
-snippet jw "$(window)" i
-$(window)$0
-endsnippet
-
-snippet jd "$(document)" i
-$(document)$0
+console.log('hello world');$0
 endsnippet
 
 #######################  ES6  #######################
@@ -364,6 +334,10 @@ snippet use "use strict"
 'use strict';
 endsnippet
 
-
+snippet timeout "setTimeout" i
+setTimeout(() => {
+	$1
+}, 2000);
+endsnippet
 
 # vim:ft=snippets:
