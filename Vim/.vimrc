@@ -15,12 +15,12 @@ endif
 if g:os ==? "Darwin" " for Mac
     let s:slimv_swank_cmd='!osascript -e "tell application \"Terminal\" to do script \"sbcl --load ~/.vim/bundle/slimv/slime/start-swank.lisp\""'
     let s:guifont="InconsolataLGC\ Nerd\ Font\ Mono:h18"
-    let s:shiftwidth=4
+    let s:shiftwidth=2
 
 elseif g:os ==? "Linux"
     let s:slimv_swank_cmd='! gnome-terminal -e "sbcl --load /home/ding/.vim/bundle/slimv/slime/start-swank.lisp &"'
     let s:guifont="InconsolataLGC\ Nerd\ Font\ Mono\ 16"
-    let s:shiftwidth=4
+    let s:shiftwidth=2
 
 elseif g:os ==? "Windows"
 
