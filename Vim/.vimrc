@@ -256,7 +256,7 @@ set incsearch                   " Find as you type search
 set hlsearch                    " Highlight search terms
 set ignorecase                  " Case insensitive search
 set smartcase
-set nowrapscan
+" set nowrapscan
 
 " 补全列表
 set wildmenu                    " Show list instead of just completing
@@ -380,11 +380,11 @@ inoremap <s-cr> <cr><up><esc>o
 inoremap <s-tab> <right>
 
 " 上下左右按键
-noremap i <up>
-noremap k <down>
-noremap j <left>
-noremap h i
-noremap H I
+" noremap i <up>
+" noremap k <down>
+" noremap j <left>
+" noremap h i
+" noremap H I
 
 " 整行上下移动
 noremap <a-i> :.m--<cr>
