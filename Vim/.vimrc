@@ -5,22 +5,22 @@
 
 """""""""""""""""""""""""""  不同环境配置  """""""""""""""""""""""""""
 if !exists("g:os")
-    if has("win64") || has("win32") || has("win16")
-        let g:os="Windows"
-    else
-        let g:os=substitute(system('uname -s'), '\n', '', '')
-    endif
+  if has("win64") || has("win32") || has("win16")
+    let g:os="Windows"
+  else
+    let g:os=substitute(system('uname -s'), '\n', '', '')
+  endif
 endif
 
 if g:os ==? "Darwin" " for Mac
-    let s:slimv_swank_cmd='!osascript -e "tell application \"Terminal\" to do script \"sbcl --load ~/.vim/bundle/slimv/slime/start-swank.lisp\""'
-    let s:guifont="InconsolataLGC\ Nerd\ Font\ Mono:h18"
-    let s:shiftwidth=2
+  let s:slimv_swank_cmd='!osascript -e "tell application \"Terminal\" to do script \"sbcl --load ~/.vim/bundle/slimv/slime/start-swank.lisp\""'
+  let s:guifont="InconsolataLGC\ Nerd\ Font\ Mono:h18"
+  let s:shiftwidth=2
 
 elseif g:os ==? "Linux"
-    let s:slimv_swank_cmd='! gnome-terminal -e "sbcl --load /home/ding/.vim/bundle/slimv/slime/start-swank.lisp &"'
-    let s:guifont="InconsolataLGC\ Nerd\ Font\ Mono\ 16"
-    let s:shiftwidth=2
+  let s:slimv_swank_cmd='! gnome-terminal -e "sbcl --load /home/ding/.vim/bundle/slimv/slime/start-swank.lisp &"'
+  let s:guifont="InconsolataLGC\ Nerd\ Font\ Mono\ 16"
+  let s:shiftwidth=2
 
 elseif g:os ==? "Windows"
 
@@ -222,17 +222,17 @@ set backspace=indent,eol,start
 " 配色
 set background=dark
 if has("gui_running")
-    "colorscheme monokai
-    colorscheme solarized
+  "colorscheme monokai
+  colorscheme solarized
 else
   " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
-    set t_Co=256
-    let g:solarized_termcolors=256
-    let g:solarized_termtrans=1
-    "colorscheme monokai
-    colorscheme solarized
-    " colorscheme torte
-    " colorscheme industry
+  set t_Co=256
+  let g:solarized_termcolors=256
+  let g:solarized_termtrans=1
+  "colorscheme monokai
+  colorscheme solarized
+  " colorscheme torte
+  " colorscheme industry
 endif
 
 " 字体
@@ -288,28 +288,28 @@ set guioptions-=T
 
 " 默认启动窗口最大化
 if has("gui_running")
-    set lines=999 columns=999
+  set lines=999 columns=999
 else
-    if exists("+lines")
-        set lines=40
-    endif
-    if exists("+columns")
-        set columns=120
-    endif
+  if exists("+lines")
+    set lines=40
+  endif
+  if exists("+columns")
+    set columns=120
+  endif
 endif
 
 " 终端光标闪烁
 if !has("gui_running")
-    if has("autocmd")
-        autocmd VimEnter,InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
-        autocmd InsertEnter,InsertChange *
-                    \ if v:insertmode ==? 'i' |
-                    \   silent execute '!echo -ne "\e[5 q"' | redraw! |
-                    \ elseif v:insertmode ==? 'r' |
-                    \   silent execute '!echo -ne "\e[3 q"' | redraw! |
-                    \ endif
-        autocmd VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
-    endif
+  if has("autocmd")
+    autocmd VimEnter,InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
+    autocmd InsertEnter,InsertChange *
+          \ if v:insertmode ==? 'i' |
+          \   silent execute '!echo -ne "\e[5 q"' | redraw! |
+          \ elseif v:insertmode ==? 'r' |
+          \   silent execute '!echo -ne "\e[3 q"' | redraw! |
+          \ endif
+    autocmd VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
+  endif
 endif
 
 
@@ -369,8 +369,8 @@ inoremap ` ``<left>
 
 " lisp中取消某些按键绑定
 function! ResetKeyMapping()
-    inoremap ' '
-    inoremap ` `
+  inoremap ' '
+  inoremap ` `
 endfunction
 autocmd FileType lisp,cl call ResetKeyMapping()
 
@@ -408,62 +408,62 @@ cnoremap <c-n> <down>
 nnoremap <leader>g :set operatorfunc=<SID>GrepOperator<cr>g@
 vnoremap <leader>g :<c-u>call <SID>GrepOperator(visualmode())<cr>
 function! s:GrepOperator(type)
-    let saved_unnamed_register=@@
+  let saved_unnamed_register=@@
 
-    if a:type ==# 'v'
-        normal! `<v`>y
-    elseif a:type ==# 'char'
-        normal! `[v`]y
-    else
-        return
-    endif
+  if a:type ==# 'v'
+    normal! `<v`>y
+  elseif a:type ==# 'char'
+    normal! `[v`]y
+  else
+    return
+  endif
 
-    silent execute "grep! -R " . shellescape(@@) . " ."
-    copen
+  silent execute "grep! -R " . shellescape(@@) . " ."
+  copen
 
-    let @@=saved_unnamed_register
+  let @@=saved_unnamed_register
 endfunction
 
 " 一键编译
 map <f5> :call Compile()<cr>
 function! Compile()
-    execute "w"
-    if &filetype ==? 'c'
-        execute "! gcc % -o ~/bin/c/%:r"
-    elseif &filetype ==? 'cpp'
-        execute "! g++ % -o ~/bin/cpp/%:r"
-    elseif &filetype ==? 'typescript'
-        execute "! tsc % --outFile ~/bin/js/%:r.js"
-    elseif &filetype ==? 'sh'
-        execute "! chmod a+x %"
-    endif
+  execute "w"
+  if &filetype ==? 'c'
+    execute "! gcc % -o ~/bin/c/%:r"
+  elseif &filetype ==? 'cpp'
+    execute "! g++ % -o ~/bin/cpp/%:r"
+  elseif &filetype ==? 'typescript'
+    execute "! tsc % --outFile ~/bin/js/%:r.js"
+  elseif &filetype ==? 'sh'
+    execute "! chmod a+x %"
+  endif
 endfunction
 
 " 一键运行
 map <f6> :call Run()<cr>
 function! Run()
-    execute "w"
-    if &filetype ==? 'c'
-        execute "! ~/bin/c/%:r"
-    elseif &filetype ==? 'cpp'
-        execute "! ~/bin/cpp/%:r"
-    elseif &filetype ==? 'javascript.jsx'
-        execute "! node ./%"
-    elseif &filetype ==? 'typescript'
-        execute "! node ~/bin/js/%:r.js"
-    elseif &filetype ==? 'sh'
-        execute "! ./%"
-    elseif &filetype ==? 'py'
-        execute "! python ./%"
-    endif
+  execute "w"
+  if &filetype ==? 'c'
+    execute "! ~/bin/c/%:r"
+  elseif &filetype ==? 'cpp'
+    execute "! ~/bin/cpp/%:r"
+  elseif &filetype ==? 'javascript.jsx'
+    execute "! node ./%"
+  elseif &filetype ==? 'typescript'
+    execute "! node ~/bin/js/%:r.js"
+  elseif &filetype ==? 'sh'
+    execute "! ./%"
+  elseif &filetype ==? 'py'
+    execute "! python ./%"
+  endif
 endfunction
 
 " 一键debug
 map <f7> :call Debug()<cr>
 function! Debug()
-    execute "w"
-    execute "! gcc % -g -o ~/bin/c/%:r"
-    execute "! gdb ~/bin/c/%:r"
+  execute "w"
+  execute "! gcc % -g -o ~/bin/c/%:r"
+  execute "! gdb ~/bin/c/%:r"
 endfunction
 
 " 缩略词
