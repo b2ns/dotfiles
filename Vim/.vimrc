@@ -39,12 +39,11 @@ Plugin 'VundleVim/Vundle.vim'     " let Vundle manage Vundle, required
 "插件安装#######################################################
 Plugin 'yianwillis/vimcdoc'       " vim帮助中文文档
 Plugin 'scrooloose/nerdtree'      " 文件浏览
-Plugin 'ctrlpvim/ctrlp.vim'       " 文件查找
+" Plugin 'ctrlpvim/ctrlp.vim'       " 文件查找
 Plugin 'majutsushi/tagbar'        " 函数列表
 
-" Plugin 'ervandew/supertab'        " YCM不可用时
 Plugin 'kovisoft/slimv'           " Lisp
-Plugin 'Valloric/YouCompleteMe'   " C/C++自动补全
+" Plugin 'Valloric/YouCompleteMe'   " C/C++自动补全
 Plugin 'pangloss/vim-javascript'  " javascript语法高亮
 Plugin 'leafgarland/typescript-vim' " typescript高亮
 Plugin 'mxw/vim-jsx'              " react-jsx语法高亮
@@ -53,7 +52,7 @@ Plugin 'chemzqm/wxapp.vim'        " 小程序开发
 Plugin 'posva/vim-vue'            " vue文件高亮
 " Plugin 'davidhalter/jedi-vim'     " python补全引擎
 " Plugin 'klen/python-mode'         " python高亮
-"Plugin 'scrooloose/syntastic'    " 语法检查
+" Plugin 'scrooloose/syntastic'    " 语法检查
 
 Plugin 'SirVer/ultisnips'         " 片段引擎
 Plugin 'honza/vim-snippets'       " 片段库
@@ -62,7 +61,6 @@ Plugin 'easymotion/vim-easymotion' " 快速跳转
 Plugin 'terryma/vim-multiple-cursors' " 多重选择
 Plugin 'scrooloose/nerdcommenter' " 快速注释
 Plugin 'tpope/vim-repeat'         " 重复上次操作
-Plugin 'godlygeek/tabular'       " 快速对齐
 Plugin 'tpope/vim-surround'      " 快速引号包围
 Plugin 'roman/golden-ratio'      " 窗口大小自动调整
 
@@ -81,8 +79,6 @@ nnoremap mt :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") ==? 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif  "自动关闭
 let g:NERDTreeWinSize=20                          " 窗口宽度(31)
 let g:NERDTreeQuitOnOpen=1                        " 打开文件后自动关闭
-
-" Ctrlp
 
 
 " Tagbar
@@ -143,7 +139,7 @@ let g:UltiSnipsJumpBackwardTrgger='<leader>N'
 let g:UltiSnipsEnableSnipMate=0                   "不使用snipMate的代码片段
 
 " Easymotion
-let g:EasyMotion_leader_key='<leader>w'
+let g:EasyMotion_leader_key='<leader><leader>'
 let g:EasyMotion_smartcase=1
 " map <leader> <Plug>(easymotion-prefix)          " prefix
 map <leader>w <Plug>(easymotion-W)
@@ -175,8 +171,6 @@ function! NERDCommenter_after()
   endif
 endfunction
 
-" Tabularize
-
 " indentline
 let g:indentLine_char_list=['|', '¦', '┆', '┊']
 autocmd FileType json let g:indentLine_setConceal=0
@@ -186,6 +180,10 @@ let g:airline_powerline_fonts=1
 
 
 """""""""""""""""""""""""""  系统  """""""""""""""""""""""""""
+" 搜索当前项目中的.vimrc配置
+set exrc
+set secure
+
 " 让配置变更立即生效
 autocmd! BufWritePost $MYVIMRC source $MYVIMRC
 
@@ -227,7 +225,8 @@ if has("gui_running")
     "colorscheme monokai
     colorscheme solarized
 else
-    set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+  " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+    set t_Co=256
     let g:solarized_termcolors=256
     let g:solarized_termtrans=1
     "colorscheme monokai
@@ -322,8 +321,8 @@ set smartindent
 
 " 缩进宽度
 let &shiftwidth=s:shiftwidth
-set tabstop=4
-set softtabstop=4
+let &tabstop=s:shiftwidth
+let &softtabstop=s:shiftwidth
 set expandtab
 
 " 基于缩进或语法进行代码折叠
@@ -471,14 +470,3 @@ endfunction
 " iabbrev dns domain name system
 
 """""""""""""""""""""""""""  其他  """""""""""""""""""""""""""
-" 读取工程自定义.vimrc配置
-function! GetCustomVimrc()
-    let s:vimrcName = ".vimrc"
-    let s:vimrcPath = findfile(s:vimrcName, fnameescape(expand("%:p:h")) . ";" . $HOME . "/")
-    let s:vimrcPath = fnamemodify(s:vimrcPath, ":p")
-
-    if s:vimrcPath != "" && s:vimrcName != fnameescape(expand("%:t")) && s:vimrcPath != $HOME . "/" . s:vimrcName
-        execute "source ". s:vimrcPath
-    endif
-endfunction
-autocmd BufRead,BufNewFile * call GetCustomVimrc()
