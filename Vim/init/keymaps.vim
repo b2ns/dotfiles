@@ -48,6 +48,7 @@ vnoremap <c-x> "+x
 " 粘贴
 nnoremap <c-v> "+gP
 inoremap <c-v> <esc>"+gP
+cnoremap <c-v> <c-r>"
 
 " 整行上下移动
 noremap <m-up> :.m--<cr>

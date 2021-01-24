@@ -1,6 +1,6 @@
 "======================================================================
 "
-" init.vim - initialize config
+" initialize config
 "
 " forked from https://github.com/skywind3000/vim-init
 "
