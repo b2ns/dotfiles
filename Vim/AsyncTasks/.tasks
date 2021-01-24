@@ -1,0 +1,18 @@
+[file-build]
+command:c,cpp=gcc -O2 -Wall "$(VIM_FILEPATH)" -o "/tmp/c-$(VIM_FILENOEXT)" -lstdc++ -lm -msse3
+command:typescript,ts=tsc "$(VIM_FILEPATH)" --outFile "/tmp/ts-$(VIM_FILENOEXT)"
+output=quickfix
+cwd=<root>
+save=2
+
+[file-run]
+command="$(VIM_FILEPATH)"
+command:c,cpp="/tmp/c-$(VIM_FILENOEXT)"
+command:javascript,javascript.jsx,jsx=node "$(VIM_FILENAME)"
+command:typescript,ts=node "/tmp/ts-$(VIM_FILENOEXT)"
+command:sh=sh "$(VIM_FILENAME)"
+command:python=python "$(VIM_FILENAME)"
+command:ruby=ruby "$(VIM_FILENAME)"
+output=terminal
+cwd=<root>
+save=2
