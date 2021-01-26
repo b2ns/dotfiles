@@ -13,7 +13,7 @@
 set number
 
 " 关闭自动换行
-set nowrap
+" set nowrap
 
 " 显示光标位置
 set ruler

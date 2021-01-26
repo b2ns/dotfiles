@@ -46,8 +46,8 @@ vnoremap <c-c> "+y
 vnoremap <c-x> "+x
 
 " 粘贴
-nnoremap <c-v> "+gP
-inoremap <c-v> <esc>"+gP
+nnoremap <c-v> <right>"+gP
+inoremap <c-v> <esc><right>"+gP
 cnoremap <c-v> <c-r>"
 
 " 整行上下移动

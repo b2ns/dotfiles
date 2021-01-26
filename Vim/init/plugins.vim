@@ -76,10 +76,10 @@ Plug 'junegunn/fzf.vim'
 
 set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf
 
-nnoremap <space>ff :Files
-nnoremap <space>fg :GFiles
+nnoremap <space>ff :Files<cr>
+nnoremap <space>fg :GFiles<cr>
 nnoremap <space>fr :Rg
-nnoremap <space>fh :History
+nnoremap <space>fh :History<cr>
 
 "--------------------------------
 " editorconfig
@@ -291,7 +291,7 @@ Plug 'mxw/vim-jsx'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'mzlogin/vim-markdown-toc'
 
-let g:mkdp_refresh_slow = 1
+" let g:mkdp_refresh_slow = 1
 let g:mkdp_auto_close = 1
 
 autocmd FIleType markdown nmap <silent> <space>md <Plug>MarkdownPreviewToggle
@@ -456,6 +456,8 @@ Plug 'tpope/vim-fugitive'
 " 边栏显示git状态
 "--------------------------------
 Plug 'airblade/vim-gitgutter'
+
+let g:gitgutter_map_keys = 0
 
 "----------------------------------------------------------------------
 " 其他
