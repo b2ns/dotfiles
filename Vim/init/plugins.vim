@@ -218,6 +218,20 @@ autocmd FileType scss setl iskeyword+=@-@"
 " coc-prettier
 noremap <c-s-i> :<c-u>CocCommand prettier.formatFile<cr>
 
+
+" nmap <space>coa  <Plug>(coc-codeaction)
+nmap <space>coa  :<c-u>CocAction<cr>
+nmap <space>cof  <Plug>(coc-fix-current)
+nmap <space>cor  <Plug>(coc-rename)
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
 "--------------------------------
 " html、css补全
 "--------------------------------
@@ -262,10 +276,14 @@ let g:javascript_plugin_jsdoc=1
 
 Plug 'jelera/vim-javascript-syntax'
 
+" 语法高亮优化
+autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+
 "--------------------------------
 " typescript
 "--------------------------------
-Plug 'leafgarland/typescript-vim'
+" Plug 'leafgarland/typescript-vim'
 
 " let g:typescript_ignore_browserwords=1
 
@@ -283,7 +301,9 @@ let g:vue_disable_pre_processors=1
 "--------------------------------
 " jsx
 "--------------------------------
-Plug 'mxw/vim-jsx'
+" Plug 'mxw/vim-jsx'
+
+Plug 'maxmellon/vim-jsx-pretty'
 
 "--------------------------------
 " markdown

@@ -19,7 +19,7 @@ set secure
 autocmd FocusLost * :up
 
 " 根据打开文件修改工作目录
-set autochdir
+" set autochdir
 
 " 设置 Backspace 键模式
 set bs=eol,start,indent
@@ -32,7 +32,6 @@ set ttimeout
 
 " 功能键超时检测 50 毫秒
 set ttimeoutlen=50
-
 
 "----------------------------------------------------------------------
 " 编码
