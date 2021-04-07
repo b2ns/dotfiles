@@ -84,7 +84,7 @@ nnoremap <space>fh :History<cr>
 "--------------------------------
 " editorconfig
 "--------------------------------
-" Plug 'editorconfig/editorconfig-vim'
+Plug 'editorconfig/editorconfig-vim'
 
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
