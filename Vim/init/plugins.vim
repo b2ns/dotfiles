@@ -274,7 +274,7 @@ Plug 'pangloss/vim-javascript'
 
 let g:javascript_plugin_jsdoc=1
 
-Plug 'jelera/vim-javascript-syntax'
+" Plug 'jelera/vim-javascript-syntax'
 
 " 语法高亮优化
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
