@@ -129,6 +129,12 @@ function! ChangeBackgroundOnSunset()
   call ChangeBackground(l:bg)
 endfunction
 
+
+" 终端只适合dark主题
+if !has("gui_running")
+  let g:var_background="dark"
+endif
+
 if g:var_enable_background_change_on_sunset
   call ChangeBackgroundOnSunset()
 else
