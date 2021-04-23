@@ -216,7 +216,7 @@ nnoremap <silent> <space>lx :<C-u>CocList --normal extensions<CR>
 autocmd FileType scss setl iskeyword+=@-@"
 
 " coc-prettier
-noremap <c-s-i> :<c-u>CocCommand prettier.formatFile<cr>
+noremap <c-a-i> :<c-u>CocCommand prettier.formatFile<cr>
 
 
 " nmap <space>coa  <Plug>(coc-codeaction)
