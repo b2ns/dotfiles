@@ -41,8 +41,7 @@ nnoremap <silent> <space>nm :NERDTreeMirror<CR>
 autocmd bufenter * if (winnr("$") ==? 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " 窗口宽度(31)
-let g:NERDTreeWinSize=35
-let g:NERDTreeWinSizeMax=35
+let g:NERDTreeWinSize=45
 " 打开文件后自动关闭
 let g:NERDTreeQuitOnOpen=1
 let g:NERDTreeMinimalUI = 1
