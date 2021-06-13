@@ -1,0 +1,36 @@
+{
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"],
+  "compilerOptions": {
+    "outDir": "dist",
+
+    "target": "ES5",
+    "module": "commonjs",
+
+    "allowJs": true,
+    "checkJs": false,
+    "jsx": "react",
+    "isolatedModules": false,
+
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "declaration": true,
+    "declarationDir": "types",
+    "sourceMap": true,
+
+    "strict": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+
+    "noEmitOnError": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
+  }
+}

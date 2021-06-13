@@ -15,6 +15,7 @@ configFiles=(
   \ "editorconfig/.editorconfig"
   \ "eslint/.eslintrc.js"
   \ "stylelint/.stylelintrc.js"
+  \ "typescript/tsconfig.json"
   \ "Vim/.vimrc"
   \ "Vim/AsyncTasks/.tasks"
 )
