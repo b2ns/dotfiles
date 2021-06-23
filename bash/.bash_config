@@ -14,6 +14,11 @@ alias Gb='git branch'
 alias Gd='git diff'
 alias Gl='git log'
 
+alias vpnc='expressvpn connect'
+alias vpnd='expressvpn disconnect'
+alias vpns='expressvpn status'
+alias vpnl='expressvpn ls'
+
 ### 其他 ###
 # bash prompt
 green=$'\e[1;32m'
