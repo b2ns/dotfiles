@@ -172,7 +172,9 @@ let g:coc_global_extensions = [
       \ "coc-emmet",
       \ "coc-emoji",
       \ "coc-html",
+      \ "coc-html-css-support",
       \ "coc-json",
+      \ "coc-lightbulb",
       \ "coc-marketplace",
       \ "coc-prettier",
       \ "coc-sh",
@@ -181,6 +183,7 @@ let g:coc_global_extensions = [
       \ "coc-tsserver",
       \ "coc-ultisnips",
       \ "coc-vetur",
+      \ "@yaegassy/coc-volar",
       \ "coc-vimlsp",
       \ "coc-yaml"
       \]
