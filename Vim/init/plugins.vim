@@ -32,7 +32,7 @@ call plug#begin(get(g:, 'bundle_home', '~/.vim/plugged'))
 "--------------------------------
 " 文件浏览
 "--------------------------------
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
 
 nnoremap <silent> <space>nn :NERDTreeFocus<CR>
 nnoremap <silent> <space>nm :NERDTreeMirror<CR>
@@ -118,7 +118,7 @@ Plug 'terryma/vim-multiple-cursors'
 "--------------------------------
 " 快速注释
 "--------------------------------
-Plug 'scrooloose/nerdcommenter'
+Plug 'preservim/nerdcommenter'
 
 " 注释间增加空格
 let g:NERDSpaceDelims=1
