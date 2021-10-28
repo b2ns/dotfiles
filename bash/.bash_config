@@ -1,4 +1,9 @@
 ### 设置环境变量 ###
+# history
+export HISTIGNORE='pwd:exit:fg:bg:top:clear:history:ls:uptime:df:cd:ll:la:rm:q:sss:hist'
+export HISTCONTROL='ignorespace:ignoredups'
+shopt -s histappend
+export HISTSIZE=10000
 
 ### 设置别名 ###
 alias rm='rm -i'
@@ -18,6 +23,8 @@ alias vpnc='expressvpn connect'
 alias vpnd='expressvpn disconnect'
 alias vpns='expressvpn status'
 alias vpnl='expressvpn ls'
+
+alias hist=' history'
 
 ### 其他 ###
 # bash prompt
