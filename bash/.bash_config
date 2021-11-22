@@ -6,6 +6,10 @@ shopt -s histappend
 export HISTSIZE=10000
 
 ### 设置别名 ###
+alias '..'='cd ..'
+alias '...'='cd ../..'
+alias '-'='cd -'
+
 alias rm='rm -i'
 alias q='exit'
 alias sss='shutdown now'
@@ -14,10 +18,10 @@ alias v='gvim'
 alias e='gedit'
 alias c='code'
 
-alias Gs='git status'
-alias Gb='git branch'
-alias Gd='git diff'
-alias Gl='git log'
+alias gs='git status'
+alias gb='git branch'
+alias gd='git diff'
+alias gl='git log'
 
 alias vpnc='expressvpn connect'
 alias vpnd='expressvpn disconnect'
