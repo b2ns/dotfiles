@@ -182,7 +182,6 @@ let g:coc_global_extensions = [
       \ "coc-tabnine",
       \ "coc-tsserver",
       \ "coc-ultisnips",
-      \ "coc-vetur",
       \ "@yaegassy/coc-volar",
       \ "coc-vimlsp",
       \ "coc-yaml"
