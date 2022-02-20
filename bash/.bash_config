@@ -22,14 +22,16 @@ alias gb='git branch'
 alias gd='git diff'
 alias gl='git log'
 
-alias vpnc='expressvpn connect'
-alias vpnd='expressvpn disconnect'
-alias vpns='expressvpn status'
-alias vpnl='expressvpn ls'
+alias hist='history'
 
-alias hist=' history'
+alias dev='yarn run dev'
+alias start='yarn run start'
+alias build='yarn run build'
 
 ### 其他 ###
+# Homebrew
+export HOMEBREW_NO_AUTO_UPDATE=1
+
 # bash prompt
 green=$'\e[1;32m'
 cyan=$'\e[1;36m'
@@ -37,6 +39,9 @@ blue=$'\e[1;34m'
 purple=$'\e[1;35m'
 normal=$'\e[m'
 PS1='\[$green\]\u@\[$purple\]\h:\[$blue\]\w\[$cyan\]\[$normal\]\\$ '
+
+# bash_completion
+[[ -r "/home/linuxbrew/.linuxbrew/etc/profile.d/bash_completion.sh" ]] && . "/home/linuxbrew/.linuxbrew/etc/profile.d/bash_completion.sh"
 
 # git prompt
 if [ -f "/home/linuxbrew/.linuxbrew/opt/bash-git-prompt/share/gitprompt.sh" ]; then
@@ -63,8 +68,12 @@ if [ -f "/home/linuxbrew/.linuxbrew/opt/bash-git-prompt/share/gitprompt.sh" ]; t
   source "/home/linuxbrew/.linuxbrew/opt/bash-git-prompt/share/gitprompt.sh"
 fi
 
-# Homebrew
-export HOMEBREW_NO_AUTO_UPDATE=1
+# bashmarks
+if [ -f ~/.local/bin/bashmarks.sh ]; then
+  . ~/.local/bin/bashmarks.sh
+fi
 
-# bash_completion
-[[ -r "/home/linuxbrew/.linuxbrew/etc/profile.d/bash_completion.sh" ]] && . "/home/linuxbrew/.linuxbrew/etc/profile.d/bash_completion.sh"
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

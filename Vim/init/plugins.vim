@@ -164,7 +164,7 @@ Plug 'tpope/vim-surround'
 "--------------------------------
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-let g:coc_config_home = "~/Git/config/Vim/coc/"
+let g:coc_config_home = "~/github/b2ns/config/Vim/coc/"
 
 let g:coc_global_extensions = [
       \ "coc-calc",
