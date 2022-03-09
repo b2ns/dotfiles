@@ -60,7 +60,19 @@ switch ($1) {
 endsnippet
 
 snippet for "for loop" i
-for (let i = 0$1; i < 5$2; i++$3) {
+for ($1) {
+	$2
+}$0
+endsnippet
+
+snippet foi "for loop i" i
+for (let i = 0$1; i < n$2; i++$3) {
+	$4
+}$0
+endsnippet
+
+snippet foj "for loop j" i
+for (let j = 0$1; j < n$2; j++$3) {
 	$4
 }$0
 endsnippet
@@ -78,7 +90,7 @@ function () {
 }$0
 endsnippet
 
-snippet >> "箭头函数" i
+snippet >>> "箭头函数" i
 ($1) => $0
 endsnippet
 
@@ -88,7 +100,7 @@ function $1($2) {
 }$0
 endsnippet
 
-snippet == "箭头函数" i
+snippet === "箭头函数" i
 ($1) => {
 	$2
 }$0
@@ -115,6 +127,10 @@ endsnippet
 
 #######################  模块  #######################
 snippet imp "import from ;" i
+import '$1';$0
+endsnippet
+
+snippet impf "import from ;" i
 import $2 from '$1';$0
 endsnippet
 
@@ -123,11 +139,11 @@ const $2 = require('$1');$0
 endsnippet
 
 snippet exp "export ;" i
-export {$1};$0
+export const $0
 endsnippet
 
 snippet expd "export default ;" i
-export default $1;$0
+export default $0
 endsnippet
 
 #######################  class  #######################
@@ -179,9 +195,11 @@ snippet events "" i
 const Emitter = require('events').EventEmitter;$0
 endsnippet
 
-#######################  小程序  #######################
-
 #######################  其他  #######################
+snippet con "const" i
+const 
+endsnippet
+
 snippet timeout "setTimeout" i
 setTimeout(() => {
 	$2
