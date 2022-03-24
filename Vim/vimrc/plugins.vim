@@ -15,21 +15,6 @@ call plug#begin(get(g:, 'bundle_home', '~/.vim/plugged'))
 " 基础配置
 "----------------------------------------------------------------------
 "--------------------------------
-" workspace or session
-"--------------------------------
-" Plug 'thaerkh/vim-workspace'"
-
-" let g:workspace_autocreate =1
-" let g:workspace_session_disable_on_args = 1
-" let g:workspace_session_directory = $HOME . '/.vim/.sessions/'
-" let g:workspace_persist_undo_history = 0
-" let g:workspace_undodir= $HOME . '/.vim/.undodir/'
-" let g:workspace_autosave = 0
-" let g:workspace_autosave_untrailspaces = 0
-
-" nnoremap <space>ws :ToggleWorkspace<CR>
-
-"--------------------------------
 " 文件浏览
 "--------------------------------
 Plug 'preservim/nerdtree'
@@ -111,14 +96,14 @@ noremap <leader>e <Plug>(easymotion-E)
 noremap <leader>b <Plug>(easymotion-B)
 
 "--------------------------------
-" sublime中multiple
+" multiple cursor
 "--------------------------------
 Plug 'terryma/vim-multiple-cursors'
 
 "--------------------------------
 " 快速注释
 "--------------------------------
-Plug 'preservim/nerdcommenter'
+Plug 'preservim/nerdcommenter', { 'tag': '2.5.2' }
 
 " 注释间增加空格
 let g:NERDSpaceDelims=1
@@ -182,9 +167,11 @@ let g:coc_global_extensions = [
       \ "coc-tabnine",
       \ "coc-tsserver",
       \ "coc-ultisnips",
+      \ "coc-vetur",
       \ "@yaegassy/coc-volar",
       \ "coc-vimlsp",
-      \ "coc-yaml"
+      \ "coc-yaml",
+      \ "coc-java",
       \]
 
 set sessionoptions+=globals
@@ -217,8 +204,7 @@ nnoremap <silent> <space>lx :<C-u>CocList --normal extensions<CR>
 autocmd FileType scss setl iskeyword+=@-@"
 
 " coc-prettier
-noremap <c-a-i> :<c-u>CocCommand prettier.formatFile<cr>
-
+" noremap <c-a-i> :<c-u>CocCommand prettier.formatFile<cr>
 
 " nmap <space>coa  <Plug>(coc-codeaction)
 nmap <space>coa  :<c-u>CocAction<cr>
@@ -239,7 +225,6 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 Plug 'mattn/emmet-vim'
 " Emmet触发按键(<c-y>)
 let g:user_emmet_leader_key='<leader>'
-" 使用HTML5标准风格
 let g:emmet_html5=1
 " 全局开启
 let g:user_emmet_install_global=1
@@ -259,6 +244,17 @@ let g:UltiSnipsJumpBackwardTrgger='<leader>N'
 " 不使用snipMate的代码片段
 let g:UltiSnipsEnableSnipMate=0
 
+"--------------------------------
+" 代码格式化
+"--------------------------------
+noremap <c-s-i> :<c-u>call FormatCode()<cr>
+function! FormatCode()
+  if &ft ==? 'java'
+    call Formatcode#Run(g:var_formatter_java)
+  else
+    execute "CocCommand prettier.formatFile"
+  endif
+endfunction
 
 "----------------------------------------------------------------------
 " 类型扩展
@@ -293,11 +289,35 @@ Plug 'herringtondarkholme/yats.vim'
 "--------------------------------
 " vue
 "--------------------------------
-Plug 'posva/vim-vue'
-
+" Plug 'posva/vim-vue'
 " autocmd FileType vue syntax sync fromstart
 " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
-let g:vue_disable_pre_processors=1
+" let g:vue_disable_pre_processors=1
+
+Plug 'leafOfTree/vim-vue-plugin'
+let g:vim_vue_plugin_config = {
+      \'syntax': {
+        \   'template': ['html'],
+        \   'script': ['javascript', 'typescript'],
+        \   'style': ['css', 'less', 'scss'],
+        \},
+        \'attribute': 1,
+        \'keyword': 1,
+        \'foldexpr': 0,
+        \'debug': 0,
+        \}
+" function! OnChangeVueSyntax(syntax)
+" " echom 'Syntax is '.a:syntax
+" if a:syntax == 'html'
+" setlocal commentstring=<!--%s-->
+" setlocal comments=s:<!--,m:\ \ \ \ ,e:-->
+" elseif a:syntax =~ 'css' || a:syntax =~ 'less' || a:syntax =~ 'scss'
+" setlocal comments=s1:/*,mb:*,ex:*/ commentstring&
+" else
+" setlocal commentstring=//%s
+" setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
+" endif
+" endfunction
 
 "--------------------------------
 " jsx
@@ -322,6 +342,11 @@ endfunction
 let g:mkdp_browserfunc = 'g:Open_browser'
 
 autocmd FIleType markdown nnoremap <silent> <space>to :GenTocGFM<cr>
+
+"--------------------------------
+" java
+"--------------------------------
+Plug 'uiiaoo/java-syntax.vim'
 
 "--------------------------------
 " Lisp
@@ -406,18 +431,18 @@ let g:rainbow_conf = {
       \ 'operators': '_,_',
       \ 'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
       \ 'separately': {
-      \  '*': {},
-      \  'tex': {
-      \   'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
-      \  },
-      \  'lisp': 0,
-      \  'vim': {
-      \   'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
-      \  },
-      \  'html': 0,
-      \  'css': 0,
-      \ }
-      \}
+        \  '*': {},
+        \  'tex': {
+          \   'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+          \  },
+          \  'lisp': 0,
+          \  'vim': {
+            \   'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+            \  },
+            \  'html': 0,
+            \  'css': 0,
+            \ }
+            \}
 
 "--------------------------------
 " 开始界面
@@ -522,4 +547,3 @@ noremap <space>lvs :BraceyStop<cr>
 " 结束插件安装
 "----------------------------------------------------------------------
 call plug#end()
-

@@ -88,9 +88,21 @@ switch ($1) {
 }$0
 endsnippet
 
-snippet for "for loop"
-for (int i = 0$1; i < 5$2; i++$3) {
-	$4
+snippet for "for loop" i
+for ($1) {
+	$2
+}$0
+endsnippet
+
+snippet foi "for loop i" i
+for (int i = 0; i < n$1; i++) {
+	$2
+}$0
+endsnippet
+
+snippet foj "for loop j" i
+for (int j = 0; j < n$1; j++) {
+	$2
 }$0
 endsnippet
 

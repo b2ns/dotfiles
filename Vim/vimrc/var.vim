@@ -28,6 +28,7 @@ let g:var_colorscheme="solarized8_flat"
 let g:var_colorscheme_light="solarized8_high"
 let g:var_background="light"
 let g:var_enable_background_change_on_sunset=0
+let g:var_formatter_java="java -jar ~/Downloads/google-java-format-1.15.0-all-deps.jar - "
 " 日出日落时间24制(800==08:00, 1830==18:30)
 let g:var_sunrise_time=830
 let g:var_sunset_time=1830

@@ -66,14 +66,20 @@ for ($1) {
 endsnippet
 
 snippet foi "for loop i" i
-for (let i = 0$1; i < n$2; i++$3) {
-	$4
+for (let i = 0; i < n$1; i++) {
+	$2
 }$0
 endsnippet
 
 snippet foj "for loop j" i
-for (let j = 0$1; j < n$2; j++$3) {
-	$4
+for (let j = 0; j < n$1; j++) {
+	$2
+}$0
+endsnippet
+
+snippet foof "for of loop" i
+for (const ${1:item} of $2) {
+	$3
 }$0
 endsnippet
 
@@ -90,8 +96,12 @@ function () {
 }$0
 endsnippet
 
-snippet >>> "箭头函数" i
+snippet >> "箭头函数" i
 ($1) => $0
+endsnippet
+
+snippet >o "箭头函数直接返回对象" i
+($1) => ({$2})$0
 endsnippet
 
 snippet fnc "带参数函数" i
@@ -100,7 +110,7 @@ function $1($2) {
 }$0
 endsnippet
 
-snippet === "箭头函数" i
+snippet == "箭头函数" i
 ($1) => {
 	$2
 }$0

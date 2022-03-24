@@ -1,5 +1,6 @@
 {
   "coc.preferences.extensionUpdateCheck": "weekly",
   "clangd.path": "/home/ding/.config/coc/extensions/coc-clangd-data/install/11.0.0/clangd_11.0.0/bin/clangd",
-  "vetur.ignoreProjectWarning": true
+  "vetur.ignoreProjectWarning": true,
+  "java.format.settings.url": "/home/ding/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml"
 }
