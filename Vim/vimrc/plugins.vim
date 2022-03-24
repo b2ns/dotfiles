@@ -103,32 +103,32 @@ Plug 'terryma/vim-multiple-cursors'
 "--------------------------------
 " 快速注释
 "--------------------------------
-Plug 'preservim/nerdcommenter', { 'tag': '2.5.2' }
+Plug 'preservim/nerdcommenter'
 
 " 注释间增加空格
 let g:NERDSpaceDelims=1
 " 取消注释时移除空格
 let g:NERDRemoveExtraSpaces=1
 " 针对vue文件
-let g:ft=''
-function! NERDCommenter_before()
-  if &ft ==? 'vue'
-    let g:ft='vue'
-    let stack=synstack(line('.'), col('.'))
-    if len(stack) > 0
-      let syn=synIDattr((stack)[0], 'name')
-      if len(syn) > 0
-        exe 'setf ' . substitute(tolower(syn), '^vue_', '', '')
-      endif
-    endif
-  endif
-endfunction
-function! NERDCommenter_after()
-  if g:ft ==? 'vue'
-    setf vue
-    let g:ft=''
-  endif
-endfunction
+" let g:ft=''
+" function! NERDCommenter_before()
+  " if &ft ==? 'vue'
+    " let g:ft='vue'
+    " let stack=synstack(line('.'), col('.'))
+    " if len(stack) > 0
+      " let syn=synIDattr((stack)[0], 'name')
+      " if len(syn) > 0
+        " exe 'setf ' . substitute(tolower(syn), '^vue_', '', '')
+      " endif
+    " endif
+  " endif
+" endfunction
+" function! NERDCommenter_after()
+  " if g:ft ==? 'vue'
+    " setf vue
+    " let g:ft=''
+  " endif
+" endfunction
 
 "--------------------------------
 " 重复上次操作
@@ -290,9 +290,9 @@ Plug 'herringtondarkholme/yats.vim'
 " vue
 "--------------------------------
 " Plug 'posva/vim-vue'
+" let g:vue_disable_pre_processors=1
 " autocmd FileType vue syntax sync fromstart
 " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
-" let g:vue_disable_pre_processors=1
 
 Plug 'leafOfTree/vim-vue-plugin'
 let g:vim_vue_plugin_config = {
