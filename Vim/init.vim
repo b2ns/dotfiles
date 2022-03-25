@@ -30,22 +30,22 @@ set rtp+=~/.vim
 "----------------------------------------------------------------------
 
 " 全局变量
-LoadScript vimrc/var.vim
+LoadScript config/var.vim
 
 " 基础配置
-LoadScript vimrc/basic.vim
+LoadScript config/basic.vim
 
 " 扩展配置
-LoadScript vimrc/config.vim
+LoadScript config/config.vim
 
 " 插件加载
-LoadScript vimrc/plugins.vim
+LoadScript config/plugins.vim
 
 " 界面样式
-LoadScript vimrc/style.vim
+LoadScript config/style.vim
 
 " 自定义按键
-LoadScript vimrc/keymaps.vim
+LoadScript config/keymaps.vim
 
 highlight link javaIdentifier NONE
 highlight link javaDelimiter NONE
