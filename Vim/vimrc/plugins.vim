@@ -521,7 +521,7 @@ Plug 'skywind3000/asyncrun.vim', { 'on': ['AsyncRun', 'AsyncStop'] }
 Plug 'skywind3000/asynctasks.vim', { 'on': ['AsyncTask', 'AsyncTaskMacro', 'AsyncTaskList', 'AsyncTaskEdit'] }
 
 let g:asyncrun_open = 6
-let g:asynctasks_term_pos = 'bottom'
+let g:asynctasks_term_pos = 'external'
 noremap <silent> <f4> :AsyncTask file-build<cr>
 noremap <silent> <f5> :AsyncTask file-run<cr>
 
