@@ -72,6 +72,10 @@ nnoremap <space>fh :History<cr>
 
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
+"--------------------------------
+" 书签
+"--------------------------------
+Plug 'MattesGroeger/vim-bookmarks'
 
 "----------------------------------------------------------------------
 " 辅助操作
@@ -140,6 +144,10 @@ Plug 'tpope/vim-repeat'
 "--------------------------------
 Plug 'tpope/vim-surround'
 
+"--------------------------------
+" auto close tag
+"--------------------------------
+Plug 'AndrewRadev/tagalong.vim'
 
 "----------------------------------------------------------------------
 " 智能补全
@@ -504,6 +512,21 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 let g:gitgutter_map_keys = 0
+
+"--------------------------------
+" git blame
+"--------------------------------
+Plug 'APZelos/blamer.nvim'
+let g:blamer_enabled = 1
+let g:blamer_delay = 1000
+let g:blamer_show_in_visual_modes = 0
+let g:blamer_show_in_insert_modes = 0
+let g:blamer_date_format = '%Y/%m/%d %H:%M'
+
+"--------------------------------
+" 查看commit
+"--------------------------------
+Plug 'junegunn/gv.vim'
 
 "----------------------------------------------------------------------
 " 其他
