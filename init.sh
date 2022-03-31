@@ -18,6 +18,7 @@ configFiles=(
   \ "typescript/tsconfig.json"
   \ "Vim/.vimrc"
   \ "Vim/AsyncTasks/.tasks"
+  \ "Vim/Vimspector/.vimspector.json"
 )
 
 # make symbolic link to home root

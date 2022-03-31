@@ -112,6 +112,7 @@ function! ChangeBackground(bg)
   " 明亮背景使用不同的主题，以免亮色对比度太低
   call ChangeColorscheme(a:bg == "dark" ? g:var_colorscheme : g:var_colorscheme_light)
   let &background=s:background
+  call g:UTILLocalStorageSet("background", s:background)
 endfunction
 
 " 切换明暗背景
@@ -135,6 +136,7 @@ if !has("gui_running")
   let g:var_background="dark"
 endif
 
+" 启动后设置一次背景
 if g:var_enable_background_change_on_sunset
   call ChangeBackgroundOnSunset()
 else

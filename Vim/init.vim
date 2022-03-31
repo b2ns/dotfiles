@@ -29,6 +29,9 @@ set rtp+=~/.vim
 " 模块加载
 "----------------------------------------------------------------------
 
+" 自定义的一些功能函数
+LoadScript config/utils.vim
+
 " 全局变量
 LoadScript config/var.vim
 

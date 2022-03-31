@@ -1,6 +1,23 @@
 {
   "coc.preferences.extensionUpdateCheck": "weekly",
-  "clangd.path": "/home/ding/.config/coc/extensions/coc-clangd-data/install/11.0.0/clangd_11.0.0/bin/clangd",
-  "vetur.ignoreProjectWarning": true,
-  "java.format.settings.url": "/home/ding/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml"
+  "coc.preferences.colorSupport": true,
+  "colors.filetypes": ["*"],
+  "java.format.settings.url": "/home/ding/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml",
+  "java.referencesCodeLens.enabled": true,
+  "java.implementationsCodeLens.enabled": true,
+  "java.signatureHelp.enabled": true,
+  "java.completion.guessMethodArguments": true,
+  "java.format.enabled": true,
+  "java.format.onType.enabled": true,
+  "cssmodules.camelCase": true,
+  "explorer.icon.enableNerdfont": true,
+  "html-css-support.enabledLanguages": [
+    "html",
+    "vue",
+    "blade",
+    "typescriptreact",
+    "javascriptreact",
+    "javascript",
+    "typescript"
+  ]
 }

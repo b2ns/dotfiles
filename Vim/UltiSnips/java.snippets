@@ -1,0 +1,39 @@
+priority -30
+
+extends javascript
+
+snippet log "System.out.println" i
+System.out.println($1);$0
+endsnippet
+
+snippet cl "class" i
+public class $1 {
+	public $1() {
+		$0
+	}
+}
+endsnippet
+
+snippet clm "class main" i
+public class $1 {
+	public static void main(String[] args) {
+		$0
+	}
+}
+endsnippet
+
+snippet ex "extends" i
+public class $1 extends $2 {
+	public $1() {
+		$0
+	}
+}
+endsnippet
+
+snippet ipl "implements" i
+public class $1 implements $2 {
+	public $1() {
+		$0
+	}
+}
+endsnippet

@@ -4,12 +4,10 @@
 "
 "======================================================================
 
-
 "----------------------------------------------------------------------
 " 在 ~/.vim/plugged 下安装插件
 "----------------------------------------------------------------------
 call plug#begin(get(g:, 'bundle_home', '~/.vim/plugged'))
-
 
 "----------------------------------------------------------------------
 " 基础配置
@@ -17,10 +15,10 @@ call plug#begin(get(g:, 'bundle_home', '~/.vim/plugged'))
 "--------------------------------
 " 文件浏览
 "--------------------------------
-Plug 'preservim/nerdtree'
+" Plug 'preservim/nerdtree'
 
-nnoremap <silent> <space>nn :NERDTreeFocus<CR>
-nnoremap <silent> <space>nm :NERDTreeMirror<CR>
+" nnoremap <silent> <space>nn :NERDTreeFocus<CR>
+" nnoremap <silent> <space>nm :NERDTreeMirror<CR>
 
 " 自动关闭
 autocmd bufenter * if (winnr("$") ==? 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -35,7 +33,7 @@ let g:NERDTreeHijackNetrw = 0
 "--------------------------------
 " 文件复制移动删除
 "--------------------------------
-Plug 'PhilRunninger/nerdtree-visual-selection'
+" Plug 'PhilRunninger/nerdtree-visual-selection'
 
 "--------------------------------
 " clean hidden buffer
@@ -46,11 +44,11 @@ Plug 'Asheq/close-buffers.vim'
 "--------------------------------
 " outline
 "--------------------------------
-Plug 'majutsushi/tagbar'
+" Plug 'majutsushi/tagbar'
 
-nnoremap <silent> <space>tb :TagbarToggle<CR>
+" nnoremap <silent> <space>tb :TagbarToggle<CR>
 " 窗口宽度(40)
-let g:tagbar_width=20
+" let g:tagbar_width=20
 
 "--------------------------------
 " 模糊搜索
@@ -61,9 +59,11 @@ Plug 'junegunn/fzf.vim'
 set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf
 
 nnoremap <space>ff :Files<cr>
-nnoremap <space>fg :GFiles<cr>
-nnoremap <space>fr :Rg
 nnoremap <space>fh :History<cr>
+nnoremap <space>fb :Buffers<cr>
+nnoremap <space>fr :Rg
+nnoremap <space>fg :GFiles<cr>
+nnoremap <space>fc :Commits<cr>
 
 "--------------------------------
 " editorconfig
@@ -102,7 +102,7 @@ noremap <leader>b <Plug>(easymotion-B)
 "--------------------------------
 " multiple cursor
 "--------------------------------
-Plug 'terryma/vim-multiple-cursors'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 "--------------------------------
 " 快速注释
@@ -159,9 +159,12 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 let g:coc_config_home = "~/github/b2ns/config/Vim/coc/"
 
+let g:coc_snippet_next = '<tab>'
+
 let g:coc_global_extensions = [
       \ "coc-calc",
       \ "coc-css",
+      \ "coc-cssmodules",
       \ "coc-emmet",
       \ "coc-emoji",
       \ "coc-html",
@@ -171,70 +174,191 @@ let g:coc_global_extensions = [
       \ "coc-marketplace",
       \ "coc-prettier",
       \ "coc-sh",
-      \ "coc-snippets",
       \ "coc-tabnine",
       \ "coc-tsserver",
-      \ "coc-ultisnips",
       \ "coc-vetur",
       \ "@yaegassy/coc-volar",
       \ "coc-vimlsp",
       \ "coc-yaml",
       \ "coc-java",
+      \ "coc-java-debug",
+      \ "coc-snippets",
+      \ "coc-explorer",
+      \ "coc-highlight",
+      \ "coc-markdownlint",
+      \ "coc-markmap",
+      \ "@yaegassy/coc-nginx",
+      \ "coc-spell-checker",
+      \ "coc-sql",
+      \ "coc-tasks",
+      \ "coc-yank",
+      \ "coc-db",
       \]
 
-set sessionoptions+=globals
+" coc-explorer
+nnoremap <silent> <space>nn <Cmd>CocCommand explorer --quit-on-open --position tab:0<CR>
 
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" coc-markmap
+command! -range=% Markmap CocCommand markmap.create <line1> <line2>
 
-inoremap <silent><expr> <c-space> coc#refresh()
-if !has("gui_running")
-  inoremap <silent><expr> <NUL> coc#refresh()
+" coc-css
+autocmd FileType scss setl iskeyword+=@-@"
+
+
+" Set internal encoding of vim, not needed on neovim, since coc.nvim using some
+" unicode characters in the file autoload/float.vim
+set encoding=utf-8
+
+" TextEdit might fail if hidden is not set.
+set hidden
+
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("nvim-0.5.0") || has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
 endif
 
+" Use tab for trigger completion with characters ahead and navigate.
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-let g:coc_snippet_next = '<tab>'
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  " inoremap <silent><expr> <c-@> coc#refresh()
+  inoremap <silent><expr> <c-space> coc#refresh()
+endif
+if !has("gui_running")
+  inoremap <silent><expr> <NUL> coc#refresh()
+endif
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+set termguicolors
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocActionAsync('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
+
+" Add `:ORI` command for organize imports of the current buffer.
+command! -nargs=0 ORI :call CocActionAsync('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
 
 " list
-nnoremap <silent> <space>li :<C-u>CocList --normal<CR>
-nnoremap <silent> <space>lx :<C-u>CocList --normal extensions<CR>
+nnoremap <silent><nowait> <space>li :<C-u>CocList<cr>
+nnoremap <silent><nowait> <space>ll :<C-u>CocListResume<cr>
+nnoremap <silent><nowait> <space>lx :<C-u>CocList extensions<cr>
+nnoremap <silent><nowait> <space>lc :<C-u>CocList commands<cr>
+nnoremap <silent><nowait> <space>le :<C-u>CocList diagnostics<cr>
+" nnoremap <silent><nowait> <space>lo :<C-u>CocList outline<cr>
+nnoremap <silent><nowait> <space>lo :<C-u>CocOutline<cr>
+nnoremap <silent><nowait> <space>ls :<C-u>CocList -I symbols<cr>
+nnoremap <silent><nowait> <space>ly :<C-u>CocList -A --normal yank<cr>
 
-" coc-css
-autocmd FileType scss setl iskeyword+=@-@"
+" Do default action for next item.
+" nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+" nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 
-" coc-prettier
-" noremap <c-a-i> :<c-u>CocCommand prettier.formatFile<cr>
+" nmap <c-a-i> <Plug>(coc-format)
+nmap <c-a-i> :<c-u>Format<cr>
+nmap <c-a-o> :<c-u>ORI<cr>
+nmap <c-a-m> :CocCommand 
+nmap <c-a-c> :<c-u>CocConfig<cr>
+nmap <c-a-r> :CocSearch 
 
-" nmap <space>coa  <Plug>(coc-codeaction)
-nmap <space>coa  :<c-u>CocAction<cr>
-nmap <space>cof  <Plug>(coc-fix-current)
-nmap <space>cor  <Plug>(coc-rename)
+nmap <space>ca <Plug>(coc-codeaction)
+vmap <space>ca  <Plug>(coc-codeaction-selected)
+nmap <space>cla  <Plug>(coc-codelens-action)
+nmap <space>cf <Plug>(coc-fix-current)
+nmap <space>cr <Plug>(coc-rename)
 
 nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
 "--------------------------------
 " html、css补全
 "--------------------------------
 Plug 'mattn/emmet-vim'
-" Emmet触发按键(<c-y>)
-let g:user_emmet_leader_key='<leader>'
-let g:emmet_html5=1
-" 全局开启
+" let g:user_emmet_leader_key='<leader>'
+let g:user_emmet_mode='i'
 let g:user_emmet_install_global=1
 " 特定文件开启emmet
 " autocmd FileType html,css,sass,scss,less,vue,jsx,markdown,wxml,wxss EmmetInstall
@@ -242,31 +366,41 @@ let g:user_emmet_install_global=1
 "--------------------------------
 " 代码片段
 "--------------------------------
-Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+" Plug 'SirVer/ultisnips'
 
 "let g:UltiSnipsExpandTrigger="<leader><tab>"
-let g:UltiSnipsJumpForwardTrigger='<leader>n'
-let g:UltiSnipsJumpBackwardTrgger='<leader>N'
+" let g:UltiSnipsJumpForwardTrigger='<leader>n'
+" let g:UltiSnipsJumpBackwardTrgger='<leader>N'
 "let g:UltiSnipsListSnippets="<c-e>"
 " 不使用snipMate的代码片段
-let g:UltiSnipsEnableSnipMate=0
+" let g:UltiSnipsEnableSnipMate=0
 
 "--------------------------------
 " 代码格式化
 "--------------------------------
-noremap <c-s-i> :<c-u>call FormatCode()<cr>
-function! FormatCode()
-  if &ft ==? 'java'
-    call Formatcode#Run(g:var_formatter_java)
-  else
-    execute "CocCommand prettier.formatFile"
-  endif
-endfunction
+" noremap <c-a-i> :<c-u>call FormatCode()<cr>
+" function! FormatCode()
+  " if &ft ==? 'java'
+    " call Formatcode#Run(g:var_formatter_java)
+  " else
+    " execute "CocCommand prettier.formatFile"
+  " endif
+" endfunction
 
 "----------------------------------------------------------------------
 " 类型扩展
 "----------------------------------------------------------------------
+"--------------------------------
+" jsonc
+"--------------------------------
+" autocmd FileType json syntax match Comment +\/\/.\+$+
+Plug 'neoclide/jsonc.vim'
+autocmd BufRead,BufNewFile *.json set filetype=jsonc
+" augroup JsonToJsonc
+  " autocmd! FileType json set filetype=jsonc
+" augroup END
+
 "--------------------------------
 " css
 "--------------------------------
@@ -357,6 +491,12 @@ autocmd FIleType markdown nnoremap <silent> <space>to :GenTocGFM<cr>
 Plug 'uiiaoo/java-syntax.vim'
 
 "--------------------------------
+" 数据库
+"--------------------------------
+Plug 'tpope/vim-dadbod'
+Plug 'kristijanhusak/vim-dadbod-ui'
+
+"--------------------------------
 " Lisp
 "--------------------------------
 " Plug 'kovisoft/slimv'
@@ -425,32 +565,7 @@ Plug 'yggdroot/indentline'
 
 let g:indentLine_char_list=['|', '¦', '┆', '┊']
 autocmd FileType json,markdown let g:indentLine_setConceal=0
-
-"--------------------------------
-" 彩虹括号
-"--------------------------------
-" WARNING: may add ugly square brackets to devicons
-" Plug 'luochen1990/rainbow'
-
-let g:rainbow_active = 1
-let g:rainbow_conf = {
-      \ 'guifgs': ['red1', 'orange1', 'yellow1', 'greenyellow', 'green1', 'springgreen1', 'cyan1', 'slateblue1', 'magenta1', 'purple1'],
-      \ 'ctermfgs': ['red', 'yellow', 'green', 'cyan', 'magenta'],
-      \ 'operators': '_,_',
-      \ 'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-      \ 'separately': {
-        \  '*': {},
-        \  'tex': {
-          \   'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
-          \  },
-          \  'lisp': 0,
-          \  'vim': {
-            \   'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
-            \  },
-            \  'html': 0,
-            \  'css': 0,
-            \ }
-            \}
+let g:indentLine_fileTypeExclude=['coc-explorer']
 
 "--------------------------------
 " 开始界面
@@ -481,21 +596,21 @@ let g:startify_custom_header = ['']
 "--------------------------------
 " 文件图标
 "--------------------------------
-Plug 'ryanoasis/vim-devicons'
+" Plug 'ryanoasis/vim-devicons'
 
-let g:webdevicons_conceal_nerdtree_brackets = 1
-let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
+" let g:webdevicons_conceal_nerdtree_brackets = 1
+" let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+" let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
 
 "--------------------------------
 " 文件图标颜色高亮
 "--------------------------------
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
-let g:NERDTreeFileExtensionHighlightFullName = 1
-let g:NERDTreeExactMatchHighlightFullName = 1
-let g:NERDTreePatternMatchHighlightFullName = 1
-let g:NERDTreeHighlightCursorline = 0
+" let g:NERDTreeFileExtensionHighlightFullName = 1
+" let g:NERDTreeExactMatchHighlightFullName = 1
+" let g:NERDTreePatternMatchHighlightFullName = 1
+" let g:NERDTreeHighlightCursorline = 0
 
 
 "----------------------------------------------------------------------
@@ -517,7 +632,7 @@ let g:gitgutter_map_keys = 0
 " git blame
 "--------------------------------
 Plug 'APZelos/blamer.nvim'
-let g:blamer_enabled = 1
+let g:blamer_enabled = 0
 let g:blamer_delay = 1000
 let g:blamer_show_in_visual_modes = 0
 let g:blamer_show_in_insert_modes = 0
@@ -557,14 +672,49 @@ noremap <space>lvv :Bracey<cr>
 noremap <space>lvs :BraceyStop<cr>
 
 "--------------------------------
-" jsoc
-"--------------------------------
-
-"--------------------------------
 " 本地和远程服务器文件同步
 "--------------------------------
 " Plug 'b2ns/vim-syncr'
 
+"--------------------------------
+" debug
+"--------------------------------
+Plug 'puremourning/vimspector'
+let g:vimspector_sign_priority = {
+  \    'vimspectorBP':         999,
+  \    'vimspectorBPCond':     999,
+  \    'vimspectorBPLog':      999,
+  \    'vimspectorBPDisabled': 999,
+  \    'vimspectorPC':         999,
+  \ }
+let g:vimspector_sidebar_width = 30
+let g:vimspector_bottombar_height = 10
+let g:vimspector_terminal_minwidth = 20
+" let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
+nmap <silent> <F6> <Plug>VimspectorToggleBreakpoint
+nmap <silent> <c-F6> <Plug>VimspectorToggleConditionalBreakpoint
+nmap <silent> <s-F6> <Plug>VimspectorAddFunctionBreakpoint
+nmap <silent> <F7> <Plug>VimspectorContinue
+nmap <silent> <c-F7> <Plug>VimspectorRestart
+nmap <silent> <s-F7> <Plug>VimspectorStop
+nmap <silent> <F8> <Plug>VimspectorStepOver
+nmap <silent> <c-F8> <Plug>VimspectorStepInto
+nmap <silent> <s-F8> <Plug>VimspectorStepOut
+nmap <silent> <F9> <Plug>VimspectorGoToCurrentLine
+nmap <silent> <c-F9> <Plug>VimspectorRunToCursor
+" nmap <silent> <F9> <Plug>VimspectorPause
+
+function JavaStartDebug()
+  call system("javac -g " . expand('%:t'))
+  call system("java -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005 " . expand('%:r:t') . " &")
+  execute "CocCommand java.debug.vimspector.start"
+endfunction
+
+nmap <F1> gg:call JavaStartDebug()<CR>
+
+"--------------------------------
+" test
+"--------------------------------
 
 "----------------------------------------------------------------------
 " 结束插件安装

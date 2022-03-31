@@ -22,7 +22,7 @@
 " 修改<Leader>，默认为'\'
 let mapleader=","
 " esc insert mode
-inoremap jj <esc>
+" inoremap jj <esc>
 
 " like C D in normal mode
 nnoremap Y y$
