@@ -174,32 +174,35 @@ function g:UTILGetColorscheme()
 endfunction
 
 " 判断主题是否拥有light或dark模式
-" 主题和背景不适配时，得到的主题名(default)和输入名会不一样，利用此特性来判断主题是否支持light或dark
+" 主题和背景不适配时，g:colors_name会不存在，利用此特性来判断主题是否支持light或dark
 function s:TestColorschemeMode(colorscheme, mode)
+  let flag=0
   " 记录之前的状态
   let preColorScheme=g:UTILGetColorscheme()
-  let preBackground=&background
 
-  let &background=a:mode
+  " 无法通过let &colorscheme=的方式设置
   exec "colorscheme ". a:colorscheme
-  let name=g:UTILGetColorscheme()
+  let &background=a:mode
+  if exists('g:colors_name')
+    let flag=1
+  endif
 
   " 还原之前的状态
-  let &background=preBackground
   exec "colorscheme ". preColorScheme
 
-  if name == a:colorscheme
-    return 1
-  endif
-  return 0
+  return flag
 endfunction
 
-let s:colorschemeModeDict={}
+let s:colorschemeModeDict=g:UTILLocalStorageGet('colorschemeModes', {})
 function g:UTILGetColorschemeMode(colorscheme)
   if !has_key(s:colorschemeModeDict, a:colorscheme)
-    let s:colorschemeModeDict[a:colorscheme]={'dark': 0, 'light': 0}
-    let s:colorschemeModeDict[a:colorscheme].dark=s:TestColorschemeMode(a:colorscheme, 'dark')
-    let s:colorschemeModeDict[a:colorscheme].light=s:TestColorschemeMode(a:colorscheme, 'light')
+    let s:colorschemeModeDict[a:colorscheme]={}
+    if s:TestColorschemeMode(a:colorscheme, 'dark')
+      let s:colorschemeModeDict[a:colorscheme].dark=1
+    endif
+    if s:TestColorschemeMode(a:colorscheme, 'light')
+      let s:colorschemeModeDict[a:colorscheme].light=1
+    endif
   endif
   return s:colorschemeModeDict[a:colorscheme]
 endfunction
@@ -215,20 +218,18 @@ endfor
 let s:colorschemeList=[]
 let s:colorschemePos=0
 
-let g:var_has_light_mode_colorscheme=[]
 function g:UTILSetColorscheme(colorscheme)
   if empty(a:colorscheme)
     return ""
   endif
 
-  " 无法通过let &colorscheme=的方式设置
   exec "colorscheme ". a:colorscheme
 
-  " 没有light模式的主题自动切换成dark模式
-  let s:lightModeColorschemeDict=g:UTILList2Dict(g:var_has_light_mode_colorscheme)
-  if &background == 'light' && !has_key(s:lightModeColorschemeDict, a:colorscheme)
-    echo a:colorscheme . ' has no light mode!'
-    call g:UTILSetBackground('dark')
+  " 没有某个模式的主题自动切换模式
+  let colorschemeModes=g:UTILGetColorschemeMode(a:colorscheme)
+  if !has_key(colorschemeModes, &background)
+    echo a:colorscheme . ' has no ' . &background . ' mode!'
+    call g:UTILToggleBackground()
   endif
 
   " 初始化主题状态
@@ -270,17 +271,13 @@ endfunction
 " 设置背景颜色
 function g:UTILSetBackground(bg)
   if &background != a:bg
-    if a:bg == 'dark'
+    let colorscheme=g:UTILGetColorscheme()
+    let colorschemeModes=g:UTILGetColorschemeMode(colorscheme)
+    if has_key(colorschemeModes, a:bg)
       let &background=a:bg
     else
-      let colorscheme=g:UTILGetColorscheme()
-      let s:lightModeColorschemeDict=g:UTILList2Dict(g:var_has_light_mode_colorscheme)
-      if has_key(s:lightModeColorschemeDict, colorscheme)
-        let &background=a:bg
-      else
-        echo colorscheme . ' has no light mode!'
-        return ""
-      endif
+      echo colorscheme . ' has no ' . a:bg . ' mode!'
+      return ""
     endif
   endif
   return a:bg

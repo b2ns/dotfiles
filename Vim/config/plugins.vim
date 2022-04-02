@@ -578,9 +578,6 @@ nmap <silent> <f3> :call <sid>ToggleBackground()<cr>
 nmap <silent> <c-f3> :call <sid>ChangeColorscheme("next")<cr>
 nmap <silent> <s-f3> :call <sid>ChangeColorscheme("pre")<cr>
 
-" 定义哪些主题具有light模式，避免不支持该模式的主题切换到该模式
-let g:var_has_light_mode_colorscheme=['everforest', 'PaperColor', 'onehalflight']
-
 function s:ToggleBackground()
   let colorscheme=g:UTILGetColorscheme()
   let background=g:UTILToggleBackground()
