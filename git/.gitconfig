@@ -1,6 +1,9 @@
 [user]
     name = b2ns
     email = eminemdsp@163.com
+[merge]
+    tool = gvimdiff
+    conflictstyle = diff3
 [credential]
     helper = store
 [alias]

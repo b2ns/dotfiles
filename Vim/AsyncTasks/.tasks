@@ -1,23 +1,27 @@
 [+]
 build_dir=/tmp
+java_classpath=$HOME/.build/java-classpath
+java_jar=$HOME/.build/java-jar
 
-[file-build]
-command:typescript,ts=tsc "$(VIM_FILEPATH)" --outFile "$(+build_dir)/ts-$(VIM_FILENOEXT)"
-command:java=javac "$(VIM_FILENAME)" -d "$(+build_dir)/java-$(VIM_FILENOEXT)"
+[build]
+command:typescript,ts=tsc "$(VIM_FILEPATH)" --outFile "$(+build_dir)/ts/$(VIM_FILENOEXT)"
+command:java=javac -d "$(+java_classpath)" "$(VIM_FILEPATH)" && jar -cvf "$(+java_jar)/All.jar" -C "$(+java_classpath)" .
 command:c,cpp=gcc -O2 -Wall "$(VIM_FILEPATH)" -o "$(+build_dir)/c-$(VIM_FILENOEXT)" -lstdc++ -lm -msse3
 output=terminal
+pos=floaterm
 cwd=<root>
 save=2
 
-[file-run]
+[run]
 command="$(VIM_FILEPATH)"
-command:javascript,javascript.jsx,jsx=node "$(VIM_FILENAME)"
-command:typescript,ts=node "$(+build_dir)/ts-$(VIM_FILENOEXT)"
-command:java=java "$(VIM_FILENAME)"
+command:javascript,javascript.jsx,jsx=node "$(VIM_FILEPATH)"
+command:typescript,ts=node "$(+build_dir)/ts/$(VIM_FILENOEXT)"
+command:java=java "$(VIM_FILEPATH)"
 command:c,cpp="$(+build_dir)/c-$(VIM_FILENOEXT)"
-command:sh=sh "$(VIM_FILENAME)"
-command:python=python "$(VIM_FILENAME)"
-command:ruby=ruby "$(VIM_FILENAME)"
+command:sh=sh "$(VIM_FILEPATH)"
+command:python=python "$(VIM_FILEPATH)"
+command:ruby=ruby "$(VIM_FILEPATH)"
 output=terminal
+pos=floaterm
 cwd=<root>
 save=2

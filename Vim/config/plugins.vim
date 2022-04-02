@@ -7,6 +7,9 @@
 "----------------------------------------------------------------------
 " 在 ~/.vim/plugged 下安装插件
 "----------------------------------------------------------------------
+let g:plug_timeout=10
+let g:plug_retries=6
+
 call plug#begin(get(g:, 'bundle_home', '~/.vim/plugged'))
 
 "----------------------------------------------------------------------
@@ -42,12 +45,16 @@ Plug 'Asheq/close-buffers.vim'
 
 
 "--------------------------------
-" outline
+" tags
 "--------------------------------
 " Plug 'majutsushi/tagbar'
+Plug 'ludovicchabant/vim-gutentags'
+" Plug 'skywind3000/gutentags_plus'
+let g:gutentags_cache_dir = expand('~/.cache/tags')
+let g:gutentags_ctags_exclude=['.git', 'node_modules', 'log', 'db']
 
 " nnoremap <silent> <space>tb :TagbarToggle<CR>
-" 窗口宽度(40)
+" " 窗口宽度(40)
 " let g:tagbar_width=20
 
 "--------------------------------
@@ -63,7 +70,7 @@ nnoremap <space>fh :History<cr>
 nnoremap <space>fb :Buffers<cr>
 nnoremap <space>fr :Rg
 nnoremap <space>fg :GFiles<cr>
-nnoremap <space>fc :Commits<cr>
+nnoremap <space>fm :Commits<cr>
 
 "--------------------------------
 " editorconfig
@@ -77,6 +84,11 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 "--------------------------------
 Plug 'MattesGroeger/vim-bookmarks'
 
+"--------------------------------
+" 翻译
+"--------------------------------
+
+
 "----------------------------------------------------------------------
 " 辅助操作
 "----------------------------------------------------------------------
@@ -84,9 +96,10 @@ Plug 'MattesGroeger/vim-bookmarks'
 " 括号补全
 "--------------------------------
 Plug 'jiangmiao/auto-pairs'
-
-" let g:AutoPairsFlyMode = 1
+let g:AutoPairsFlyMode = 1
 let g:AutoPairsShortcutToggle = ''
+let g:AutoPairsMapCh=0
+let g:AutoPairsMoveCharacter=''
 
 "--------------------------------
 " 光标快速跳转
@@ -95,9 +108,9 @@ Plug 'easymotion/vim-easymotion'
 
 let g:EasyMotion_leader_key='<leader><leader>'
 let g:EasyMotion_smartcase=1
-noremap <leader>w <Plug>(easymotion-W)
-noremap <leader>e <Plug>(easymotion-E)
-noremap <leader>b <Plug>(easymotion-B)
+nnoremap <leader>w <Plug>(easymotion-W)
+nnoremap <leader>e <Plug>(easymotion-E)
+nnoremap <leader>b <Plug>(easymotion-B)
 
 "--------------------------------
 " multiple cursor
@@ -149,6 +162,11 @@ Plug 'tpope/vim-surround'
 "--------------------------------
 Plug 'AndrewRadev/tagalong.vim'
 
+"--------------------------------
+" 对齐
+"--------------------------------
+Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
+
 "----------------------------------------------------------------------
 " 智能补全
 "----------------------------------------------------------------------
@@ -174,7 +192,6 @@ let g:coc_global_extensions = [
       \ "coc-marketplace",
       \ "coc-prettier",
       \ "coc-sh",
-      \ "coc-tabnine",
       \ "coc-tsserver",
       \ "coc-vetur",
       \ "@yaegassy/coc-volar",
@@ -193,10 +210,15 @@ let g:coc_global_extensions = [
       \ "coc-tasks",
       \ "coc-yank",
       \ "coc-db",
+      \ "coc-floaterm",
+      \ "coc-word",
+      \ "coc-dictionary",
+      \ "coc-tag",
       \]
+      " \ "coc-tabnine",
 
 " coc-explorer
-nnoremap <silent> <space>nn <Cmd>CocCommand explorer --quit-on-open --position tab:0<CR>
+nnoremap <silent> <space>nn <Cmd>CocCommand explorer --quit-on-open --position left --width 50<CR>
 
 " coc-markmap
 command! -range=% Markmap CocCommand markmap.create <line1> <line2>
@@ -314,6 +336,7 @@ nnoremap <silent><nowait> <space>le :<C-u>CocList diagnostics<cr>
 nnoremap <silent><nowait> <space>lo :<C-u>CocOutline<cr>
 nnoremap <silent><nowait> <space>ls :<C-u>CocList -I symbols<cr>
 nnoremap <silent><nowait> <space>ly :<C-u>CocList -A --normal yank<cr>
+nnoremap <silent><nowait> <space>lt :<C-u>CocList --normal floaterm<cr>
 
 " Do default action for next item.
 " nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
@@ -531,11 +554,55 @@ let g:slimv_echolines=1
 "--------------------------------
 " 主题配色
 "--------------------------------
-Plug 'lifepillar/vim-solarized8'
+" Plug 'lifepillar/vim-solarized8'
+" let g:solarized_termcolors=256
+" let g:solarized_termtrans=1
+" let g:solarized_statusline="flat"
 
-let g:solarized_termcolors=256
-let g:solarized_termtrans=1
-let g:solarized_statusline="flat"
+Plug 'sainnhe/everforest'
+let g:everforest_better_performance=1
+let g:everforest_background='hard'
+let g:everforest_ui_contrast='hight'
+let g:everforest_enable_italic=1
+
+Plug 'dracula/vim', { 'as': 'dracula' }
+
+Plug 'patstockwell/vim-monokai-tasty'
+let g:vim_monokai_tasty_italic = 1
+
+Plug 'NLKNguyen/papercolor-theme'
+
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
+
+nmap <silent> <f3> :call <sid>ToggleBackground()<cr>
+nmap <silent> <c-f3> :call <sid>ChangeColorscheme("next")<cr>
+nmap <silent> <s-f3> :call <sid>ChangeColorscheme("pre")<cr>
+
+" 定义哪些主题具有light模式，避免不支持该模式的主题切换到该模式
+let g:var_has_light_mode_colorscheme=['everforest', 'PaperColor', 'onehalflight']
+
+function s:ToggleBackground()
+  let colorscheme=g:UTILGetColorscheme()
+  let background=g:UTILToggleBackground()
+  if !empty(background)
+    call g:UTILLocalStorageSet('background', background)
+    let timer = timer_start(0, {-> execute("echo '" . colorscheme . ': ' . background . "'", "")})
+  endif
+endfunction
+
+function s:ChangeColorscheme(nextOrPre)
+  let colorscheme=""
+  if a:nextOrPre == "next"
+    let colorscheme=g:UTILNextColorscheme()
+  else
+    let colorscheme=g:UTILPreColorscheme()
+  endif
+
+  if !empty(colorscheme)
+    call g:UTILLocalStorageSet('colorscheme', colorscheme)
+    let timer = timer_start(0, {-> execute("echo '" . colorscheme . ': ' . &background . "'", "")})
+  endif
+endfunction
 
 "--------------------------------
 " 状态栏
@@ -653,23 +720,37 @@ Plug 'yianwillis/vimcdoc'
 
 "--------------------------------
 "--------------------------------
+" 终端
+"--------------------------------
+Plug 'voldikss/vim-floaterm'
+" let g:floaterm_wintype='vsplit'
+let g:floaterm_position='bottomright'
+let g:floaterm_width=0.5
+let g:floaterm_height=1.0
+let g:floaterm_borderchars='-│-│┌┐┘└'
+let g:floaterm_opener='tabe'
+let g:floaterm_keymap_toggle = '<c-a-t>'
+
+"--------------------------------
 " task任务执行
 "--------------------------------
 Plug 'skywind3000/asyncrun.vim', { 'on': ['AsyncRun', 'AsyncStop'] }
 Plug 'skywind3000/asynctasks.vim', { 'on': ['AsyncTask', 'AsyncTaskMacro', 'AsyncTaskList', 'AsyncTaskEdit'] }
 
 let g:asyncrun_open = 6
-let g:asynctasks_term_pos = 'external'
-noremap <silent> <f4> :AsyncTask file-build<cr>
-noremap <silent> <f5> :AsyncTask file-run<cr>
+" let g:asynctasks_term_pos = 'external'
+" let g:asynctasks_term_reuse=1
+" let g:asynctasks_term_focus=0
+nnoremap <silent> <f4> :AsyncTask build<cr>
+nnoremap <silent> <f5> :AsyncTask run<cr>
 
 "--------------------------------
 " live server
 "--------------------------------
 Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
 
-noremap <space>lvv :Bracey<cr>
-noremap <space>lvs :BraceyStop<cr>
+nnoremap <space>lvv :Bracey<cr>
+nnoremap <space>lvs :BraceyStop<cr>
 
 "--------------------------------
 " 本地和远程服务器文件同步
@@ -704,13 +785,13 @@ nmap <silent> <F9> <Plug>VimspectorGoToCurrentLine
 nmap <silent> <c-F9> <Plug>VimspectorRunToCursor
 " nmap <silent> <F9> <Plug>VimspectorPause
 
-function JavaStartDebug()
+function s:JavaStartDebug()
   call system("javac -g " . expand('%:t'))
   call system("java -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005 " . expand('%:r:t') . " &")
   execute "CocCommand java.debug.vimspector.start"
 endfunction
 
-nmap <F1> gg:call JavaStartDebug()<CR>
+nmap <F1> gg:call <sid>JavaStartDebug()<CR>
 
 "--------------------------------
 " test

@@ -1,7 +1,9 @@
 {
+  "tabnine.priority": 95,
+  "snippets.priority": 100,
   "coc.preferences.extensionUpdateCheck": "weekly",
-  "coc.preferences.colorSupport": true,
   "colors.filetypes": ["*"],
+  "java.home": "/usr/lib/jvm/java-11-openjdk-amd64",
   "java.format.settings.url": "/home/ding/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml",
   "java.referencesCodeLens.enabled": true,
   "java.implementationsCodeLens.enabled": true,
@@ -9,6 +11,11 @@
   "java.completion.guessMethodArguments": true,
   "java.format.enabled": true,
   "java.format.onType.enabled": true,
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar",
+    "/usr/share/java/**/*.jar",
+    "~/.build/java-jar/**/*.jar"
+  ],
   "cssmodules.camelCase": true,
   "explorer.icon.enableNerdfont": true,
   "html-css-support.enabledLanguages": [

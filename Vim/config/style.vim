@@ -95,52 +95,12 @@ endif
 " 允许 256 色
 set t_Co=256
 
-" 设置主题
-function! ChangeColorscheme(colorscheme)
-  " NOTE 无法通过let &colorscheme=的方式设置
-  exec "colorscheme ". a:colorscheme
-endfunction
-
-" 设置背景
-let s:background=""
-function! ChangeBackground(bg)
-  if s:background == a:bg
-    return
-  endif
-
-  let s:background = a:bg
-  " 明亮背景使用不同的主题，以免亮色对比度太低
-  call ChangeColorscheme(a:bg == "dark" ? g:var_colorscheme : g:var_colorscheme_light)
-  let &background=s:background
-  call g:UTILLocalStorageSet("background", s:background)
-endfunction
-
-" 切换明暗背景
-function! ToggleBackground()
-  call ChangeBackground(s:background == "dark" ? "light" : "dark")
-endfunction
-noremap <silent> <F3> :call ToggleBackground()<cr>
-
-function! ChangeBackgroundOnSunset()
-  let l:time = strftime("%H%M")
-  let l:bg = "light"
-  if l:time <= g:var_sunrise_time || l:time >= g:var_sunset_time
-    let l:bg = "dark"
-  endif
-  call ChangeBackground(l:bg)
-endfunction
-
-
-" 终端只适合dark主题
-if !has("gui_running")
-  let g:var_background="dark"
-endif
-
-" 启动后设置一次背景
+" 启动后设置一次主题和背景
+call g:UTILSetColorscheme(g:var_colorscheme)
 if g:var_enable_background_change_on_sunset
-  call ChangeBackgroundOnSunset()
+  call g:UTILSetBackgroundOnTime(g:var_sunrise_time, g:var_sunset_time)
 else
-  call ChangeBackground(g:var_background)
+  call g:UTILSetBackground(g:var_background)
 endif
 
 
@@ -187,6 +147,11 @@ endif
 
 " 去掉 sign column 的白色背景
 hi! SignColumn guibg=NONE ctermbg=NONE
+
+" 修改行号为浅灰色，默认主题的黄色行号很难看，换主题可以仿照修改
+highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE 
+	\ gui=NONE guifg=DarkGrey guibg=NONE
+
 
 "----------------------------------------------------------------------
 " quickfix 设置，隐藏行号

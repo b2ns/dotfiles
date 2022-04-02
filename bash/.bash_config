@@ -9,11 +9,12 @@ export HISTSIZE=10000
 alias '..'='cd ..'
 alias '...'='cd ../..'
 
-alias rm='rm -i'
+# alias rm='rm -i'
 alias q='exit'
 alias sss='shutdown now'
 
 alias v='gvim'
+alias f='floaterm'
 alias e='gedit'
 alias c='code'
 
