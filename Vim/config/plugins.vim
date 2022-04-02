@@ -554,15 +554,13 @@ let g:slimv_echolines=1
 "--------------------------------
 " 主题配色
 "--------------------------------
-" Plug 'lifepillar/vim-solarized8'
-" let g:solarized_termcolors=256
-" let g:solarized_termtrans=1
-" let g:solarized_statusline="flat"
+Plug 'morhetz/gruvbox'
+let g:gruvbox_contrast_dark='medium'
+let g:gruvbox_contrast_light='soft'
 
 Plug 'sainnhe/everforest'
 let g:everforest_better_performance=1
-let g:everforest_background='hard'
-let g:everforest_ui_contrast='hight'
+let g:everforest_background='medium'
 let g:everforest_enable_italic=1
 
 Plug 'dracula/vim', { 'as': 'dracula' }
@@ -589,11 +587,7 @@ endfunction
 
 function s:ChangeColorscheme(nextOrPre)
   let colorscheme=""
-  if a:nextOrPre == "next"
-    let colorscheme=g:UTILNextColorscheme()
-  else
-    let colorscheme=g:UTILPreColorscheme()
-  endif
+  let colorscheme=g:UTILSwithColorscheme(a:nextOrPre)
 
   if !empty(colorscheme)
     call g:UTILLocalStorageSet('colorscheme', colorscheme)

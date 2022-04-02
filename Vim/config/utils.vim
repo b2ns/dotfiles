@@ -16,18 +16,6 @@ let g:var_is_win=g:os ==? "Windows"
 "----------------------------------------------------------------------
 " 通用方法
 "----------------------------------------------------------------------
-" 在List中查找元素，返回index
-function g:UTILListFind(list, item) abort
-  let i = 0
-  for it in a:list
-    if (it is a:item)
-      return i
-    endif
-    let i += 1
-  endfor
-  return -1
-endfunction
-
 " List -> Dict
 function g:UTILList2Dict(list) abort
   let dict={}
@@ -39,10 +27,10 @@ endfunction
 
 function g:UTILMkFile(filename) abort
   let file=expand(a:filename)
+  let dir=join(slice(split(file, '\ze/'), 0, -1), '')
   if !filereadable(file)
+    call g:UTILMkDir(dir)
     call system("cd .>" . file)
-  else
-    echom file . " already exists!"
   endif
 endfunction
 
@@ -52,8 +40,6 @@ function g:UTILMkDir(dirname) abort
     if exists("*mkdir")
       call mkdir(dir, "p")
     endif
-  else
-    echom dir . " already exists!"
   endif
 endfunction
 
@@ -77,7 +63,7 @@ function g:UTILDeserializeDict(fileOrList) abort
     if empty(key)
       let key=line
     else
-      let dict[key]=line
+      let dict[key]=js_decode(line)
       let key=""
     endif
   endfor
@@ -88,8 +74,8 @@ endfunction
 " 序列化字典
 function g:UTILSerializeDict(dict, file = "") abort
   let list=[]
-  for item in items(a:dict)
-    let list += item
+  for [key, value] in items(a:dict)
+    let list += [key, js_encode(value)]
   endfor
   if !empty(a:file)
     let file=expand(a:file)
@@ -102,7 +88,7 @@ endfunction
 "----------------------------------------------------------------------
 " 实现一个localStorage来持久化一些状态
 "----------------------------------------------------------------------
-let g:var_vim_local_storage_file="~/._vim_local_storage_"
+let g:var_vim_local_storage_file="~/.cache/vim/.local_storage"
 let s:var_vim_local_storage_obj=""
 
 function g:UTILLocalStorageSet(key, value) abort
@@ -141,20 +127,29 @@ function s:LocalStorageAction(action, key = "", value = "") abort
   if type(s:var_vim_local_storage_obj) == type("")
     call s:LocalStorageInit()
   endif
+  let hasKey=has_key(s:var_vim_local_storage_obj, a:key)
 
-  try
-    if a:action == "get"
+  if a:action == "get"
+    if hasKey
       return s:var_vim_local_storage_obj[a:key]
-    elseif a:action == "set"
-      let s:var_vim_local_storage_obj[a:key]=a:value
-    elseif a:action == "remove"
-      call remove(s:var_vim_local_storage_obj, a:key)
-    elseif a:action == "clear"
-      let s:var_vim_local_storage_obj={}
+    else
+      return ''
     endif
-  catch /.*/
-    return ""
-  endtry
+  elseif a:action == "set"
+    if hasKey && s:var_vim_local_storage_obj[a:key] == a:value
+      return ''
+    else
+      let s:var_vim_local_storage_obj[a:key]=a:value
+    endif
+  elseif a:action == "remove"
+    if hasKey
+      call remove(s:var_vim_local_storage_obj, a:key)
+    else
+      return ''
+    endif
+  elseif a:action == "clear"
+    let s:var_vim_local_storage_obj={}
+  endif
 
   call g:UTILSerializeDict(s:var_vim_local_storage_obj, expand(g:var_vim_local_storage_file))
 endfunction
@@ -203,6 +198,7 @@ function g:UTILGetColorschemeMode(colorscheme)
     if s:TestColorschemeMode(a:colorscheme, 'light')
       let s:colorschemeModeDict[a:colorscheme].light=1
     endif
+    call g:UTILLocalStorageSet('colorschemeModes', s:colorschemeModeDict)
   endif
   return s:colorschemeModeDict[a:colorscheme]
 endfunction
@@ -210,10 +206,7 @@ endfunction
 " 设置主题
 " 此时只能拿到系统内置主题
 let s:defaultColorschemeList=g:UTILGetColorschemeList()
-let s:defaultColorschemeDict={}
-for item in s:defaultColorschemeList
-  let s:defaultColorschemeDict[item]=1
-endfor
+let s:defaultColorschemeDict=g:UTILList2Dict(s:defaultColorschemeList)
 
 let s:colorschemeList=[]
 let s:colorschemePos=0
@@ -225,7 +218,7 @@ function g:UTILSetColorscheme(colorscheme)
 
   exec "colorscheme ". a:colorscheme
 
-  " 没有某个模式的主题自动切换模式
+  " 没有某种背景模式的主题自动切换背景
   let colorschemeModes=g:UTILGetColorschemeMode(a:colorscheme)
   if !has_key(colorschemeModes, &background)
     echo a:colorscheme . ' has no ' . &background . ' mode!'
@@ -240,7 +233,7 @@ function g:UTILSetColorscheme(colorscheme)
     let s:colorschemeList=filter(allColorschemeList, {idx, val -> !has_key(s:defaultColorschemeDict, val)})
     let currentColorscheme=g:UTILGetColorscheme()
     " 找到当前主题在List中的位置
-    let s:colorschemePos=g:UTILListFind(s:colorschemeList, currentColorscheme)
+    let s:colorschemePos=index(s:colorschemeList, currentColorscheme)
     if s:colorschemePos < 0
       let s:colorschemePos=0
     endif
@@ -250,20 +243,19 @@ function g:UTILSetColorscheme(colorscheme)
 endfunction
 
 " 切换主题
-function g:UTILPreColorscheme()
-  if s:colorschemePos > 0
-    let s:colorschemePos -= 1
+function g:UTILSwithColorscheme(nextOrPre)
+  if a:nextOrPre == 'pre'
+    if s:colorschemePos > 0
+      let s:colorschemePos -= 1
+    else
+      let s:colorschemePos = len(s:colorschemeList) - 1
+    endif
   else
-    let s:colorschemePos = len(s:colorschemeList) - 1
-  endif
-  return g:UTILSetColorscheme(get(s:colorschemeList, s:colorschemePos))
-endfunction
-
-function g:UTILNextColorscheme()
-  if s:colorschemePos < len(s:colorschemeList) - 1
-    let s:colorschemePos += 1
-  else
-    let s:colorschemePos = 0
+    if s:colorschemePos < len(s:colorschemeList) - 1
+      let s:colorschemePos += 1
+    else
+      let s:colorschemePos = 0
+    endif
   endif
   return g:UTILSetColorscheme(get(s:colorschemeList, s:colorschemePos))
 endfunction
