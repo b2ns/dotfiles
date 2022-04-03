@@ -16,6 +16,17 @@ let g:var_is_win=g:os ==? "Windows"
 "----------------------------------------------------------------------
 " 通用方法
 "----------------------------------------------------------------------
+" 执行异步代码，利用定时器模拟异步
+function g:UTILRunAsync(funcRef) abort
+  return timer_start(0, a:funcRef)
+endfunction
+
+" 因为界面重绘会清空输出内容，因此需要异步输出
+" 异步echo
+function g:UTILEchoAsync(str) abort
+  call g:UTILRunAsync({-> execute("echo '" . a:str . "'", "")})
+endfunction
+
 " List -> Dict
 function g:UTILList2Dict(list) abort
   let dict={}

@@ -121,6 +121,7 @@ function ChangeFontSize(biggerOrSmaller = 'bigger') abort
   endif
   let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)' . operator . '1', '')
   call UTILLocalStorageSet('font', &guifont)
+  call g:UTILEchoAsync('guifont: ' . &guifont)
 endfunction
 
 "----------------------------------------------------------------------

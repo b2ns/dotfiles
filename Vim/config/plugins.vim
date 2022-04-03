@@ -47,15 +47,10 @@ Plug 'Asheq/close-buffers.vim'
 "--------------------------------
 " tags
 "--------------------------------
-" Plug 'majutsushi/tagbar'
 Plug 'ludovicchabant/vim-gutentags'
 " Plug 'skywind3000/gutentags_plus'
 let g:gutentags_cache_dir = expand('~/.cache/tags')
 let g:gutentags_ctags_exclude=['.git', 'node_modules', 'log', 'db']
-
-" nnoremap <silent> <space>tb :TagbarToggle<CR>
-" " 窗口宽度(40)
-" let g:tagbar_width=20
 
 "--------------------------------
 " 模糊搜索
@@ -129,26 +124,6 @@ Plug 'preservim/nerdcommenter'
 let g:NERDSpaceDelims=1
 " 取消注释时移除空格
 let g:NERDRemoveExtraSpaces=1
-" 针对vue文件
-" let g:ft=''
-" function! NERDCommenter_before()
-  " if &ft ==? 'vue'
-    " let g:ft='vue'
-    " let stack=synstack(line('.'), col('.'))
-    " if len(stack) > 0
-      " let syn=synIDattr((stack)[0], 'name')
-      " if len(syn) > 0
-        " exe 'setf ' . substitute(tolower(syn), '^vue_', '', '')
-      " endif
-    " endif
-  " endif
-" endfunction
-" function! NERDCommenter_after()
-  " if g:ft ==? 'vue'
-    " setf vue
-    " let g:ft=''
-  " endif
-" endfunction
 
 "--------------------------------
 " 重复上次操作
@@ -168,7 +143,6 @@ Plug 'AndrewRadev/tagalong.vim'
 "--------------------------------
 " 对齐
 "--------------------------------
-" Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
 Plug 'junegunn/vim-easy-align'
 nmap <c-m-a> <Plug>(EasyAlign)
 xmap <c-m-a> <Plug>(EasyAlign)
@@ -232,20 +206,12 @@ command! -range=% Markmap CocCommand markmap.create <line1> <line2>
 " coc-css
 autocmd FileType scss setl iskeyword+=@-@"
 
-
-" Set internal encoding of vim, not needed on neovim, since coc.nvim using some
-" unicode characters in the file autoload/float.vim
-set encoding=utf-8
-
 " TextEdit might fail if hidden is not set.
 set hidden
 
 " Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
-
-" Give more space for displaying messages.
-set cmdheight=2
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
@@ -265,10 +231,10 @@ endif
 
 " Use tab for trigger completion with characters ahead and navigate.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
+      \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -396,14 +362,6 @@ let g:user_emmet_install_global=1
 " 代码片段
 "--------------------------------
 Plug 'honza/vim-snippets'
-" Plug 'SirVer/ultisnips'
-
-"let g:UltiSnipsExpandTrigger="<leader><tab>"
-" let g:UltiSnipsJumpForwardTrigger='<leader>n'
-" let g:UltiSnipsJumpBackwardTrgger='<leader>N'
-"let g:UltiSnipsListSnippets="<c-e>"
-" 不使用snipMate的代码片段
-" let g:UltiSnipsEnableSnipMate=0
 
 "--------------------------------
 " 代码格式化
@@ -477,18 +435,6 @@ let g:vim_vue_plugin_config = {
         \'foldexpr': 0,
         \'debug': 0,
         \}
-" function! OnChangeVueSyntax(syntax)
-" " echom 'Syntax is '.a:syntax
-" if a:syntax == 'html'
-" setlocal commentstring=<!--%s-->
-" setlocal comments=s:<!--,m:\ \ \ \ ,e:-->
-" elseif a:syntax =~ 'css' || a:syntax =~ 'less' || a:syntax =~ 'scss'
-" setlocal comments=s1:/*,mb:*,ex:*/ commentstring&
-" else
-" setlocal commentstring=//%s
-" setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
-" endif
-" endfunction
 
 "--------------------------------
 " jsx
@@ -503,7 +449,6 @@ Plug 'maxmellon/vim-jsx-pretty'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'mzlogin/vim-markdown-toc'
 
-" let g:mkdp_refresh_slow = 1
 let g:mkdp_auto_close = 1
 
 autocmd FIleType markdown nmap <silent> <space>md <Plug>MarkdownPreviewToggle
@@ -530,21 +475,21 @@ Plug 'kristijanhusak/vim-dadbod-ui'
 "--------------------------------
 " Plug 'kovisoft/slimv'
 
-let g:slimv_swank_cmd=g:var_slimv_swank_cmd
-let g:slimv_impl='sbcl'
-let g:slimv_preferred='sbcl'
-"禁止此功能
-let g:paredit_electric_return=0
-" let g:paredit_mode=0
-" 彩虹括号匹配
-let g:lisp_rainbow=1
-let g:lisp_menu=1
-let g:swank_block_size=65536
-" 禁止绑定tab键
-let g:slimv_unmap_tab=1
-" 竖直分裂窗口
-let g:slimv_repl_split=4
-let g:slimv_echolines=1
+" let g:slimv_swank_cmd=g:var_slimv_swank_cmd
+" let g:slimv_impl='sbcl'
+" let g:slimv_preferred='sbcl'
+" "禁止此功能
+" let g:paredit_electric_return=0
+" " let g:paredit_mode=0
+" " 彩虹括号匹配
+" let g:lisp_rainbow=1
+" let g:lisp_menu=1
+" let g:swank_block_size=65536
+" " 禁止绑定tab键
+" let g:slimv_unmap_tab=1
+" " 竖直分裂窗口
+" let g:slimv_repl_split=4
+" let g:slimv_echolines=1
 
 "----------------------------------------------------------------------
 " 语法检查
@@ -576,8 +521,6 @@ let g:vim_monokai_tasty_italic = 1
 
 Plug 'NLKNguyen/papercolor-theme'
 
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
-
 nmap <silent> <f3> :call <sid>ToggleBackground()<cr>
 nmap <silent> <c-f3> :call <sid>ChangeColorscheme("next")<cr>
 nmap <silent> <s-f3> :call <sid>ChangeColorscheme("pre")<cr>
@@ -587,7 +530,7 @@ function s:ToggleBackground()
   let background=g:UTILToggleBackground()
   if !empty(background)
     call g:UTILLocalStorageSet('background', background)
-    let timer = timer_start(0, {-> execute("echo '" . colorscheme . ': ' . background . "'", "")})
+    call g:UTILEchoAsync(colorscheme . ': ' . background)
   endif
 endfunction
 
@@ -597,7 +540,7 @@ function s:ChangeColorscheme(nextOrPre)
 
   if !empty(colorscheme)
     call g:UTILLocalStorageSet('colorscheme', colorscheme)
-    let timer = timer_start(0, {-> execute("echo '" . colorscheme . ': ' . &background . "'", "")})
+    call g:UTILEchoAsync(colorscheme . ': ' . &background)
   endif
 endfunction
 
@@ -614,13 +557,6 @@ let g:airline_powerline_fonts = 1
 let g:airline_exclude_preview = 1
 let g:airline_highlighting_cache = 1
 let g:airline_extensions = ["coc"]
-
-"--------------------------------
-" 窗口大小自动调整
-"--------------------------------
-" Plug 'roman/golden-ratio'
-
-" let g:golden_ratio_exclude_nonmodifiable = 1
 
 "--------------------------------
 " 缩进标识
@@ -653,29 +589,6 @@ let g:startify_lists = [
       \ { 'type': 'commands',  'header': ['   Commands']       },
       \ ]
 let g:startify_custom_header = ['']
-" let g:ascii = ['']
-" let g:startify_custom_header =
-" \ 'startify#pad(g:ascii + startify#fortune#quote())'
-
-"--------------------------------
-" 文件图标
-"--------------------------------
-" Plug 'ryanoasis/vim-devicons'
-
-" let g:webdevicons_conceal_nerdtree_brackets = 1
-" let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-" let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
-
-"--------------------------------
-" 文件图标颜色高亮
-"--------------------------------
-" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-
-" let g:NERDTreeFileExtensionHighlightFullName = 1
-" let g:NERDTreeExactMatchHighlightFullName = 1
-" let g:NERDTreePatternMatchHighlightFullName = 1
-" let g:NERDTreeHighlightCursorline = 0
-
 
 "----------------------------------------------------------------------
 " Git集成
@@ -720,17 +633,11 @@ Plug 'yianwillis/vimcdoc'
 "--------------------------------
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
-" let g:goyo_width=90
+let g:goyo_width=100
 let g:goyo_height='90%'
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 nmap <c-m-z> :<c-u>Goyo<cr>
-"--------------------------------
-" 折叠
-"--------------------------------
-Plug 'Konfekt/FastFold'
-let g:fastfold_force = 1
-nmap <SID>(DisableFastFoldUpdate) <Plug>(FastFoldUpdate)
 
 "--------------------------------
 "--------------------------------
@@ -753,10 +660,9 @@ Plug 'skywind3000/asynctasks.vim', { 'on': ['AsyncTask', 'AsyncTaskMacro', 'Asyn
 
 let g:asyncrun_open = 6
 " let g:asynctasks_term_pos = 'external'
-" let g:asynctasks_term_reuse=1
 " let g:asynctasks_term_focus=0
-nnoremap <silent> <f4> :AsyncTask build<cr>
 nnoremap <silent> <f5> :AsyncTask run<cr>
+nnoremap <silent> <c-f5> :AsyncTask build<cr>
 
 "--------------------------------
 " live server
