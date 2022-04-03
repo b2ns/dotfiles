@@ -215,15 +215,16 @@ let s:autoSkipColorschemeCount=0
 let s:switchColorschemeDirction='next'
 
 function g:UTILSetColorscheme(colorscheme)
-  if empty(a:colorscheme)
+  let colorscheme=a:colorscheme
+  if empty(colorscheme)
     return ""
   endif
-  let colorscheme=a:colorscheme
 
-  let colorschemeModes=g:UTILGetColorschemeMode(a:colorscheme)
-  if has_key(colorschemeModes, &background)
+  let colorschemeModes=g:UTILGetColorschemeMode(colorscheme)
+  " 因为系统初始化时背景始终是light，可能与主题不匹配导致第一次设置主题不执行
+  if has_key(colorschemeModes, &background) || empty(s:colorschemeList)
     let s:autoSkipColorschemeCount = 0
-    exec "colorscheme ". a:colorscheme
+    exec "colorscheme ". colorscheme
   else
     " echo a:colorscheme . ' has no ' . &background . ' mode!'
     if s:autoSkipColorschemeCount <= len(s:colorschemeList)
