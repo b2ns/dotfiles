@@ -7,8 +7,8 @@
 "----------------------------------------------------------------------
 " 在 ~/.vim/plugged 下安装插件
 "----------------------------------------------------------------------
-let g:plug_timeout=10
-let g:plug_retries=6
+let g:plug_timeout=15
+let g:plug_retries=2
 
 call plug#begin(get(g:, 'bundle_home', '~/.vim/plugged'))
 
@@ -68,7 +68,7 @@ set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf
 nnoremap <space>ff :Files<cr>
 nnoremap <space>fh :History<cr>
 nnoremap <space>fb :Buffers<cr>
-nnoremap <space>fr :Rg
+nnoremap <space>fr :Rg 
 nnoremap <space>fg :GFiles<cr>
 nnoremap <space>fm :Commits<cr>
 
@@ -83,6 +83,8 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 " 书签
 "--------------------------------
 Plug 'MattesGroeger/vim-bookmarks'
+let g:bookmark_auto_close = 1
+let g:bookmark_center = 1
 
 "--------------------------------
 " 翻译
@@ -111,6 +113,7 @@ let g:EasyMotion_smartcase=1
 nnoremap <leader>w <Plug>(easymotion-W)
 nnoremap <leader>e <Plug>(easymotion-E)
 nnoremap <leader>b <Plug>(easymotion-B)
+
 
 "--------------------------------
 " multiple cursor
@@ -165,7 +168,10 @@ Plug 'AndrewRadev/tagalong.vim'
 "--------------------------------
 " 对齐
 "--------------------------------
-Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
+" Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
+Plug 'junegunn/vim-easy-align'
+nmap <c-m-a> <Plug>(EasyAlign)
+xmap <c-m-a> <Plug>(EasyAlign)
 
 "----------------------------------------------------------------------
 " 智能补全
@@ -708,6 +714,23 @@ Plug 'junegunn/gv.vim'
 " vim中文文档
 "--------------------------------
 Plug 'yianwillis/vimcdoc'
+
+"--------------------------------
+" Zen模式
+"--------------------------------
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+" let g:goyo_width=90
+let g:goyo_height='90%'
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+nmap <c-m-z> :<c-u>Goyo<cr>
+"--------------------------------
+" 折叠
+"--------------------------------
+Plug 'Konfekt/FastFold'
+let g:fastfold_force = 1
+nmap <SID>(DisableFastFoldUpdate) <Plug>(FastFoldUpdate)
 
 "--------------------------------
 "--------------------------------

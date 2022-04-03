@@ -19,7 +19,10 @@ set number
 set ruler
 
 " 高亮光标所在行
-set cursorline
+" set cursorline
+" 插入模式时取消高亮
+autocmd InsertLeave,WinEnter * set cursorline
+autocmd InsertEnter,WinLeave * set nocursorline
 
 " 禁止光标闪烁
 "set gcr=a:block-blinkon0
@@ -72,7 +75,7 @@ set guioptions-=r
 set guioptions-=R
 
 " 禁止显示菜单和工具条
-"set guioptions-=m
+set guioptions-=m
 set guioptions-=T
 
 " 默认启动窗口最大化
@@ -103,6 +106,22 @@ else
   call g:UTILSetBackground(g:var_background)
 endif
 
+"----------------------------------------------------------------------
+" 字体
+"----------------------------------------------------------------------
+let &guifont=g:UTILLocalStorageGet('font', g:var_guifont)
+
+nmap <c-f2> :call ChangeFontSize('bigger')<cr>
+nmap <s-f2> :call ChangeFontSize('smaller')<cr>
+
+function ChangeFontSize(biggerOrSmaller = 'bigger') abort
+  let operator = '+'
+  if a:biggerOrSmaller == 'smaller'
+    let operator = '-'
+  endif
+  let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)' . operator . '1', '')
+  call UTILLocalStorageSet('font', &guifont)
+endfunction
 
 "----------------------------------------------------------------------
 " 状态栏设置
@@ -150,7 +169,7 @@ hi! SignColumn guibg=NONE ctermbg=NONE
 
 " 修改行号为浅灰色，默认主题的黄色行号很难看，换主题可以仿照修改
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE 
-	\ gui=NONE guifg=DarkGrey guibg=NONE
+      \ gui=NONE guifg=DarkGrey guibg=NONE
 
 
 "----------------------------------------------------------------------

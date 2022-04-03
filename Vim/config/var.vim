@@ -19,13 +19,13 @@ let g:var_formatter_java="java -jar ~/Downloads/google-java-format-1.15.0-all-de
 " 不同环境某些配置不一样
 if g:var_is_linux
   let g:var_slimv_swank_cmd='! gnome-terminal -e "sbcl --load /home/ding/.vim/plugged/slimv/slime/start-swank.lisp &"'
-  let g:var_guifont="InconsolataLGC\ Nerd\ Font\ Mono\ 16"
+  let g:var_guifont="InconsolataLGC\ Nerd\ Font\ Mono\ 15"
 
 elseif g:var_is_mac
   let g:var_slimv_swank_cmd='!osascript -e "tell application \"Terminal\" to do script \"sbcl --load ~/.vim/plugged/slimv/slime/start-swank.lisp\""'
-  let g:var_guifont="InconsolataLGC\ Nerd\ Font\ Mono:h18"
+  let g:var_guifont="InconsolataLGC\ Nerd\ Font\ Mono:h16"
 
 elseif g:var_is_win
   let g:var_slimv_swank_cmd='! gnome-terminal -e "sbcl --load /home/ding/.vim/plugged/slimv/slime/start-swank.lisp &"'
-  let g:var_guifont="InconsolataLGC\ Nerd\ Font\ Mono:h16"
+  let g:var_guifont="InconsolataLGC\ Nerd\ Font\ Mono:h15"
 endif

@@ -210,19 +210,28 @@ let s:defaultColorschemeDict=g:UTILList2Dict(s:defaultColorschemeList)
 
 let s:colorschemeList=[]
 let s:colorschemePos=0
+" 避免无限递归的标志
+let s:autoSkipColorschemeCount=0
+let s:switchColorschemeDirction='next'
 
 function g:UTILSetColorscheme(colorscheme)
   if empty(a:colorscheme)
     return ""
   endif
+  let colorscheme=a:colorscheme
 
-  exec "colorscheme ". a:colorscheme
-
-  " 没有某种背景模式的主题自动切换背景
   let colorschemeModes=g:UTILGetColorschemeMode(a:colorscheme)
-  if !has_key(colorschemeModes, &background)
-    echo a:colorscheme . ' has no ' . &background . ' mode!'
-    call g:UTILToggleBackground()
+  if has_key(colorschemeModes, &background)
+    let s:autoSkipColorschemeCount = 0
+    exec "colorscheme ". a:colorscheme
+  else
+    " echo a:colorscheme . ' has no ' . &background . ' mode!'
+    if s:autoSkipColorschemeCount <= len(s:colorschemeList)
+      let s:autoSkipColorschemeCount += 1
+      let colorscheme=g:UTILSwithColorscheme(s:switchColorschemeDirction)
+    else
+      echo 'no colorscheme suppoert ' . &background . ' mode!'
+    endif
   endif
 
   " 初始化主题状态
@@ -239,11 +248,12 @@ function g:UTILSetColorscheme(colorscheme)
     endif
   endif
 
-  return a:colorscheme
+  return colorscheme
 endfunction
 
 " 切换主题
 function g:UTILSwithColorscheme(nextOrPre)
+  let s:switchColorschemeDirction=a:nextOrPre
   if a:nextOrPre == 'pre'
     if s:colorschemePos > 0
       let s:colorschemePos -= 1

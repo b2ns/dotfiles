@@ -14,6 +14,7 @@ alias q='exit'
 alias sss='shutdown now'
 
 alias v='gvim'
+alias vbig='gvim -n -u NONE -i NONE -N'
 alias f='floaterm'
 alias e='gedit'
 alias c='code'

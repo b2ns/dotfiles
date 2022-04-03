@@ -48,7 +48,7 @@ vnoremap <c-c> "+y
 vnoremap <c-x> "+x
 
 " 粘贴
-nnoremap <c-v> "+p
+nnoremap <c-v> "+P
 inoremap <c-v> <c-r>+
 cnoremap <c-v> <c-r>"
 
@@ -74,6 +74,9 @@ cnoremap <c-n> <down>
 " 缩略词
 " iabbrev dns domain name system
 
+" 防止缩进时失去选择
+xnoremap <  <gv
+xnoremap >  >gv
 "----------------------------------------------------------------------
 " INSERT 模式下使用 EMACS 键位
 "----------------------------------------------------------------------
