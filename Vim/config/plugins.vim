@@ -78,8 +78,8 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 " 书签
 "--------------------------------
 Plug 'MattesGroeger/vim-bookmarks'
-let g:bookmark_auto_close = 1
-let g:bookmark_center = 1
+" let g:bookmark_auto_close = 1
+" let g:bookmark_center = 1
 
 "--------------------------------
 " 翻译
@@ -93,7 +93,7 @@ let g:bookmark_center = 1
 " 括号补全
 "--------------------------------
 Plug 'jiangmiao/auto-pairs'
-let g:AutoPairsFlyMode = 1
+" let g:AutoPairsFlyMode = 1
 let g:AutoPairsShortcutToggle = ''
 let g:AutoPairsMapCh=0
 let g:AutoPairsMoveCharacter=''
@@ -631,13 +631,13 @@ Plug 'yianwillis/vimcdoc'
 "--------------------------------
 " Zen模式
 "--------------------------------
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
-let g:goyo_width=100
-let g:goyo_height='90%'
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
-nmap <c-m-z> :<c-u>Goyo<cr>
+" Plug 'junegunn/goyo.vim'
+" Plug 'junegunn/limelight.vim'
+" let g:goyo_width=100
+" let g:goyo_height='90%'
+" autocmd! User GoyoEnter Limelight
+" autocmd! User GoyoLeave Limelight!
+" nmap <c-m-z> :<c-u>Goyo<cr>
 
 "--------------------------------
 "--------------------------------
