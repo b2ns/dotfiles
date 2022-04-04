@@ -18,25 +18,7 @@ call plug#begin(get(g:, 'bundle_home', '~/.vim/plugged'))
 "--------------------------------
 " 文件浏览
 "--------------------------------
-" Plug 'preservim/nerdtree'
 
-" nnoremap <silent> <space>nn :NERDTreeFocus<CR>
-" nnoremap <silent> <space>nm :NERDTreeMirror<CR>
-
-" 自动关闭
-autocmd bufenter * if (winnr("$") ==? 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" 窗口宽度(31)
-let g:NERDTreeWinSize=45
-" 打开文件后自动关闭
-let g:NERDTreeQuitOnOpen=1
-let g:NERDTreeMinimalUI = 1
-let g:NERDTreeHijackNetrw = 0
-
-"--------------------------------
-" 文件复制移动删除
-"--------------------------------
-" Plug 'PhilRunninger/nerdtree-visual-selection'
 
 "--------------------------------
 " clean hidden buffer
@@ -78,8 +60,8 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 " 书签
 "--------------------------------
 Plug 'MattesGroeger/vim-bookmarks'
-" let g:bookmark_auto_close = 1
-" let g:bookmark_center = 1
+let g:bookmark_auto_close = 1
+let g:bookmark_center = 1
 
 "--------------------------------
 " 翻译
@@ -96,7 +78,6 @@ Plug 'jiangmiao/auto-pairs'
 " let g:AutoPairsFlyMode = 1
 let g:AutoPairsShortcutToggle = ''
 let g:AutoPairsMapCh=0
-let g:AutoPairsMoveCharacter=''
 
 "--------------------------------
 " 光标快速跳转
@@ -144,8 +125,8 @@ Plug 'AndrewRadev/tagalong.vim'
 " 对齐
 "--------------------------------
 Plug 'junegunn/vim-easy-align'
-nmap <c-m-a> <Plug>(EasyAlign)
-xmap <c-m-a> <Plug>(EasyAlign)
+" nmap <c-m-a> <Plug>(EasyAlign)
+" xmap <c-m-a> <Plug>(EasyAlign)
 
 "----------------------------------------------------------------------
 " 智能补全
@@ -593,6 +574,13 @@ let g:startify_custom_header = ['']
 "----------------------------------------------------------------------
 " Git集成
 "----------------------------------------------------------------------
+
+" 定义一个 DiffOrig 命令用于查看文件改动
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+        \ | wincmd p | diffthis
+endif
+
 "--------------------------------
 " git操作
 "--------------------------------

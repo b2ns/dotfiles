@@ -174,8 +174,8 @@ if has('folding')
 endif
 
 " 持久化折叠信息
-autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent loadview
+" autocmd BufWinLeave *.* mkview
+" autocmd BufWinEnter *.* silent loadview
 
 
 "----------------------------------------------------------------------

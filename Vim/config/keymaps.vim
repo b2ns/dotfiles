@@ -21,14 +21,12 @@
 
 " 修改<Leader>，默认为'\'
 let mapleader=","
-" esc insert mode
-" inoremap jj <esc>
-
-" like C D in normal mode
-nnoremap Y y$
 
 " 反向查找
 noremap \ ,
+
+" like C D in normal mode
+nnoremap Y y$
 
 " 保存
 nnoremap <leader>w :w<cr>
@@ -43,6 +41,7 @@ nnoremap <c-a> ggVG
 
 " 复制
 vnoremap <c-c> "+y
+nnoremap <c-c> :let @+=@"<cr>
 
 " 剪切
 vnoremap <c-x> "+x

@@ -29,8 +29,6 @@ autocmd InsertEnter,WinLeave * set nocursorline
 
 " 隐藏可隐藏的文本
 set concealcursor="nc"
-" [issue](https://github.com/ryanoasis/vim-devicons/wiki/FAQ-&-Troubleshooting#square-brackets-around-icons)
-" set conceallevel=0
 
 " 显示匹配的括号
 set showmatch
@@ -111,10 +109,10 @@ endif
 "----------------------------------------------------------------------
 let &guifont=g:UTILLocalStorageGet('font', g:var_guifont)
 
-nmap <c-f2> :call ChangeFontSize('bigger')<cr>
-nmap <s-f2> :call ChangeFontSize('smaller')<cr>
+nmap <c-f2> :call <sid>ChangeFontSize('bigger')<cr>
+nmap <s-f2> :call <sid>ChangeFontSize('smaller')<cr>
 
-function ChangeFontSize(biggerOrSmaller = 'bigger') abort
+function s:ChangeFontSize(biggerOrSmaller = 'bigger') abort
   let operator = '+'
   if a:biggerOrSmaller == 'smaller'
     let operator = '-'
