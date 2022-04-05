@@ -42,11 +42,11 @@ Plug 'junegunn/fzf.vim'
 
 set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf
 
-nnoremap <space>ff :Files<cr>
+nnoremap <space>ff :GFiles<cr>
+nnoremap <space>fa :Files<cr>
 nnoremap <space>fh :History<cr>
 nnoremap <space>fb :Buffers<cr>
 nnoremap <space>fr :Rg 
-nnoremap <space>fg :GFiles<cr>
 nnoremap <space>fm :Commits<cr>
 
 "--------------------------------
@@ -303,11 +303,11 @@ nmap <c-a-m> :CocCommand
 nmap <c-a-c> :<c-u>CocConfig<cr>
 nmap <c-a-r> :CocSearch 
 
-nmap <space>ca <Plug>(coc-codeaction)
-vmap <space>ca  <Plug>(coc-codeaction-selected)
-nmap <space>cla  <Plug>(coc-codelens-action)
-nmap <space>cf <Plug>(coc-fix-current)
-nmap <space>cr <Plug>(coc-rename)
+nmap ta <Plug>(coc-codeaction)
+vmap ta  <Plug>(coc-codeaction-selected)
+nmap tl  <Plug>(coc-codelens-action)
+nmap tf <Plug>(coc-fix-current)
+nmap tr <Plug>(coc-rename)
 
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gt <Plug>(coc-type-definition)
@@ -438,7 +438,7 @@ function! g:Open_browser(url)
 endfunction
 let g:mkdp_browserfunc = 'g:Open_browser'
 
-autocmd FIleType markdown nnoremap <silent> <space>to :GenTocGFM<cr>
+" autocmd FIleType markdown nnoremap <silent> <space>to :GenTocGFM<cr>
 
 "--------------------------------
 " java
@@ -619,10 +619,10 @@ Plug 'yianwillis/vimcdoc'
 "--------------------------------
 " Zen模式
 "--------------------------------
-" Plug 'junegunn/goyo.vim'
-" Plug 'junegunn/limelight.vim'
-" let g:goyo_width=100
-" let g:goyo_height='90%'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+let g:goyo_width=100
+let g:goyo_height='90%'
 " autocmd! User GoyoEnter Limelight
 " autocmd! User GoyoLeave Limelight!
 " nmap <c-m-z> :<c-u>Goyo<cr>
@@ -651,14 +651,15 @@ let g:asyncrun_open = 6
 " let g:asynctasks_term_focus=0
 nnoremap <silent> <f5> :AsyncTask run<cr>
 nnoremap <silent> <c-f5> :AsyncTask build<cr>
+nnoremap <silent> <s-f5> :AsyncTask test<cr>
 
 "--------------------------------
 " live server
 "--------------------------------
 Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
 
-nnoremap <space>lvv :Bracey<cr>
-nnoremap <space>lvs :BraceyStop<cr>
+nnoremap <c-f4> :Bracey<cr>
+nnoremap <s-f4> :BraceyStop<cr>
 
 "--------------------------------
 " 本地和远程服务器文件同步
@@ -704,6 +705,7 @@ nmap <F1> gg:call <sid>JavaStartDebug()<CR>
 "--------------------------------
 " test
 "--------------------------------
+Plug 'vim-test/vim-test'
 
 "----------------------------------------------------------------------
 " 结束插件安装

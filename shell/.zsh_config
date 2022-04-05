@@ -1,0 +1,81 @@
+### zsh ###
+# ZSH_THEME="robbyrussell"
+ZSH_THEME="spaceship"
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "nicoulaj" )
+
+zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' frequency 13
+
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_dups       # ignore duplicated commands history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+setopt share_history          # share command history data
+HIST_STAMPS="yyyy-mm-dd"
+
+plugins=(
+  git
+  sudo
+  colored-man-pages
+  command-not-found
+  web-search
+  copyfile
+  copypath
+  dirhistory
+  history-substring-search
+  jump
+  z
+  thefuck
+
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  you-should-use
+)
+source $ZSH/oh-my-zsh.sh
+
+### 设置环境变量 ###
+# history
+# export HISTIGNORE="pwd:exit:fg:bg:top:clear:history:ls:uptime:df:cd:ll:la:rm:q:sss"
+# export HISTCONTROL="ignorespace:ignoredups"
+# export HISTSIZE=10000
+
+### 设置别名 ###
+# alias rm="rm -i"
+alias q="exit"
+alias sss="shutdown now"
+
+alias v="gvim"
+alias vbig="gvim -n -u NONE -i NONE -N"
+alias f="floaterm"
+alias e="gedit"
+alias c="code"
+
+alias gs="git status"
+alias gb="git branch"
+alias gd="git diff"
+alias gl="git log"
+# alias gad="git add"
+# alias gco="git checkout"
+# alias gci="git commit"
+# alias gph="git push"
+# alias gpl="git pull"
+# alias gcl="git clone"
+# alias gm="git merge"
+# alias grb="git rebase"
+
+alias dev="yarn run dev"
+alias start="yarn run start"
+alias build="yarn run build"
+
+### 其他 ###
+# Homebrew
+export HOMEBREW_NO_AUTO_UPDATE=1
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# java
+export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+export CLASSPATH=".:/usr/share/java/:/usr/share/java/junit4.jar:/usr/share/java/hamcrest-core.jar:$HOME/.build/java/classpath:$HOME/.build/java/jar"
+

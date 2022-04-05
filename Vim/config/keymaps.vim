@@ -168,12 +168,9 @@ endif
 "----------------------------------------------------------------------
 
 noremap <silent> <leader>tc :tabnew<cr>
-noremap <silent> <leader>tq :tabclose<cr>
-noremap <silent> <leader>tn :tabnext<cr>
-noremap <silent> <m-l> :tabnext<cr>
-noremap <silent> <leader>tp :tabprev<cr>
-noremap <silent> <m-h> :tabprev<cr>
 noremap <silent> <leader>to :tabonly<cr>
+noremap <silent> <m-l> :tabnext<cr>
+noremap <silent> <m-h> :tabprev<cr>
 
 
 " 左移 tab
@@ -192,8 +189,6 @@ function! Tab_MoveRight()
   endif
 endfunc
 
-noremap <silent><leader>tl :call Tab_MoveLeft()<cr>
-noremap <silent><leader>tr :call Tab_MoveRight()<cr>
 noremap <silent><m-left> :call Tab_MoveLeft()<cr>
 noremap <silent><m-right> :call Tab_MoveRight()<cr>
 

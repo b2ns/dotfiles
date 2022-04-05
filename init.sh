@@ -10,7 +10,8 @@ root=$(abspath "$0")
 home=$HOME
 
 configFiles=(
-  \ "bash/.bash_config"
+  \ "shell/.bash_config"
+  \ "shell/.zsh_config"
   \ "prettier/.prettierrc.js"
   \ "editorconfig/.editorconfig"
   \ "eslint/.eslintrc.js"
@@ -18,6 +19,7 @@ configFiles=(
   \ "typescript/tsconfig.json"
   \ "Vim/.vimrc"
   \ "Vim/AsyncTasks/.tasks"
+  \ "Vim/AsyncTasks/.task.sh"
   \ "Vim/Vimspector/.vimspector.json"
 )
 

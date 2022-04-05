@@ -1,12 +1,11 @@
 [+]
-build_dir=/tmp
-java_classpath=$HOME/.build/java-classpath
-java_jar=$HOME/.build/java-jar
+bash_task=$HOME/.task.sh
 
 [build]
-command:typescript,ts=tsc "$(VIM_FILEPATH)" --outFile "$(+build_dir)/ts/$(VIM_FILENOEXT)"
-command:java=javac -d "$(+java_classpath)" "$(VIM_FILEPATH)" && jar -cvf "$(+java_jar)/All.jar" -C "$(+java_classpath)" .
-command:c,cpp=gcc -O2 -Wall "$(VIM_FILEPATH)" -o "$(+build_dir)/c-$(VIM_FILENOEXT)" -lstdc++ -lm -msse3
+command:java=source "$(+bash_task)" java build
+command:typescript,typescriptreact,ts,tsx=source "$(+bash_task)" ts build
+command:c,cpp=source "$(+bash_task)" c build
+
 output=terminal
 pos=floaterm
 cwd=<root>
@@ -14,13 +13,22 @@ save=2
 
 [run]
 command="$(VIM_FILEPATH)"
-command:javascript,javascript.jsx,jsx=node "$(VIM_FILEPATH)"
-command:typescript,ts=node "$(+build_dir)/ts/$(VIM_FILENOEXT)"
-command:java=java "$(VIM_FILEPATH)"
-command:c,cpp="$(+build_dir)/c-$(VIM_FILENOEXT)"
-command:sh=sh "$(VIM_FILEPATH)"
+command:java=source "$(+bash_task)" java run "$(-rebuild:n)"
+command:typescript,typescriptreact,ts,tsx=source "$(+bash_task)" ts run
+command:c,cpp=source "$(+bash_task)" c run
+
+command:javascript,js=node "$(VIM_FILEPATH)"
+command:sh=source "$(VIM_FILEPATH)"
 command:python=python "$(VIM_FILEPATH)"
-command:ruby=ruby "$(VIM_FILEPATH)"
+
+output=terminal
+pos=floaterm
+cwd=<root>
+save=2
+
+[test]
+command:java=source "$(+bash_task)" java test
+
 output=terminal
 pos=floaterm
 cwd=<root>

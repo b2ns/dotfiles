@@ -14,7 +14,7 @@
   "java.project.referencedLibraries": [
     "lib/**/*.jar",
     "/usr/share/java/**/*.jar",
-    "~/.build/java-jar/**/*.jar"
+    "~/.build/java/**/*.jar"
   ],
   "cssmodules.camelCase": true,
   "explorer.icon.enableNerdfont": true,
