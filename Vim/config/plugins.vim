@@ -175,6 +175,7 @@ let g:coc_global_extensions = [
       \ "coc-word",
       \ "coc-dictionary",
       \ "coc-tag",
+      \ "coc-docker",
       \]
       " \ "coc-tabnine",
 
