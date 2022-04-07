@@ -74,7 +74,7 @@ function g:UTILDeserializeDict(fileOrList) abort
     if empty(key)
       let key=line
     else
-      let dict[key]=js_decode(line)
+      let dict[key]=json_decode(line)
       let key=""
     endif
   endfor
@@ -86,7 +86,7 @@ endfunction
 function g:UTILSerializeDict(dict, file = "") abort
   let list=[]
   for [key, value] in items(a:dict)
-    let list += [key, js_encode(value)]
+    let list += [key, json_encode(value)]
   endfor
   if !empty(a:file)
     let file=expand(a:file)

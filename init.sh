@@ -30,10 +30,9 @@ for file in ${configFiles[@]}; do
   homeFilename="$home/$filename"
 
   if [[ $doClean != "uninstall" ]]; then
-    ln -s "$pathname" "$homeFilename"
-    echo link: "$homeFilename ->  $pathname"
+    ln -svf "$pathname" "$homeFilename"
   else
-    rm "$homeFilename"
+    rm -vf "$homeFilename"
     echo remove: $homeFilename
   fi
 done

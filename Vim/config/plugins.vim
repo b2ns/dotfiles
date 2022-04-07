@@ -10,6 +10,15 @@
 let g:plug_timeout=15
 let g:plug_retries=2
 
+" 按条件加载插件
+function! Cond(cond, ...)
+  let opts = get(a:000, 0, {})
+  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
+" examples:
+" Plug 'benekastah/neomake', Cond(has('nvim'))
+" Plug 'benekastah/neomake', Cond(has('nvim'), { 'on': 'Neomake' })
+
 call plug#begin(get(g:, 'bundle_home', '~/.vim/plugged'))
 
 "----------------------------------------------------------------------
@@ -132,11 +141,16 @@ Plug 'junegunn/vim-easy-align'
 " 智能补全
 "----------------------------------------------------------------------
 "--------------------------------
+" AI补全，目前只支持nvim，等更新吧
+"--------------------------------
+Plug 'github/copilot.vim', Cond(has('nvim'))
+
+"--------------------------------
 " coc插件系统
 "--------------------------------
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-let g:coc_config_home = "~/github/b2ns/config/Vim/coc/"
+let g:coc_config_home = "~/github/b2ns/dotfiles/Vim/coc/"
 
 let g:coc_snippet_next = '<tab>'
 
@@ -172,12 +186,14 @@ let g:coc_global_extensions = [
       \ "coc-yank",
       \ "coc-db",
       \ "coc-floaterm",
-      \ "coc-word",
       \ "coc-dictionary",
       \ "coc-tag",
       \ "coc-docker",
+      \ "coc-clangd",
+      \ "coc-zi",
       \]
       " \ "coc-tabnine",
+      " \ "coc-word",
 
 " coc-explorer
 nnoremap <silent> <space>nn <Cmd>CocCommand explorer --quit-on-open --position left --width 50<CR>
@@ -304,11 +320,11 @@ nmap <c-a-m> :CocCommand
 nmap <c-a-c> :<c-u>CocConfig<cr>
 nmap <c-a-r> :CocSearch 
 
-nmap ta <Plug>(coc-codeaction)
-vmap ta  <Plug>(coc-codeaction-selected)
-nmap tl  <Plug>(coc-codelens-action)
-nmap tf <Plug>(coc-fix-current)
-nmap tr <Plug>(coc-rename)
+nmap <space>ta <Plug>(coc-codeaction)
+vmap <space>ta  <Plug>(coc-codeaction-selected)
+nmap <space>tl  <Plug>(coc-codelens-action)
+nmap <space>tf <Plug>(coc-fix-current)
+nmap <space>tr <Plug>(coc-rename)
 
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gt <Plug>(coc-type-definition)
@@ -503,11 +519,11 @@ let g:vim_monokai_tasty_italic = 1
 
 Plug 'NLKNguyen/papercolor-theme'
 
-nmap <silent> <f3> :call <sid>ToggleBackground()<cr>
-nmap <silent> <c-f3> :call <sid>ChangeColorscheme("next")<cr>
-nmap <silent> <s-f3> :call <sid>ChangeColorscheme("pre")<cr>
+nmap <silent> <f3> :call ToggleBackground()<cr>
+nmap <silent> <c-f3> :call ChangeColorscheme("next")<cr>
+nmap <silent> <s-f3> :call ChangeColorscheme("pre")<cr>
 
-function s:ToggleBackground()
+function ToggleBackground()
   let colorscheme=g:UTILGetColorscheme()
   let background=g:UTILToggleBackground()
   if !empty(background)
@@ -516,7 +532,7 @@ function s:ToggleBackground()
   endif
 endfunction
 
-function s:ChangeColorscheme(nextOrPre)
+function ChangeColorscheme(nextOrPre)
   let colorscheme=""
   let colorscheme=g:UTILSwithColorscheme(a:nextOrPre)
 

@@ -1,7 +1,8 @@
 {
-  "tabnine.priority": 95,
   "snippets.priority": 100,
   "coc.preferences.extensionUpdateCheck": "weekly",
+  "suggest.defaultSortMethod": "none",
+  "suggest.enablePreview": true,
   "colors.filetypes": ["*"],
   "java.home": "/usr/lib/jvm/java-11-openjdk-amd64",
   "java.format.settings.url": "/home/ding/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml",

@@ -192,6 +192,12 @@ set lazyredraw
 " 或者 Vim 当前目录包含 .tags 文件
 set tags=./.tags;,.tags,./tags;,tags
 
+" set formatoptions-=mBcql
+
+" 避免换行是自动插入注释标签
+" set formatoptions-=ro " 不生效，因为其他文件也设置了formatoptions
+autocmd BufEnter * set fo-=r fo-=o
+
 " 如遇Unicode值大于255的文本，不必等到空格再折行
 set formatoptions+=m
 

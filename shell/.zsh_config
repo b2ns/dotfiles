@@ -44,6 +44,7 @@ alias sss="shutdown now"
 
 alias v="gvim"
 alias vbig="gvim -n -u NONE -i NONE -N"
+alias n="nvim"
 alias f="floaterm"
 alias e="gedit"
 alias c="code"
@@ -75,4 +76,9 @@ export NVM_DIR="$HOME/.nvm"
 # java
 export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
 export CLASSPATH=".:/usr/share/java/:/usr/share/java/junit4.jar:/usr/share/java/hamcrest-core.jar:$HOME/.build/java/classpath:$HOME/.build/java/jar"
+
+# clangd
+if [ -d "$HOME/Downloads/clangd_14.0.0/bin" ] ; then
+  PATH="$HOME/Downloads/clangd_14.0.0/bin:$PATH"
+fi
 

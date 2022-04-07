@@ -79,13 +79,13 @@ set guioptions-=T
 " 默认启动窗口最大化
 if has("gui_running")
   set lines=999 columns=999
-else
-  if exists("+lines")
-    set lines=30
-  endif
-  if exists("+columns")
-    set columns=100
-  endif
+" else
+  " if exists("+lines")
+    " set lines=30
+  " endif
+  " if exists("+columns")
+    " set columns=100
+  " endif
 endif
 
 
@@ -109,10 +109,10 @@ endif
 "----------------------------------------------------------------------
 let &guifont=g:UTILLocalStorageGet('font', g:var_guifont)
 
-nmap <c-f2> :call <sid>ChangeFontSize('bigger')<cr>
-nmap <s-f2> :call <sid>ChangeFontSize('smaller')<cr>
+nmap <c-f2> :call ChangeFontSize('bigger')<cr>
+nmap <s-f2> :call ChangeFontSize('smaller')<cr>
 
-function s:ChangeFontSize(biggerOrSmaller = 'bigger') abort
+function ChangeFontSize(biggerOrSmaller = 'bigger') abort
   let operator = '+'
   if a:biggerOrSmaller == 'smaller'
     let operator = '-'
