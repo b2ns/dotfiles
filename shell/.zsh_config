@@ -1,4 +1,36 @@
-### zsh ###
+### 工具函数 ###
+function __cd_list() {
+  if [[ -n "$1" ]]; then
+    cd "$1" && ls -A
+  else
+    cd
+  fi
+}
+
+function __add_to_path() {
+  if [ -d "$1" ] ; then
+    PATH="$1:$PATH"
+  fi
+}
+
+function __join_path() {
+  separator=":"
+  PATH=""
+  for p in "$@"; do
+    if [[ -n "$PATH" ]]; then
+      PATH="$PATH$separator$p"
+    else
+      PATH="$p"
+    fi
+  done
+  echo $PATH
+}
+
+function __source() {
+  [ -s "$1" ] && source "$1"
+}
+
+### zsh配置 ###
 ZSH_THEME="robbyrussell"
 ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "nicoulaj" )
 
@@ -29,25 +61,21 @@ plugins=(
 )
 bindkey '^ ' autosuggest-accept
 
-source $ZSH/oh-my-zsh.sh
-
-### 设置环境变量 ###
-# history
-# export HISTIGNORE="pwd:exit:fg:bg:top:clear:history:ls:uptime:df:cd:ll:la:rm:q:sss"
-# export HISTCONTROL="ignorespace:ignoredups"
-# export HISTSIZE=10000
+__source $ZSH/oh-my-zsh.sh
 
 ### 设置别名 ###
 # alias rm="rm -i"
+alias c="__cd_list"
 alias q="exit"
 alias sss="shutdown now"
+alias j="z"
 
 alias v="gvim"
 alias vbig="gvim -n -u NONE -i NONE -N"
 alias n="nvim"
 alias f="floaterm"
 alias e="gedit"
-alias c="code"
+# alias code="code"
 
 alias gs="git status"
 alias gb="git branch"
@@ -71,14 +99,18 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"  # This loads nvm
+__source "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # java
 export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
-export CLASSPATH=".:/usr/share/java/:/usr/share/java/junit4.jar:/usr/share/java/hamcrest-core.jar:$HOME/.build/java/classpath:$HOME/.build/java/jar"
+export CLASSPATH=$(__join_path \
+"." \
+"/usr/share/java/" \
+"/usr/share/java/junit4.jar" \
+"/usr/share/java/hamcrest-core.jar" \
+"$HOME/.build/java/classpath" \
+"$HOME/.build/java/jar" \
+)
 
 # clangd
-if [ -d "$HOME/Downloads/clangd_14.0.0/bin" ] ; then
-  PATH="$HOME/Downloads/clangd_14.0.0/bin:$PATH"
-fi
-
+__add_to_path "$HOME/Downloads/clangd_14.0.0/bin"
