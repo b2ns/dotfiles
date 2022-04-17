@@ -717,7 +717,7 @@ function s:JavaStartDebug()
   execute "CocCommand java.debug.vimspector.start"
 endfunction
 
-nmap <F1> gg:call <sid>JavaStartDebug()<CR>
+autocmd FIleType java nmap <F1> gg:call <sid>JavaStartDebug()<CR>
 
 "--------------------------------
 " test

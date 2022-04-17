@@ -1,7 +1,7 @@
 ### 工具函数 ###
 function __cd_list() {
   if [[ -n "$1" ]]; then
-    cd "$1" && ls -A
+    cd "$1" && ls --color=tty -A
   else
     cd
   fi
@@ -66,6 +66,9 @@ __source $ZSH/oh-my-zsh.sh
 ### 设置别名 ###
 # alias rm="rm -i"
 alias c="__cd_list"
+alias l="ls"
+alias la="ls -A"
+alias ll="ls -lAh"
 alias q="exit"
 alias sss="shutdown now"
 alias j="z"
