@@ -155,6 +155,7 @@ let g:coc_config_home = "~/github/b2ns/dotfiles/Vim/coc/"
 let g:coc_snippet_next = '<tab>'
 
 let g:coc_global_extensions = [
+      \ "coc-clangd",
       \ "coc-calc",
       \ "coc-css",
       \ "coc-cssmodules",
@@ -169,7 +170,6 @@ let g:coc_global_extensions = [
       \ "coc-sh",
       \ "coc-tsserver",
       \ "coc-vetur",
-      \ "@yaegassy/coc-volar",
       \ "coc-vimlsp",
       \ "coc-yaml",
       \ "coc-java",
@@ -179,19 +179,19 @@ let g:coc_global_extensions = [
       \ "coc-highlight",
       \ "coc-markdownlint",
       \ "coc-markmap",
-      \ "@yaegassy/coc-nginx",
-      \ "coc-spell-checker",
-      \ "coc-sql",
       \ "coc-tasks",
       \ "coc-yank",
-      \ "coc-db",
       \ "coc-floaterm",
       \ "coc-dictionary",
       \ "coc-tag",
-      \ "coc-docker",
-      \ "coc-clangd",
       \ "coc-zi",
+      \ "coc-docker",
+      \ "@yaegassy/coc-nginx",
+      \ "coc-sql",
+      \ "coc-db",
       \]
+      " \ "@yaegassy/coc-volar",
+      " \ "coc-spell-checker",
       " \ "coc-tabnine",
       " \ "coc-word",
 
@@ -314,8 +314,8 @@ nnoremap <silent><nowait> <space>lt :<C-u>CocList --normal floaterm<cr>
 " nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 
 " nmap <c-a-i> <Plug>(coc-format)
-nmap <c-a-i> :<c-u>Format<cr>
-nmap <c-a-o> :<c-u>ORI<cr>
+nmap <c-a-o> :<c-u>Format<cr>
+" nmap <c-a-o> :<c-u>ORI<cr>
 nmap <c-a-m> :CocCommand 
 nmap <c-a-c> :<c-u>CocConfig<cr>
 nmap <c-a-r> :CocSearch 
@@ -374,13 +374,18 @@ Plug 'honza/vim-snippets'
 " endfunction
 
 "----------------------------------------------------------------------
-" 类型扩展
+" 类型扩展和语法高亮
 "----------------------------------------------------------------------
+"--------------------------------
+" nvim的语法高亮
+"--------------------------------
+Plug 'nvim-treesitter/nvim-treesitter', Cond(has('nvim'), {'do': ':TSUpdate'})
+
 "--------------------------------
 " jsonc
 "--------------------------------
 " autocmd FileType json syntax match Comment +\/\/.\+$+
-Plug 'neoclide/jsonc.vim'
+Plug 'neoclide/jsonc.vim', Cond(!has('nvim'))
 autocmd BufRead,BufNewFile *.json set filetype=jsonc
 " augroup JsonToJsonc
   " autocmd! FileType json set filetype=jsonc
@@ -389,16 +394,14 @@ autocmd BufRead,BufNewFile *.json set filetype=jsonc
 "--------------------------------
 " css
 "--------------------------------
-Plug 'hail2u/vim-css3-syntax'
+Plug 'hail2u/vim-css3-syntax', Cond(!has('nvim'))
 
 "--------------------------------
 " javascript
 "--------------------------------
-Plug 'pangloss/vim-javascript'
+Plug 'pangloss/vim-javascript', Cond(!has('nvim'))
 
 let g:javascript_plugin_jsdoc=1
-
-" Plug 'jelera/vim-javascript-syntax'
 
 " 语法高亮优化
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
@@ -407,21 +410,12 @@ autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 "--------------------------------
 " typescript
 "--------------------------------
-" Plug 'leafgarland/typescript-vim'
-
-" let g:typescript_ignore_browserwords=1
-
-Plug 'herringtondarkholme/yats.vim'
+Plug 'herringtondarkholme/yats.vim', Cond(!has('nvim'))
 
 "--------------------------------
 " vue
 "--------------------------------
-" Plug 'posva/vim-vue'
-" let g:vue_disable_pre_processors=1
-" autocmd FileType vue syntax sync fromstart
-" autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
-
-Plug 'leafOfTree/vim-vue-plugin'
+Plug 'leafOfTree/vim-vue-plugin', Cond(!has('nvim'))
 let g:vim_vue_plugin_config = {
       \'syntax': {
         \   'template': ['html'],
@@ -437,30 +431,35 @@ let g:vim_vue_plugin_config = {
 "--------------------------------
 " jsx
 "--------------------------------
-" Plug 'mxw/vim-jsx'
-
-Plug 'maxmellon/vim-jsx-pretty'
+Plug 'maxmellon/vim-jsx-pretty', Cond(!has('nvim'))
 
 "--------------------------------
 " markdown
 "--------------------------------
+Plug 'SidOfc/mkdx'
+let g:mkdx#settings = {
+      \ 'highlight': { 'enable': 1 },
+      \ 'enter': { 'shift': 1 },
+      \ 'links': {},
+      \ 'toc': { 'update_on_write': 1 },
+      \ 'fold': { 'enable': 1 },
+      \ 'insert_indent_mappings': 0,
+      \ 'checkbox': { 'toggles': [' ', 'x'] },
+      \}
+let g:polyglot_disabled = ['markdown']
+
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-Plug 'mzlogin/vim-markdown-toc'
-
 let g:mkdp_auto_close = 1
-
 autocmd FIleType markdown nmap <silent> <space>md <Plug>MarkdownPreviewToggle
 function! g:Open_browser(url)
   silent exec "silent !google-chrome --app=" . a:url
 endfunction
 let g:mkdp_browserfunc = 'g:Open_browser'
 
-" autocmd FIleType markdown nnoremap <silent> <space>to :GenTocGFM<cr>
-
 "--------------------------------
 " java
 "--------------------------------
-Plug 'uiiaoo/java-syntax.vim'
+Plug 'uiiaoo/java-syntax.vim', Cond(!has('nvim'))
 
 "--------------------------------
 " 数据库
@@ -520,8 +519,8 @@ let g:vim_monokai_tasty_italic = 1
 Plug 'NLKNguyen/papercolor-theme'
 
 nmap <silent> <f3> :call ToggleBackground()<cr>
-nmap <silent> <c-f3> :call ChangeColorscheme("next")<cr>
-nmap <silent> <s-f3> :call ChangeColorscheme("pre")<cr>
+call g:UTILBindkey('nmap <silent>', '<c-f3>', ":call ChangeColorscheme('next')<cr>")
+call g:UTILBindkey('nmap <silent>', '<s-f3>', ":call ChangeColorscheme('pre')<cr>")
 
 function ToggleBackground()
   let colorscheme=g:UTILGetColorscheme()
@@ -650,12 +649,21 @@ let g:goyo_height='90%'
 "--------------------------------
 Plug 'voldikss/vim-floaterm'
 " let g:floaterm_wintype='vsplit'
-let g:floaterm_position='bottomright'
-let g:floaterm_width=0.5
-let g:floaterm_height=1.0
+" let g:floaterm_position='bottomright'
+let g:floaterm_width=0.9
+let g:floaterm_height=0.9
 let g:floaterm_borderchars='-│-│┌┐┘└'
 let g:floaterm_opener='tabe'
-let g:floaterm_keymap_toggle = '<c-a-t>'
+let g:floaterm_keymap_toggle = '<f4>'
+nnoremap <silent> <c-a-t> :FloatermNew<CR>
+tnoremap <silent> <c-a-t> <C-\><C-n>:FloatermNew<CR>
+
+call g:UTILBindkey('nnoremap <silent>', '<c-f4>', ":FloatermNext<cr>")
+call g:UTILBindkey('tnoremap <silent>', '<c-f4>', ":FloatermNext<cr>")
+call g:UTILBindkey('nnoremap <silent>', '<s-f4>', ":FloatermPrev<cr>")
+call g:UTILBindkey('tnoremap <silent>', '<s-f4>', ":FloatermPrev<cr>")
+
+autocmd VimLeavePre * FloatermKill!
 
 "--------------------------------
 " task任务执行
@@ -667,16 +675,15 @@ let g:asyncrun_open = 6
 " let g:asynctasks_term_pos = 'external'
 " let g:asynctasks_term_focus=0
 nnoremap <silent> <f5> :AsyncTask run<cr>
-nnoremap <silent> <c-f5> :AsyncTask build<cr>
-nnoremap <silent> <s-f5> :AsyncTask test<cr>
+call g:UTILBindkey('nnoremap <silent>', '<c-f5>', ":AsyncTask build<cr>")
+call g:UTILBindkey('nnoremap <silent>', '<s-f5>', ":AsyncTask test<cr>")
 
 "--------------------------------
 " live server
 "--------------------------------
 Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
-
-nnoremap <c-f4> :Bracey<cr>
-nnoremap <s-f4> :BraceyStop<cr>
+" nnoremap <c-f4> :Bracey<cr>
+" nnoremap <s-f4> :BraceyStop<cr>
 
 "--------------------------------
 " 本地和远程服务器文件同步
@@ -698,18 +705,22 @@ let g:vimspector_sidebar_width = 30
 let g:vimspector_bottombar_height = 10
 let g:vimspector_terminal_minwidth = 20
 " let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
+
 nmap <silent> <F6> <Plug>VimspectorToggleBreakpoint
-nmap <silent> <c-F6> <Plug>VimspectorToggleConditionalBreakpoint
-nmap <silent> <s-F6> <Plug>VimspectorAddFunctionBreakpoint
+call g:UTILBindkey('nmap <silent>', '<c-f6>', "<Plug>VimspectorToggleConditionalBreakpoint")
+call g:UTILBindkey('nmap <silent>', '<s-f6>', "<Plug>VimspectorAddFunctionBreakpoint")
+
 nmap <silent> <F7> <Plug>VimspectorContinue
-nmap <silent> <c-F7> <Plug>VimspectorRestart
-nmap <silent> <s-F7> <Plug>VimspectorStop
+call g:UTILBindkey('nmap <silent>', '<c-f7>', "<Plug>VimspectorRestart")
+call g:UTILBindkey('nmap <silent>', '<s-f7>', "<Plug>VimspectorStop")
+
 nmap <silent> <F8> <Plug>VimspectorStepOver
-nmap <silent> <c-F8> <Plug>VimspectorStepInto
-nmap <silent> <s-F8> <Plug>VimspectorStepOut
+call g:UTILBindkey('nmap <silent>', '<c-f8>', "<Plug>VimspectorStepInto")
+call g:UTILBindkey('nmap <silent>', '<s-f8>', "<Plug>VimspectorStepOut")
+
 nmap <silent> <F9> <Plug>VimspectorGoToCurrentLine
-nmap <silent> <c-F9> <Plug>VimspectorRunToCursor
-" nmap <silent> <F9> <Plug>VimspectorPause
+call g:UTILBindkey('nmap <silent>', '<c-f9>', "<Plug>VimspectorRunToCursor")
+" call g:UTILBindkey('nmap <silent>', '<s-f9>', "")
 
 function s:JavaStartDebug()
   call system("javac -g " . expand('%:t'))
@@ -728,3 +739,42 @@ autocmd FIleType java nmap <F1> gg:call <sid>JavaStartDebug()<CR>
 " 结束插件安装
 "----------------------------------------------------------------------
 call plug#end()
+
+"--------------------------------
+" lua类插件配置
+"--------------------------------
+if has('nvim')
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all"
+  ensure_installed = { "c", "cpp", "javascript", "typescript", "tsx", "vue", "html", "css", "scss", "bash", "dockerfile", "graphql", "java", "jsdoc", "json", "jsonc", "json5", "markdown", "vim", "yaml", "lua" },
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- List of parsers to ignore installing (for "all")
+  -- ignore_install = { "javascript" },
+
+  indent = {
+    enable = true
+  },
+
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+
+    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+    -- the name of the parser)
+    -- list of language that will be disabled
+    -- disable = { "c", "rust" },
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
+endif

@@ -10,6 +10,7 @@ root=$(abspath "$0")
 home=$HOME
 
 configFiles=(
+  \ "terminal/.alacritty.yml"
   \ "shell/.bash_config"
   \ "shell/.zsh_config"
   \ "prettier/.prettierrc.js"

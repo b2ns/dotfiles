@@ -7,6 +7,14 @@ function __cd_list() {
   fi
 }
 
+function __z() {
+  if [[ -n "$1" ]]; then
+    _z 2>&1 "$1" && ls --color=tty -A
+  else
+    cd
+  fi
+}
+
 function __add_to_path() {
   if [ -d "$1" ] ; then
     PATH="$1:$PATH"
@@ -45,16 +53,15 @@ setopt share_history          # share command history data
 HIST_STAMPS="yyyy-mm-dd"
 
 plugins=(
-  sudo
   colored-man-pages
   command-not-found
-  web-search
   copyfile
   copypath
   dirhistory
   history-substring-search
   z
   thefuck
+  last-working-dir
 
   zsh-autosuggestions
   zsh-syntax-highlighting
@@ -64,21 +71,19 @@ bindkey '^ ' autosuggest-accept
 __source $ZSH/oh-my-zsh.sh
 
 ### 设置别名 ###
-# alias rm="rm -i"
+alias rm="rm -i"
 alias c="__cd_list"
+alias z="__z"
 alias l="ls"
 alias la="ls -A"
 alias ll="ls -lAh"
 alias q="exit"
 alias sss="shutdown now"
-alias j="z"
 
-alias v="gvim"
-alias vbig="gvim -n -u NONE -i NONE -N"
-alias n="nvim"
+alias v="nvim"
+alias vbig="nvim -n -u NONE -i NONE -N"
 alias f="floaterm"
 alias e="gedit"
-# alias code="code"
 
 alias gs="git status"
 alias gb="git branch"
@@ -97,6 +102,9 @@ alias start="yarn run start"
 alias build="yarn run build"
 
 ### 其他 ###
+# set neovim as default rather than vim
+export EDITOR="nvim"
+
 # Homebrew
 export HOMEBREW_NO_AUTO_UPDATE=1
 

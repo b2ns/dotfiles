@@ -17,6 +17,7 @@
     "/usr/share/java/**/*.jar",
     "~/.build/java/**/*.jar"
   ],
+  "vetur.ignoreProjectWarning": true,
   "cssmodules.camelCase": true,
   "explorer.icon.enableNerdfont": true,
   "html-css-support.enabledLanguages": [

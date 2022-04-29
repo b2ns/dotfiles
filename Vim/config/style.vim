@@ -109,8 +109,8 @@ endif
 "----------------------------------------------------------------------
 let &guifont=g:UTILLocalStorageGet('font', g:var_guifont)
 
-nmap <c-f2> :call ChangeFontSize('bigger')<cr>
-nmap <s-f2> :call ChangeFontSize('smaller')<cr>
+call g:UTILBindkey('nmap', '<c-f2>', ":call ChangeFontSize('bigger')<cr>")
+call g:UTILBindkey('nmap', '<s-f2>', ":call ChangeFontSize('smaller')<cr>")
 
 function ChangeFontSize(biggerOrSmaller = 'bigger') abort
   let operator = '+'
@@ -345,3 +345,18 @@ set tabline=%!Vim_NeatTabLine()
 set guitablabel=%{Vim_NeatGuiTabLabel()}
 set guitabtooltip=%{Vim_NeatGuiTabTip()}
 
+"----------------------------------------------------------------------
+" 终端下光标切换形态和闪烁
+"----------------------------------------------------------------------
+if has('nvim')
+  set guicursor+=a:blinkwait700-blinkon400-blinkoff250
+elseif has('terminal') && !has('gui_running')
+  au VimEnter,InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
+  au InsertEnter,InsertChange *
+        \ if v:insertmode == 'i' | 
+        \   silent execute '!echo -ne "\e[5 q"' | redraw! |
+        \ elseif v:insertmode == 'r' |
+        \   silent execute '!echo -ne "\e[3 q"' | redraw! |
+        \ endif
+  au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
+endif

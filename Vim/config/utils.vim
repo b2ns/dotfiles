@@ -16,6 +16,20 @@ let g:var_is_win=g:os ==? "Windows"
 "----------------------------------------------------------------------
 " 通用方法
 "----------------------------------------------------------------------
+" ctrl, shift + fx 不能在终端中起作用
+" map <C-Fx> is equal to map <Fy> where y = x + 24.
+" map <S-Fx> is equal to map <Fy> where y = x + 12.
+" So if you want to map <C-F12> to something, you can also map <F36> to the same thing.
+function g:UTILBindkey(mapArgs, key, action) abort
+  let key=a:key
+  if !has('gui_running')
+    if has('nvim')
+      let key=substitute(key, '\v\c<([cs])-f(\d+)>', {m ->'f' . (m[1] == 'c' ? m[2]+24 : m[2]+12)}, '')
+    endif
+  endif
+  exe a:mapArgs . ' ' . key . ' ' . a:action
+endfunction
+
 " 执行异步代码，利用定时器模拟异步
 function g:UTILRunAsync(funcRef) abort
   return timer_start(0, a:funcRef)
