@@ -71,6 +71,14 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 Plug 'MattesGroeger/vim-bookmarks'
 let g:bookmark_auto_close = 1
 let g:bookmark_center = 1
+let g:bookmark_no_default_key_mappings = 1
+nmap <space>mm <Plug>BookmarkToggle
+nmap <space>mi <Plug>BookmarkAnnotate
+nmap <space>ma <Plug>BookmarkShowAll
+nmap <space>mn <Plug>BookmarkNext
+nmap <space>mp <Plug>BookmarkPrev
+nmap <space>mc <Plug>BookmarkClear
+nmap <space>mx <Plug>BookmarkClearAll
 
 "--------------------------------
 " 翻译
@@ -307,6 +315,7 @@ nnoremap <silent><nowait> <space>lo :<C-u>CocOutline<cr>
 nnoremap <silent><nowait> <space>ls :<C-u>CocList -I symbols<cr>
 nnoremap <silent><nowait> <space>ly :<C-u>CocList -A --normal yank<cr>
 nnoremap <silent><nowait> <space>lt :<C-u>CocList --normal floaterm<cr>
+nnoremap <silent><nowait> <space>lm :<C-u>ALEPopulateQuickfix<cr>
 
 " Do default action for next item.
 " nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
@@ -314,17 +323,18 @@ nnoremap <silent><nowait> <space>lt :<C-u>CocList --normal floaterm<cr>
 " nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 
 " nmap <c-a-i> <Plug>(coc-format)
-nmap <c-a-o> :<c-u>Format<cr>
-" nmap <c-a-o> :<c-u>ORI<cr>
+" nmap <c-a-o> :<c-u>Format<cr>
+nmap mm :<c-u>Format<cr>
+nmap <c-a-o> :<c-u>ORI<cr>
 nmap <c-a-m> :CocCommand 
 nmap <c-a-c> :<c-u>CocConfig<cr>
 nmap <c-a-r> :CocSearch 
 
-nmap <space>ta <Plug>(coc-codeaction)
-vmap <space>ta  <Plug>(coc-codeaction-selected)
-nmap <space>tl  <Plug>(coc-codelens-action)
-nmap <space>tf <Plug>(coc-fix-current)
-nmap <space>tr <Plug>(coc-rename)
+nmap ta <Plug>(coc-codeaction)
+vmap ta  <Plug>(coc-codeaction-selected)
+nmap tl  <Plug>(coc-codelens-action)
+nmap tf <Plug>(coc-fix-current)
+nmap tr <Plug>(coc-rename)
 
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gt <Plug>(coc-type-definition)
@@ -494,6 +504,22 @@ Plug 'kristijanhusak/vim-dadbod-ui'
 "--------------------------------
 " ALE
 "--------------------------------
+Plug 'dense-analysis/ale'
+let g:ale_disable_lsp = 1
+let g:ale_set_highlights = 0
+" let g:ale_lint_on_text_changed = 'never'
+" let g:ale_lint_on_insert_leave = 0
+" let g:ale_lint_on_enter = 0
+" let g:ale_lint_on_save = 0
+
+let g:ale_fixers = {
+  \ 'javascript': ['eslint'],
+\ }
+
+nmap ml <Plug>(ale_lint)
+nmap mf <Plug>(ale_fix)
+nmap mp <Plug>(ale_previous)
+nmap mn <Plug>(ale_next)
 
 
 "----------------------------------------------------------------------
@@ -546,14 +572,17 @@ endfunction
 "--------------------------------
 Plug 'vim-airline/vim-airline'
 
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
+" let g:airline_left_sep = ''
+" let g:airline_left_alt_sep = ''
+" let g:airline_right_sep = ''
+" let g:airline_right_alt_sep = ''
 let g:airline_powerline_fonts = 1
 let g:airline_exclude_preview = 1
 let g:airline_highlighting_cache = 1
-let g:airline_extensions = ["coc"]
+let g:airline_focuslost_inactive = 1
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+let g:airline_stl_path_style = 'short'
+let g:airline_section_c_only_filename = 1
 
 "--------------------------------
 " 缩进标识

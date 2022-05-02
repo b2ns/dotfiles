@@ -1,5 +1,5 @@
 module.exports = {
-  printWidth: 120,
+  printWidth: 140,
   tabWidth: 2,
   useTabs: false,
   semi: true,
@@ -8,11 +8,12 @@ module.exports = {
   jsxSingleQuote: false,
   trailingComma: 'es5',
   bracketSpacing: true,
-  // jsxBracketSameLine: false,
+  bracketSameLine: false,
   arrowParens: 'always',
   proseWrap: 'preserve',
   htmlWhitespaceSensitivity: 'css',
   vueIndentScriptAndStyle: false,
   endOfLine: 'lf',
   embeddedLanguageFormatting: 'auto',
+  singleAttributePerLine: false,
 };
