@@ -2,9 +2,10 @@
 bash_task=$HOME/.task.sh
 
 [build]
-command:java=source "$(+bash_task)" java build
-command:typescript,typescriptreact,ts,tsx=source "$(+bash_task)" ts build
-command:c,cpp=source "$(+bash_task)" c build
+command=yarn build
+command:java=bash "$(+bash_task)" java build
+command:typescript,typescriptreact,ts,tsx=bash "$(+bash_task)" ts build
+command:c,cpp=bash "$(+bash_task)" c build
 
 output=terminal
 pos=floaterm
@@ -12,13 +13,14 @@ cwd=<root>
 save=2
 
 [run]
+command=yarn start
 command="$(VIM_FILEPATH)"
-command:java=source "$(+bash_task)" java run "$(-rebuild:n)"
-command:typescript,typescriptreact,ts,tsx=source "$(+bash_task)" ts run
-command:c,cpp=source "$(+bash_task)" c run
+command:java=bash "$(+bash_task)" java run "$(-rebuild:n)"
+command:typescript,typescriptreact,ts,tsx=bash "$(+bash_task)" ts run
+command:c,cpp=bash "$(+bash_task)" c run
 
 command:javascript,js=node "$(VIM_FILEPATH)"
-command:sh=source "$(VIM_FILEPATH)"
+command:sh=bash "$(VIM_FILEPATH)"
 command:python=python "$(VIM_FILEPATH)"
 
 output=terminal
@@ -27,7 +29,8 @@ cwd=<root>
 save=2
 
 [test]
-command:java=source "$(+bash_task)" java test
+command=yarn test
+command:java=bash "$(+bash_task)" java test
 
 output=terminal
 pos=floaterm

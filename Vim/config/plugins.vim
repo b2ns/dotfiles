@@ -192,16 +192,16 @@ let g:coc_global_extensions = [
       \ "coc-floaterm",
       \ "coc-dictionary",
       \ "coc-tag",
-      \ "coc-zi",
+      \ "coc-word",
       \ "coc-docker",
       \ "@yaegassy/coc-nginx",
       \ "coc-sql",
       \ "coc-db",
       \]
-      " \ "@yaegassy/coc-volar",
-      " \ "coc-spell-checker",
-      " \ "coc-tabnine",
-      " \ "coc-word",
+" \ "@yaegassy/coc-volar",
+" \ "coc-spell-checker",
+" \ "coc-tabnine",
+" \ "coc-zi",
 
 " coc-explorer
 nnoremap <silent> <space>nn <Cmd>CocCommand explorer --quit-on-open --position left --width 50<CR>
@@ -376,11 +376,11 @@ Plug 'honza/vim-snippets'
 "--------------------------------
 " noremap <c-a-i> :<c-u>call FormatCode()<cr>
 " function! FormatCode()
-  " if &ft ==? 'java'
-    " call Formatcode#Run(g:var_formatter_java)
-  " else
-    " execute "CocCommand prettier.formatFile"
-  " endif
+" if &ft ==? 'java'
+" call Formatcode#Run(g:var_formatter_java)
+" else
+" execute "CocCommand prettier.formatFile"
+" endif
 " endfunction
 
 "----------------------------------------------------------------------
@@ -398,7 +398,7 @@ Plug 'nvim-treesitter/nvim-treesitter', Cond(has('nvim'), {'do': ':TSUpdate'})
 Plug 'neoclide/jsonc.vim', Cond(!has('nvim'))
 autocmd BufRead,BufNewFile *.json set filetype=jsonc
 " augroup JsonToJsonc
-  " autocmd! FileType json set filetype=jsonc
+" autocmd! FileType json set filetype=jsonc
 " augroup END
 
 "--------------------------------
@@ -446,17 +446,17 @@ Plug 'maxmellon/vim-jsx-pretty', Cond(!has('nvim'))
 "--------------------------------
 " markdown
 "--------------------------------
-Plug 'SidOfc/mkdx'
-let g:mkdx#settings = {
-      \ 'highlight': { 'enable': 1 },
-      \ 'enter': { 'shift': 1 },
-      \ 'links': {},
-      \ 'toc': { 'update_on_write': 1 },
-      \ 'fold': { 'enable': 1 },
-      \ 'insert_indent_mappings': 0,
-      \ 'checkbox': { 'toggles': [' ', 'x'] },
-      \}
-let g:polyglot_disabled = ['markdown']
+" Plug 'SidOfc/mkdx'
+" let g:mkdx#settings = {
+      " \ 'highlight': { 'enable': 1 },
+      " \ 'enter': { 'shift': 1 },
+      " \ 'links': {},
+      " \ 'toc': { 'text': 'toc', 'update_on_write': 1 },
+      " \ 'fold': { 'enable': 1 },
+      " \ 'insert_indent_mappings': 0,
+      " \ 'checkbox': { 'toggles': [' ', 'x'] },
+      " \}
+" let g:polyglot_disabled = ['markdown']
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 let g:mkdp_auto_close = 1
@@ -465,6 +465,10 @@ function! g:Open_browser(url)
   silent exec "silent !google-chrome --app=" . a:url
 endfunction
 let g:mkdp_browserfunc = 'g:Open_browser'
+
+Plug 'mzlogin/vim-markdown-toc'
+let g:vmt_list_item_char="-"
+
 
 "--------------------------------
 " java
@@ -512,9 +516,16 @@ let g:ale_set_highlights = 0
 " let g:ale_lint_on_enter = 0
 " let g:ale_lint_on_save = 0
 
+let g:ale_linter_aliases = {'vue': ['vue', 'javascript']}
+let g:ale_linters = {
+      \ 'vue': ['eslint', 'vls']
+      \ }
 let g:ale_fixers = {
-  \ 'javascript': ['eslint'],
-\ }
+      \ 'javascript': ['prettier', 'eslint'],
+      \ 'sh': ['shfmt'],
+      \ 'vue': ['prettier', 'eslint']
+      \ }
+let g:ale_sh_shfmt_options="-ci" . " -i " . g:var_shiftwidth
 
 nmap ml <Plug>(ale_lint)
 nmap mf <Plug>(ale_fix)
@@ -724,12 +735,12 @@ Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
 "--------------------------------
 Plug 'puremourning/vimspector'
 let g:vimspector_sign_priority = {
-  \    'vimspectorBP':         999,
-  \    'vimspectorBPCond':     999,
-  \    'vimspectorBPLog':      999,
-  \    'vimspectorBPDisabled': 999,
-  \    'vimspectorPC':         999,
-  \ }
+      \    'vimspectorBP':         999,
+      \    'vimspectorBPCond':     999,
+      \    'vimspectorBPLog':      999,
+      \    'vimspectorBPDisabled': 999,
+      \    'vimspectorPC':         999,
+      \ }
 let g:vimspector_sidebar_width = 30
 let g:vimspector_bottombar_height = 10
 let g:vimspector_terminal_minwidth = 20
@@ -773,9 +784,9 @@ call plug#end()
 " lua类插件配置
 "--------------------------------
 if has('nvim')
-lua << EOF
-require'nvim-treesitter.configs'.setup {
-  -- A list of parser names, or "all"
+  lua << EOF
+  require'nvim-treesitter.configs'.setup {
+    -- A list of parser names, or "all"
   ensure_installed = { "c", "cpp", "javascript", "typescript", "tsx", "vue", "html", "css", "scss", "bash", "dockerfile", "graphql", "java", "jsdoc", "json", "jsonc", "json5", "markdown", "vim", "yaml", "lua" },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
@@ -785,25 +796,25 @@ require'nvim-treesitter.configs'.setup {
   -- ignore_install = { "javascript" },
 
   indent = {
-    enable = true
+  enable = true
   },
 
-  highlight = {
-    -- `false` will disable the whole extension
-    enable = true,
+highlight = {
+  -- `false` will disable the whole extension
+enable = true,
 
-    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
-    -- the name of the parser)
-    -- list of language that will be disabled
-    -- disable = { "c", "rust" },
+-- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+-- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+-- the name of the parser)
+-- list of language that will be disabled
+-- disable = { "c", "rust" },
 
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
+-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+-- Using this option may slow down your editor, and you may see some duplicate highlights.
+-- Instead of true it can also be a list of languages
+additional_vim_regex_highlighting = false,
+},
 }
 EOF
 endif

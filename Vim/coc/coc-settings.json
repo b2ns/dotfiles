@@ -21,6 +21,11 @@
   "vetur.ignoreProjectWarning": true,
   "cssmodules.camelCase": true,
   "explorer.icon.enableNerdfont": true,
+  "explorer.keyMappings.global": {
+    "s": "open:vsplit",
+    "E": "open:split",
+    "<c-t>": "open:tab"
+  },
   "html-css-support.enabledLanguages": [
     "html",
     "vue",

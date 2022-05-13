@@ -36,6 +36,9 @@ module.exports = {
     },
   },
   rules: {
+    // Override default rules
+    'no-constant-condition': ['error', { checkLoops: false }],
+
     // Possible Problems
     'no-constant-binary-expression': 'error',
     'no-constructor-return': 'error',
