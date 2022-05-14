@@ -1,39 +1,115 @@
 #!/usr/bin/env bash
 set -euo | IFS=$'\n\t'
+source libshell
 
-function abspath() {
-  echo "$(cd "$(dirname "$1")" && pwd)"
-}
+################################################
+# main logic
+################################################
+declare -gA configFiles=(
+  ["terminal/.alacritty.yml"]=""
+  ["shell/.bash_config"]=""
+  ["shell/.zsh_config"]=""
+  ["prettier/.prettierrc.js"]=""
+  ["editorconfig/.editorconfig"]=""
+  ["eslint/.eslintrc.js"]=""
+  ["stylelint/.stylelintrc.js"]=""
+  ["typescript/tsconfig.json"]=""
+  ["Vim/.vimrc"]=""
+  ["Vim/AsyncTasks/.tasks"]=""
+  ["Vim/AsyncTasks/.task.sh"]=""
+  ["Vim/Vimspector/.vimspector.json"]=""
+  ["./Vim/init.vim"]="$HOME/.config/nvim/init.vim"
 
-doClean="$1"
-root=$(abspath "$0")
-home=$HOME
-
-configFiles=(
-  \ "terminal/.alacritty.yml"
-  \ "shell/.bash_config"
-  \ "shell/.zsh_config"
-  \ "prettier/.prettierrc.js"
-  \ "editorconfig/.editorconfig"
-  \ "eslint/.eslintrc.js"
-  \ "stylelint/.stylelintrc.js"
-  \ "typescript/tsconfig.json"
-  \ "Vim/.vimrc"
-  \ "Vim/AsyncTasks/.tasks"
-  \ "Vim/AsyncTasks/.task.sh"
-  \ "Vim/Vimspector/.vimspector.json"
+  # prefix with [copy]: to copy file rather than link
+  # ["[copy]:./Vim/init.vim"]=""
 )
 
-# make symbolic link to home root
-for file in ${configFiles[@]}; do
-  pathname="$root/$file"
-  filename=$(basename "$file")
-  homeFilename="$home/$filename"
+install() {
+  local file=""
+  local control=""
+  local key=""
+  for key in "${!configFiles[@]}"; do
+    control="$(String_stripEnd "$key" "]:*" 1)"
+    file="$(String_stripStart "$key" "*]:")"
 
-  if [[ $doClean != "uninstall" ]]; then
-    ln -svf "$pathname" "$homeFilename"
-  else
-    rm -vf "$homeFilename"
-    echo remove: $homeFilename
-  fi
-done
+    local src=""
+    src="$(Path_filepath "${file}")"
+
+    local dest="${configFiles[$key]}"
+
+    if String_isEmpty "${dest}"; then
+      dest="$HOME/$(Path_filename "${file}")"
+    else
+      local destDir=""
+      destDir="$(Path_dirName "${dest}")"
+      if ! File_isDir "${destDir}"; then
+        Path_mkdir "${destDir}"
+      fi
+    fi
+
+    if File_isExist "$dest"; then
+      IO_warn "Already exists: $dest"
+    else
+      if String_includes "$control" "copy"; then
+        IO_info "Copy $file to $dest"
+        cp -r "$src" "$dest"
+      else
+        IO_info "Link $file to $dest"
+        ln -s "$src" "$dest"
+      fi
+    fi
+  done
+
+  IO_success "Done!"
+}
+
+uninstall() {
+  local file=""
+  local key=""
+  for key in "${!configFiles[@]}"; do
+    file="$(String_stripStart "$key" "*]:")"
+
+    local dest="${configFiles[$key]}"
+
+    if String_isEmpty "${dest}"; then
+      dest="$HOME/$(Path_filename "${file}")"
+    fi
+
+    if File_isExist "$dest"; then
+      if File_isSymlink "$dest"; then
+        IO_info "Removing link: $dest"
+        rm "$dest"
+      else
+        IO_warn "$dest is not a link, delete manually"
+      fi
+    else
+      IO_warn "Not found: $dest"
+    fi
+  done
+
+  IO_success "Done!"
+}
+
+################################################
+# handle arguments
+################################################
+Args_define "-i --install" "Install the config"
+Args_define "-u --uninstall" "Uninstall the config"
+Args_define "-h --help" "Show help"
+
+Args_parse "$@"
+
+if Args_has "-i"; then
+  install
+  exit 0
+fi
+
+if Args_has "-u"; then
+  uninstall
+  exit 0
+fi
+
+if Args_has "-h" || (($# == 0)); then
+  Args_help
+  exit 0
+fi
