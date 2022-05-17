@@ -43,7 +43,7 @@ install() {
       local destDir=""
       destDir="$(Path_dirname "${dest}")"
       if ! File_isDir "${destDir}"; then
-        Path_mkdir "${destDir}"
+        mkdir -p "${destDir}"
       fi
     fi
 
