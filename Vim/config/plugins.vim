@@ -396,7 +396,7 @@ Plug 'nvim-treesitter/nvim-treesitter', Cond(has('nvim'), {'do': ':TSUpdate'})
 "--------------------------------
 " autocmd FileType json syntax match Comment +\/\/.\+$+
 Plug 'neoclide/jsonc.vim', Cond(!has('nvim'))
-autocmd BufRead,BufNewFile *.json set filetype=jsonc
+" autocmd BufRead,BufNewFile *.json set filetype=jsonc
 " augroup JsonToJsonc
 " autocmd! FileType json set filetype=jsonc
 " augroup END

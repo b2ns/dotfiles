@@ -1,6 +1,11 @@
 # dotfiles
 
-##
-run `init.sh` to symbolic link some dotfile to home directory
+## usage
 
-run `init.sh uninstall` to remove symbolic links
+```sh
+# to install
+./init.sh -i
+
+# to uninstall
+./init.sh -u
+```

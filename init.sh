@@ -41,7 +41,7 @@ install() {
       dest="$HOME/$(Path_filename "${file}")"
     else
       local destDir=""
-      destDir="$(Path_dirName "${dest}")"
+      destDir="$(Path_dirname "${dest}")"
       if ! File_isDir "${destDir}"; then
         Path_mkdir "${destDir}"
       fi
