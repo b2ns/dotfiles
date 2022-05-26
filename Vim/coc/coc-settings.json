@@ -5,6 +5,7 @@
   "suggest.defaultSortMethod": "none",
   "suggest.enablePreview": true,
   "colors.filetypes": ["*"],
+  "outline.sortBy": "position",
   "java.home": "/usr/lib/jvm/java-11-openjdk-amd64",
   "java.format.settings.url": "/home/ding/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml",
   "java.referencesCodeLens.enabled": true,

@@ -41,7 +41,8 @@ Plug 'Asheq/close-buffers.vim'
 Plug 'ludovicchabant/vim-gutentags'
 " Plug 'skywind3000/gutentags_plus'
 let g:gutentags_cache_dir = expand('~/.cache/tags')
-let g:gutentags_ctags_exclude=['.git', 'node_modules', 'log', 'db']
+let g:gutentags_ctags_exclude=['.git', 'node_modules', 'log', 'db', '*.test.*', '*.spec.*', '__tests__']
+let g:gutentags_exclude_project_root=['/usr/local', '/opt/homebrew', '/home/linuxbrew/.linuxbrew', '/home/ding/github/v8', '/home/ding/github/alacritty']
 
 "--------------------------------
 " 模糊搜索
@@ -149,7 +150,7 @@ Plug 'junegunn/vim-easy-align'
 " 智能补全
 "----------------------------------------------------------------------
 "--------------------------------
-" AI补全，目前只支持nvim，等更新吧
+" AI补全，目前只支持nvim
 "--------------------------------
 Plug 'github/copilot.vim', Cond(has('nvim'))
 
@@ -389,13 +390,13 @@ Plug 'honza/vim-snippets'
 "--------------------------------
 " nvim的语法高亮
 "--------------------------------
-Plug 'nvim-treesitter/nvim-treesitter', Cond(has('nvim'), {'do': ':TSUpdate'})
+Plug 'nvim-treesitter/nvim-treesitter', Cond(has('nvim') && !g:var_is_win, {'do': ':TSUpdate'})
 
 "--------------------------------
 " jsonc
 "--------------------------------
 " autocmd FileType json syntax match Comment +\/\/.\+$+
-Plug 'neoclide/jsonc.vim', Cond(!has('nvim'))
+Plug 'neoclide/jsonc.vim', Cond(!has('nvim') + g:var_is_win)
 " autocmd BufRead,BufNewFile *.json set filetype=jsonc
 " augroup JsonToJsonc
 " autocmd! FileType json set filetype=jsonc
@@ -404,12 +405,12 @@ Plug 'neoclide/jsonc.vim', Cond(!has('nvim'))
 "--------------------------------
 " css
 "--------------------------------
-Plug 'hail2u/vim-css3-syntax', Cond(!has('nvim'))
+Plug 'hail2u/vim-css3-syntax', Cond(!has('nvim') + g:var_is_win)
 
 "--------------------------------
 " javascript
 "--------------------------------
-Plug 'pangloss/vim-javascript', Cond(!has('nvim'))
+Plug 'pangloss/vim-javascript', Cond(!has('nvim') + g:var_is_win)
 
 let g:javascript_plugin_jsdoc=1
 
@@ -420,12 +421,12 @@ autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 "--------------------------------
 " typescript
 "--------------------------------
-Plug 'herringtondarkholme/yats.vim', Cond(!has('nvim'))
+Plug 'herringtondarkholme/yats.vim', Cond(!has('nvim') + g:var_is_win)
 
 "--------------------------------
 " vue
 "--------------------------------
-Plug 'leafOfTree/vim-vue-plugin', Cond(!has('nvim'))
+Plug 'leafOfTree/vim-vue-plugin', Cond(!has('nvim') + g:var_is_win)
 let g:vim_vue_plugin_config = {
       \'syntax': {
         \   'template': ['html'],
@@ -441,7 +442,7 @@ let g:vim_vue_plugin_config = {
 "--------------------------------
 " jsx
 "--------------------------------
-Plug 'maxmellon/vim-jsx-pretty', Cond(!has('nvim'))
+Plug 'maxmellon/vim-jsx-pretty', Cond(!has('nvim') + g:var_is_win)
 
 "--------------------------------
 " markdown
@@ -473,7 +474,7 @@ let g:vmt_list_item_char="-"
 "--------------------------------
 " java
 "--------------------------------
-Plug 'uiiaoo/java-syntax.vim', Cond(!has('nvim'))
+Plug 'uiiaoo/java-syntax.vim', Cond(!has('nvim') + g:var_is_win)
 
 "--------------------------------
 " 数据库
@@ -688,6 +689,9 @@ let g:goyo_height='90%'
 " 终端
 "--------------------------------
 Plug 'voldikss/vim-floaterm'
+if g:var_is_win
+  let g:floaterm_shell="sh.exe"
+endif
 " let g:floaterm_wintype='vsplit'
 " let g:floaterm_position='bottomright'
 let g:floaterm_width=0.9
@@ -783,7 +787,7 @@ call plug#end()
 "--------------------------------
 " lua类插件配置
 "--------------------------------
-if has('nvim')
+if has('nvim') && !g:var_is_win
   lua << EOF
   require'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all"

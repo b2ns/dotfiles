@@ -2,6 +2,8 @@
 set -euo | IFS=$'\n\t'
 source libshell
 
+__dirname="$(Path_dirname "${BASH_SOURCE[0]}")"
+
 ################################################
 # main logic
 ################################################
@@ -33,17 +35,17 @@ install() {
     file="$(String_stripStart "$key" "*]:")"
 
     local src=""
-    src="$(Path_filepath "${file}")"
+    src="$(Path_resolve "$__dirname" "$file")"
 
     local dest="${configFiles[$key]}"
 
-    if String_isEmpty "${dest}"; then
-      dest="$HOME/$(Path_filename "${file}")"
+    if String_isEmpty "$dest"; then
+      dest="$HOME/$(Path_basename "$file")"
     else
       local destDir=""
-      destDir="$(Path_dirname "${dest}")"
-      if ! File_isDir "${destDir}"; then
-        mkdir -p "${destDir}"
+      destDir="$(Path_dirname "$dest")"
+      if ! File_isDir "$destDir"; then
+        mkdir -p "$destDir"
       fi
     fi
 
@@ -71,8 +73,8 @@ uninstall() {
 
     local dest="${configFiles[$key]}"
 
-    if String_isEmpty "${dest}"; then
-      dest="$HOME/$(Path_filename "${file}")"
+    if String_isEmpty "$dest"; then
+      dest="$HOME/$(Path_basename "$file")"
     fi
 
     if File_isExist "$dest"; then
