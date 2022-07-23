@@ -13,14 +13,14 @@ rebuildWhenRun="$3"
 java_classpath="$build_dir/java/classpath"
 java_jar="$build_dir/java/jar"
 
-function getJavaPkgName() {
-  match="$(grep -oE "^[ ]*package [^;]+;" $VIM_FILEPATH)"
+getJavaPkgName() {
+  match="$(grep -oE "^[ ]*package [^;]+;" "$VIM_FILEPATH")"
   match=${match##*package }
   match=${match%%;*}
-  echo $match
+  echo "$match"
 }
 
-function getJavaClassName() {
+getJavaClassName() {
   pkgName=$(getJavaPkgName)
   if [[ -n "$pkgName" ]]; then
     echo "$pkgName.$VIM_FILENOEXT"
@@ -29,15 +29,15 @@ function getJavaClassName() {
   fi
 }
 
-function buildJava() {
+buildJava() {
   javac -d "$java_classpath" "$VIM_FILEPATH"
 }
 
-function buildJavaWithJar() {
+buildJavaWithJar() {
   javac -d "$java_classpath" "$VIM_FILEPATH" && jar -cvf "$java_jar/All.jar" -C "$java_classpath" .
 }
 
-function runJava() {
+runJava() {
   className=$(getJavaClassName)
   if [[ $rebuildWhenRun == "y" ]]; then
     buildJava && java "$className"
@@ -45,13 +45,13 @@ function runJava() {
     classFile=${className//./\/}
     classFile="$java_classpath/$classFile.class"
     if [[ -e "$classFile" ]]; then
-      rm -f $classFile
+      rm -f "$classFile"
     fi
     java "$VIM_FILEPATH"
   fi
 }
 
-function testJava() {
+testJava() {
   className=$(getJavaClassName)
   buildJava && java org.junit.runner.JUnitCore "$className"
 }
@@ -61,11 +61,11 @@ function testJava() {
 ################################################################################
 ts_dir="$tmp_dir/ts"
 
-function buildTs() {
+buildTs() {
   tsc --target esnext --module commonjs --jsx react --outDir "$ts_dir" "$VIM_FILEPATH"
 }
 
-function runTs() {
+runTs() {
   buildTs
   node "$ts_dir/$VIM_FILENOEXT.js"
 }
@@ -75,11 +75,11 @@ function runTs() {
 ################################################################################
 c_dir="$tmp_dir"
 
-function buildC() {
+buildC() {
   gcc -O2 -Wall "$VIM_FILEPATH" -o "$c_dir/c-$VIM_FILENOEXT" -lstdc++ -lm -msse3
 }
 
-function runC() {
+runC() {
   buildC
   "$c_dir/c-$VIM_FILENOEXT"
 }
@@ -130,6 +130,6 @@ case "$filetype" in
     ;;
 
   *)
-    echo filetype:$filetype not defined in task
+    echo filetype:"$filetype" not defined in task
     ;;
 esac

@@ -426,7 +426,7 @@ Plug 'herringtondarkholme/yats.vim', Cond(!has('nvim') + g:var_is_win)
 "--------------------------------
 " vue
 "--------------------------------
-Plug 'leafOfTree/vim-vue-plugin', Cond(!has('nvim') + g:var_is_win)
+Plug 'leafOfTree/vim-vue-plugin'
 let g:vim_vue_plugin_config = {
       \'syntax': {
         \   'template': ['html'],
@@ -519,12 +519,14 @@ let g:ale_set_highlights = 0
 
 let g:ale_linter_aliases = {'vue': ['vue', 'javascript']}
 let g:ale_linters = {
-      \ 'vue': ['eslint', 'vls']
+      \ 'vue': ['eslint', 'vls'],
+      \ 'asm': ['nasm'],
       \ }
 let g:ale_fixers = {
-      \ 'javascript': ['prettier', 'eslint'],
+      \ 'javascript': ['eslint'],
+      \ 'typescript': ['eslint'],
       \ 'sh': ['shfmt'],
-      \ 'vue': ['prettier', 'eslint']
+      \ 'vue': ['eslint']
       \ }
 let g:ale_sh_shfmt_options="-ci" . " -i " . g:var_shiftwidth
 
@@ -791,7 +793,7 @@ if has('nvim') && !g:var_is_win
   lua << EOF
   require'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all"
-  ensure_installed = { "c", "cpp", "javascript", "typescript", "tsx", "vue", "html", "css", "scss", "bash", "dockerfile", "graphql", "java", "jsdoc", "json", "jsonc", "json5", "markdown", "vim", "yaml", "lua" },
+  ensure_installed = { "c", "cpp", "javascript", "typescript", "tsx", "svelte","html", "css", "scss", "bash", "dockerfile", "graphql", "java", "jsdoc", "json", "jsonc", "json5", "markdown", "vim", "yaml", "lua" },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -800,25 +802,25 @@ if has('nvim') && !g:var_is_win
   -- ignore_install = { "javascript" },
 
   indent = {
-  enable = true
+    enable = false
   },
 
-highlight = {
-  -- `false` will disable the whole extension
-enable = true,
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
 
--- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
--- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
--- the name of the parser)
--- list of language that will be disabled
--- disable = { "c", "rust" },
+    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+    -- the name of the parser)
+    -- list of language that will be disabled
+    -- disable = { "c", "rust" },
 
--- Setting this to true will run `:h syntax` and tree-sitter at the same time.
--- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
--- Using this option may slow down your editor, and you may see some duplicate highlights.
--- Instead of true it can also be a list of languages
-additional_vim_regex_highlighting = false,
-},
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
 }
 EOF
 endif

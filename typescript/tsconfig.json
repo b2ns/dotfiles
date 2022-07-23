@@ -9,11 +9,11 @@
 
     "allowJs": true,
     "checkJs": false,
-    "jsx": "react",
+    "jsx": "preserve",
     "isolatedModules": false,
 
     "removeComments": true,
-    "preserveConstEnums": true,
+    "preserveConstEnums": false,
     "declaration": true,
     "declarationDir": "types",
     "sourceMap": true,
@@ -21,13 +21,14 @@
     "strict": true,
     "alwaysStrict": true,
     "noImplicitAny": true,
+    "strictNullChecks": true,
     "noImplicitThis": true,
     "strictBindCallApply": true,
     "strictFunctionTypes": true,
-    "strictNullChecks": true,
 
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
 
     "noEmitOnError": true,
     "forceConsistentCasingInFileNames": true,
