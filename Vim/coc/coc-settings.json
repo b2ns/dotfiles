@@ -21,6 +21,7 @@
   ],
   "vetur.ignoreProjectWarning": true,
   "cssmodules.camelCase": true,
+  "explorer.file.showHiddenFiles": true,
   "explorer.icon.enableNerdfont": true,
   "explorer.keyMappings.global": {
     "s": "open:vsplit",

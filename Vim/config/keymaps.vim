@@ -64,7 +64,7 @@ nnoremap & :&&<CR>
 xnoremap & :&&<CR>
 
 " 清空查找高亮
-nnoremap <silent> <c-l> :nohlsearch<cr>
+nnoremap <silent> <s-l> :nohlsearch<cr>
 
 " 命令行历史
 cnoremap <c-p> <up>
@@ -169,8 +169,8 @@ endif
 
 noremap <silent> <leader>tc :tabnew<cr>
 noremap <silent> <leader>to :tabonly<cr>
-noremap <silent> <m-l> :tabnext<cr>
-noremap <silent> <m-h> :tabprev<cr>
+noremap <silent> <c-l> :tabnext<cr>
+noremap <silent> <c-h> :tabprev<cr>
 
 
 " 左移 tab
@@ -189,8 +189,8 @@ function! Tab_MoveRight()
   endif
 endfunc
 
-noremap <silent><m-left> :call Tab_MoveLeft()<cr>
-noremap <silent><m-right> :call Tab_MoveRight()<cr>
+noremap <silent><c-left> :call Tab_MoveLeft()<cr>
+noremap <silent><c-right> :call Tab_MoveRight()<cr>
 
 
 "----------------------------------------------------------------------
