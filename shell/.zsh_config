@@ -16,22 +16,22 @@ function __z() {
 }
 
 function __add_to_path() {
-  if [[ -d "$1" ]] ; then
+  if [[ -d "$1" ]]; then
     PATH="$1:$PATH"
   fi
 }
 
 function __join_path() {
   separator=":"
-  PATH=""
+  path=""
   for p in "$@"; do
-    if [[ -n "$PATH" ]]; then
-      PATH="$PATH$separator$p"
+    if [[ -n "$path" ]]; then
+      path="$path$separator$p"
     else
-      PATH="$p"
+      path="$p"
     fi
   done
-  echo $PATH
+  echo "$path"
 }
 
 function __source() {
@@ -40,9 +40,9 @@ function __source() {
 
 ### zsh配置 ###
 ZSH_THEME="robbyrussell"
-ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "nicoulaj" )
+ZSH_THEME_RANDOM_CANDIDATES=("robbyrussell" "nicoulaj")
 
-zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' mode auto # update automatically without asking
 zstyle ':omz:update' frequency 13
 
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
@@ -60,7 +60,6 @@ plugins=(
   dirhistory
   history-substring-search
   z
-  thefuck
   last-working-dir
 
   zsh-autosuggestions
@@ -112,21 +111,24 @@ export EDITOR="nvim"
 
 # Homebrew
 export HOMEBREW_NO_AUTO_UPDATE=1
+__add_to_path "/home/linuxbrew/.linuxbrew/bin/"
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
-__source "$NVM_DIR/nvm.sh"  # This loads nvm
+__source "$NVM_DIR/nvm.sh" # This loads nvm
 
 # java
 export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
-export CLASSPATH=$(__join_path \
-"." \
-"/usr/share/java/" \
-"/usr/share/java/junit4.jar" \
-"/usr/share/java/hamcrest-core.jar" \
-"$HOME/.build/java/classpath" \
-"$HOME/.build/java/jar" \
+CLASSPATH=$(
+  __join_path \
+    "." \
+    "/usr/share/java/" \
+    "/usr/share/java/junit4.jar" \
+    "/usr/share/java/hamcrest-core.jar" \
+    "$HOME/.build/java/classpath" \
+    "$HOME/.build/java/jar"
 )
+export CLASSPATH
 
 # clangd
 __add_to_path "$HOME/Downloads/clangd_14.0.0/bin"

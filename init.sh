@@ -21,6 +21,8 @@ declare -gA configFiles=(
   ["Vim/AsyncTasks/.task.sh"]=""
   ["Vim/Vimspector/.vimspector.json"]=""
   ["./Vim/init.vim"]="$HOME/.config/nvim/init.vim"
+  ["[copy]:git/.gitconfig"]=""
+  ["[copy]:npm/.npmrc"]=""
 
   # prefix with [copy]: to copy file rather than link
   # ["[copy]:./Vim/init.vim"]=""
