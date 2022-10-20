@@ -147,7 +147,7 @@ set hlsearch
 set incsearch
 
 " 不跳转到文件开头
-set nowrapscan
+" set nowrapscan
 
 
 "----------------------------------------------------------------------
