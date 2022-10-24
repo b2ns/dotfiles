@@ -9,7 +9,7 @@ function __cd_list() {
 
 function __z() {
   if [[ -n "$1" ]]; then
-    _z 2>&1 "$1" && ls --color=tty -A
+    zshz 2>&1 "$1" && ls --color=tty -A
   else
     cd
   fi
@@ -59,7 +59,7 @@ plugins=(
   copypath
   dirhistory
   history-substring-search
-  z
+  zsh-z
   last-working-dir
 
   zsh-autosuggestions
