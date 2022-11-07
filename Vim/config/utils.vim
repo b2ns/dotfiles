@@ -52,7 +52,7 @@ endfunction
 
 function g:UTILMkFile(filename) abort
   let file=expand(a:filename)
-  let dir=join(slice(split(file, '\ze/'), 0, -1), '')
+  let dir=join(split(file, '\ze/')[0:-2], '')
   if !filereadable(file)
     call g:UTILMkDir(dir)
     call system("cd .>" . file)
