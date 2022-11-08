@@ -52,12 +52,17 @@ Plug 'junegunn/fzf.vim'
 
 set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf
 
-nnoremap <space>ff :GFiles<cr>
+nnoremap <c-i> :GFiles<cr>
+nnoremap <c-a-f> :Rg 
 nnoremap <space>fa :Files<cr>
 nnoremap <space>fh :History<cr>
 nnoremap <space>fb :Buffers<cr>
-nnoremap <space>fr :Rg 
 nnoremap <space>fm :Commits<cr>
+
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
 
 "--------------------------------
 " editorconfig
@@ -69,17 +74,17 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 "--------------------------------
 " 书签
 "--------------------------------
-Plug 'MattesGroeger/vim-bookmarks'
-let g:bookmark_auto_close = 1
-let g:bookmark_center = 1
-let g:bookmark_no_default_key_mappings = 1
-nmap <space>mm <Plug>BookmarkToggle
-nmap <space>mi <Plug>BookmarkAnnotate
-nmap <space>ma <Plug>BookmarkShowAll
-nmap <space>mn <Plug>BookmarkNext
-nmap <space>mp <Plug>BookmarkPrev
-nmap <space>mc <Plug>BookmarkClear
-nmap <space>mx <Plug>BookmarkClearAll
+" Plug 'MattesGroeger/vim-bookmarks'
+" let g:bookmark_auto_close = 1
+" let g:bookmark_center = 1
+" let g:bookmark_no_default_key_mappings = 1
+" nmap <space>mm <Plug>BookmarkToggle
+" nmap <space>mi <Plug>BookmarkAnnotate
+" nmap <space>ma <Plug>BookmarkShowAll
+" nmap <space>mn <Plug>BookmarkNext
+" nmap <space>mp <Plug>BookmarkPrev
+" nmap <space>mc <Plug>BookmarkClear
+" nmap <space>mx <Plug>BookmarkClearAll
 
 "--------------------------------
 " 翻译
@@ -152,7 +157,7 @@ Plug 'junegunn/vim-easy-align'
 "--------------------------------
 " AI补全，目前只支持nvim
 "--------------------------------
-Plug 'github/copilot.vim', Cond(has('nvim'))
+" Plug 'github/copilot.vim', Cond(has('nvim'))
 
 "--------------------------------
 " coc插件系统
@@ -205,7 +210,7 @@ let g:coc_global_extensions = [
 " \ "coc-zi",
 
 " coc-explorer
-nnoremap <silent> <space>nn <Cmd>CocCommand explorer --quit-on-open --position left --width 50<CR>
+nnoremap <silent> <space>n <Cmd>CocCommand explorer --quit-on-open --position left --width 50<CR>
 
 " coc-markmap
 command! -range=% Markmap CocCommand markmap.create <line1> <line2>
@@ -337,11 +342,11 @@ nmap <c-a-m> :CocCommand
 nmap <c-a-c> :<c-u>CocConfig<cr>
 nmap <c-a-r> :CocSearch 
 
-nmap ta <Plug>(coc-codeaction)
-vmap ta  <Plug>(coc-codeaction-selected)
-nmap tl  <Plug>(coc-codelens-action)
-nmap tf <Plug>(coc-fix-current)
-nmap tr <Plug>(coc-rename)
+nmap ma <Plug>(coc-codeaction)
+vmap ma  <Plug>(coc-codeaction-selected)
+nmap mL  <Plug>(coc-codelens-action)
+nmap mf <Plug>(coc-fix-current)
+nmap mr <Plug>(coc-rename)
 
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gt <Plug>(coc-type-definition)
@@ -536,7 +541,7 @@ let g:ale_fixers = {
 let g:ale_sh_shfmt_options="-ci" . " -i " . g:var_shiftwidth
 
 nmap ml <Plug>(ale_lint)
-nmap mf <Plug>(ale_fix)
+nmap mF <Plug>(ale_fix)
 nmap mp <Plug>(ale_previous)
 nmap mn <Plug>(ale_next)
 
