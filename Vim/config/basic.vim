@@ -19,7 +19,7 @@ set secure
 autocmd FocusLost * :up
 
 " 根据打开文件修改工作目录
-set autochdir
+" set autochdir
 
 " 设置 Backspace 键模式
 set bs=eol,start,indent
