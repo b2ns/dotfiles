@@ -1,5 +1,6 @@
 {
   "snippets.priority": 100,
+  "snippets.snipmate.enable": false,
   "diagnostic.displayByAle": true,
   "coc.preferences.extensionUpdateCheck": "weekly",
   "suggest.defaultSortMethod": "none",

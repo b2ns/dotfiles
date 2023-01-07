@@ -53,9 +53,9 @@ snippet swi "switch ... case ..." i
 switch ($1) {
 	case 1$2:
 		$3
-		break;
+		break
 	default:
-		break;$4
+		break$4
 }$0
 endsnippet
 
@@ -96,11 +96,11 @@ function () {
 }$0
 endsnippet
 
-snippet >> "箭头函数" i
+snippet af "箭头函数" i
 ($1) => $0
 endsnippet
 
-snippet >o "箭头函数直接返回对象" i
+snippet afo "箭头函数直接返回对象" i
 ($1) => ({$2})$0
 endsnippet
 
@@ -110,7 +110,7 @@ function $1($2) {
 }$0
 endsnippet
 
-snippet == "箭头函数" i
+snippet afb "箭头函数" i
 ($1) => {
 	$2
 }$0
@@ -124,41 +124,41 @@ endsnippet
 
 #######################  输入输出  #######################
 snippet log "控制台log输出" i
-console.log($1);$0
+console.log($1)$0
 endsnippet
 
 snippet dir "控制台dir输出" i
-console.dir($1);$0
+console.dir($1)$0
 endsnippet
 
 snippet hel "hello world" i
-console.log('hello world');$0
+console.log('hello world')$0
 endsnippet
 
 #######################  模块  #######################
-snippet imp "import from ;" i
-import '$1';$0
+snippet imp "import from " i
+import '$1'$0
 endsnippet
 
-snippet impf "import from ;" i
-import $2 from '$1';$0
+snippet impf "import from " i
+import $2 from '$1'$0
 endsnippet
 
-snippet req "const x = require('x');" i
-const $2 = require('$1');$0
+snippet req "const x = require('x')" i
+const $2 = require('$1')$0
 endsnippet
 
-snippet exp "export ;" i
+snippet exp "export " i
 export const $0
 endsnippet
 
-snippet expf "export ;" i
+snippet expf "export " i
 export function $1($2) {
 	$3
 }$0
 endsnippet
 
-snippet expd "export default ;" i
+snippet expd "export default " i
 export default $0
 endsnippet
 
@@ -173,7 +173,7 @@ endsnippet
 snippet ex "class extends" i
 class $1 extends $2 {
 	constructor($3) {
-		super($4);
+		super($4)
 	}
 }$0
 endsnippet
@@ -184,31 +184,31 @@ endsnippet
 
 #######################  Node.js  #######################
 snippet fs "" i
-const fs = require('fs');$0
+const fs = require('fs')$0
 endsnippet
 
 snippet http "" i
-const http = require('http');$0
+const http = require('http')$0
 endsnippet
 
 snippet net "" i
-const net = require('net');$0
+const net = require('net')$0
 endsnippet
 
 snippet path "" i
-const path = require('path');$0
+const path = require('path')$0
 endsnippet
 
 snippet url "" i
-const url = require('url');$0
+const url = require('url')$0
 endsnippet
 
 snippet querystring "" i
-const qs = require('querystring');$0
+const qs = require('querystring')$0
 endsnippet
 
 snippet events "" i
-const Emitter = require('events').EventEmitter;$0
+const Emitter = require('events').EventEmitter$0
 endsnippet
 
 #######################  其他  #######################
@@ -223,13 +223,13 @@ endsnippet
 snippet timeout "setTimeout" i
 setTimeout(() => {
 	$2
-}, ${1:1000});
+}, ${1:1000})
 endsnippet
 
 snippet okeys "Object.keys().foreach" i
 Object.keys($1).forEach((key) => {
 	$0
-});
+})
 endsnippet
 
 # vim:ft=snippets:

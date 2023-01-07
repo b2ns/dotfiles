@@ -166,8 +166,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 let g:coc_config_home = "~/github/b2ns/dotfiles/Vim/coc/"
 
-let g:coc_snippet_next = '<tab>'
-
 let g:coc_global_extensions = [
       \ "coc-clangd",
       \ "coc-calc",
@@ -241,22 +239,18 @@ else
   set signcolumn=yes
 endif
 
-" Use tab for trigger completion with characters ahead and navigate.
-" inoremap <silent><expr> <TAB>
-      " \ coc#pum#visible() ? coc#pum#next(1) :
-      " \ CheckBackspace() ? "\<Tab>" :
-      " \ coc#refresh()
-" inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-
 inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#confirm() :
-      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#pum#visible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ CheckBackspace() ? "\<TAB>" :
       \ coc#refresh()
 
 function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+let g:coc_snippet_next = '<tab>'
 
 " Use <c-space> to trigger completion.
 if has('nvim')

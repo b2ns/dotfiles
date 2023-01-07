@@ -66,7 +66,7 @@ buildTs() {
 }
 
 runTs() {
-  tsx "$ts_dir/$VIM_FILENOEXT.js" || {
+  tsx "$VIM_FILEPATH" || {
     buildTs
     node "$ts_dir/$VIM_FILENOEXT.js"
   }
