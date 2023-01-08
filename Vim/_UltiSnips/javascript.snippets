@@ -51,7 +51,7 @@ endsnippet
 
 snippet swi "switch ... case ..." i
 switch ($1) {
-	case 1$2:
+	case $2:
 		$3
 		break
 	default:
@@ -60,19 +60,7 @@ switch ($1) {
 endsnippet
 
 snippet for "for loop" i
-for ($1) {
-	$2
-}$0
-endsnippet
-
-snippet foi "for loop i" i
 for (let i = 0; i < $1; i++) {
-	$2
-}$0
-endsnippet
-
-snippet foj "for loop j" i
-for (let j = 0; j < $1; j++) {
 	$2
 }$0
 endsnippet
@@ -83,16 +71,22 @@ for (const ${1:item} of $2) {
 }$0
 endsnippet
 
-snippet whi "while loop" i
+snippet foin "for in loop" i
+for (const ${1:key} in $2) {
+	$3
+}$0
+endsnippet
+
+snippet wh "while loop" i
 while ($1) {
 	$2
 }$0
 endsnippet
 
 #######################  函数  #######################
-snippet fn "匿名函数" i
-function () {
-	$1
+snippet fun "函数" i
+function $1($2) {
+	$3
 }$0
 endsnippet
 
@@ -104,22 +98,16 @@ snippet afo "箭头函数直接返回对象" i
 ($1) => ({$2})$0
 endsnippet
 
-snippet fnc "带参数函数" i
-function $1($2) {
-	$3
-}$0
-endsnippet
-
-snippet afb "箭头函数" i
+snippet afb "箭头函数体" i
 ($1) => {
 	$2
 }$0
 endsnippet
 
-snippet fnp "自执行函数包装" i
-(function () {
-	$1
-})();
+snippet funas "async 函数" i
+async function $1($2) {
+	$3
+}$0
 endsnippet
 
 #######################  输入输出  #######################
@@ -136,11 +124,11 @@ console.log('hello world')$0
 endsnippet
 
 #######################  模块  #######################
-snippet imp "import from " i
+snippet im "import from " i
 import '$1'$0
 endsnippet
 
-snippet impf "import from " i
+snippet imp "import from " i
 import $2 from '$1'$0
 endsnippet
 
