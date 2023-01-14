@@ -3,7 +3,6 @@ bash_task=$HOME/.task.sh
 
 [build]
 command=yarn build
-command:java=bash "$(+bash_task)" java build
 command:typescript,typescriptreact,ts,tsx=bash "$(+bash_task)" ts build
 command:c,cpp=bash "$(+bash_task)" c build
 
@@ -15,7 +14,6 @@ save=2
 [run]
 command=yarn start
 command="$(VIM_FILEPATH)"
-command:java=bash "$(+bash_task)" java run "$(-rebuild:n)"
 command:typescript,typescriptreact,ts,tsx=bash "$(+bash_task)" ts run
 command:c,cpp=bash "$(+bash_task)" c run
 
@@ -30,7 +28,6 @@ save=2
 
 [test]
 command=yarn test
-command:java=bash "$(+bash_task)" java test
 
 output=terminal
 pos=floaterm

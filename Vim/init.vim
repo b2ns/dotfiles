@@ -49,6 +49,3 @@ LoadScript config/style.vim
 
 " 自定义按键
 LoadScript config/keymaps.vim
-
-highlight link javaIdentifier NONE
-highlight link javaDelimiter NONE

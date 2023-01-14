@@ -25,11 +25,6 @@ call plug#begin(get(g:, 'bundle_home', '~/.vim/plugged'))
 " 基础配置
 "----------------------------------------------------------------------
 "--------------------------------
-" 文件浏览
-"--------------------------------
-
-
-"--------------------------------
 " clean hidden buffer
 "--------------------------------
 Plug 'Asheq/close-buffers.vim'
@@ -63,33 +58,6 @@ command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
-
-"--------------------------------
-" editorconfig
-"--------------------------------
-" Plug 'editorconfig/editorconfig-vim'
-
-let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
-
-"--------------------------------
-" 书签
-"--------------------------------
-" Plug 'MattesGroeger/vim-bookmarks'
-" let g:bookmark_auto_close = 1
-" let g:bookmark_center = 1
-" let g:bookmark_no_default_key_mappings = 1
-" nmap <space>mm <Plug>BookmarkToggle
-" nmap <space>mi <Plug>BookmarkAnnotate
-" nmap <space>ma <Plug>BookmarkShowAll
-" nmap <space>mn <Plug>BookmarkNext
-" nmap <space>mp <Plug>BookmarkPrev
-" nmap <space>mc <Plug>BookmarkClear
-" nmap <space>mx <Plug>BookmarkClearAll
-
-"--------------------------------
-" 翻译
-"--------------------------------
-
 
 "----------------------------------------------------------------------
 " 辅助操作
@@ -144,21 +112,9 @@ Plug 'tpope/vim-surround'
 "--------------------------------
 Plug 'AndrewRadev/tagalong.vim'
 
-"--------------------------------
-" 对齐
-"--------------------------------
-Plug 'junegunn/vim-easy-align'
-" nmap <c-m-a> <Plug>(EasyAlign)
-" xmap <c-m-a> <Plug>(EasyAlign)
-
 "----------------------------------------------------------------------
 " 智能补全
 "----------------------------------------------------------------------
-"--------------------------------
-" AI补全，目前只支持nvim
-"--------------------------------
-" Plug 'github/copilot.vim', Cond(has('nvim'))
-
 "--------------------------------
 " coc插件系统
 "--------------------------------
@@ -184,8 +140,6 @@ let g:coc_global_extensions = [
       \ "coc-vetur",
       \ "coc-vimlsp",
       \ "coc-yaml",
-      \ "coc-java",
-      \ "coc-java-debug",
       \ "coc-snippets",
       \ "coc-explorer",
       \ "coc-highlight",
@@ -197,15 +151,11 @@ let g:coc_global_extensions = [
       \ "coc-dictionary",
       \ "coc-tag",
       \ "coc-word",
-      \ "coc-docker",
       \ "@yaegassy/coc-nginx",
-      \ "coc-sql",
-      \ "coc-db",
       \]
 " \ "@yaegassy/coc-volar",
 " \ "coc-spell-checker",
 " \ "coc-tabnine",
-" \ "coc-zi",
 
 " coc-explorer
 nnoremap <silent> <space>n <Cmd>CocCommand explorer --quit-on-open --position left --width 50<CR>
@@ -396,73 +346,13 @@ Plug 'honza/vim-snippets'
 "--------------------------------
 Plug 'nvim-treesitter/nvim-treesitter', Cond(has('nvim') && !g:var_is_win, {'do': ':TSUpdate'})
 
-"--------------------------------
-" jsonc
-"--------------------------------
-" autocmd FileType json syntax match Comment +\/\/.\+$+
-Plug 'neoclide/jsonc.vim', Cond(!has('nvim') + g:var_is_win)
-" autocmd BufRead,BufNewFile *.json set filetype=jsonc
-" augroup JsonToJsonc
-" autocmd! FileType json set filetype=jsonc
-" augroup END
-
-"--------------------------------
-" css
-"--------------------------------
-Plug 'hail2u/vim-css3-syntax', Cond(!has('nvim') + g:var_is_win)
-
-"--------------------------------
-" javascript
-"--------------------------------
-Plug 'pangloss/vim-javascript', Cond(!has('nvim') + g:var_is_win)
-
-let g:javascript_plugin_jsdoc=1
-
 " 语法高亮优化
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 
 "--------------------------------
-" typescript
-"--------------------------------
-Plug 'herringtondarkholme/yats.vim', Cond(!has('nvim') + g:var_is_win)
-
-"--------------------------------
-" vue
-"--------------------------------
-Plug 'leafOfTree/vim-vue-plugin'
-let g:vim_vue_plugin_config = {
-      \'syntax': {
-        \   'template': ['html'],
-        \   'script': ['javascript', 'typescript'],
-        \   'style': ['css', 'less', 'scss'],
-        \},
-        \'attribute': 1,
-        \'keyword': 1,
-        \'foldexpr': 0,
-        \'debug': 0,
-        \}
-
-"--------------------------------
-" jsx
-"--------------------------------
-Plug 'maxmellon/vim-jsx-pretty', Cond(!has('nvim') + g:var_is_win)
-
-"--------------------------------
 " markdown
 "--------------------------------
-" Plug 'SidOfc/mkdx'
-" let g:mkdx#settings = {
-      " \ 'highlight': { 'enable': 1 },
-      " \ 'enter': { 'shift': 1 },
-      " \ 'links': {},
-      " \ 'toc': { 'text': 'toc', 'update_on_write': 1 },
-      " \ 'fold': { 'enable': 1 },
-      " \ 'insert_indent_mappings': 0,
-      " \ 'checkbox': { 'toggles': [' ', 'x'] },
-      " \}
-" let g:polyglot_disabled = ['markdown']
-
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 let g:mkdp_auto_close = 1
 autocmd FIleType markdown nmap <silent> <space>md <Plug>MarkdownPreviewToggle
@@ -473,18 +363,6 @@ let g:mkdp_browserfunc = 'g:Open_browser'
 
 Plug 'mzlogin/vim-markdown-toc'
 let g:vmt_list_item_char="-"
-
-
-"--------------------------------
-" java
-"--------------------------------
-Plug 'uiiaoo/java-syntax.vim', Cond(!has('nvim') + g:var_is_win)
-
-"--------------------------------
-" 数据库
-"--------------------------------
-Plug 'tpope/vim-dadbod'
-Plug 'kristijanhusak/vim-dadbod-ui'
 
 "--------------------------------
 " Lisp
@@ -680,17 +558,6 @@ Plug 'junegunn/gv.vim'
 Plug 'yianwillis/vimcdoc'
 
 "--------------------------------
-" Zen模式
-"--------------------------------
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
-let g:goyo_width=100
-let g:goyo_height='90%'
-" autocmd! User GoyoEnter Limelight
-" autocmd! User GoyoLeave Limelight!
-" nmap <c-m-z> :<c-u>Goyo<cr>
-
-"--------------------------------
 "--------------------------------
 " 终端
 "--------------------------------
@@ -732,8 +599,6 @@ call g:UTILBindkey('nnoremap <silent>', '<s-f5>', ":AsyncTask test<cr>")
 " live server
 "--------------------------------
 Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
-" nnoremap <c-f4> :Bracey<cr>
-" nnoremap <s-f4> :BraceyStop<cr>
 
 "--------------------------------
 " 本地和远程服务器文件同步
@@ -772,19 +637,6 @@ nmap <silent> <F9> <Plug>VimspectorGoToCurrentLine
 call g:UTILBindkey('nmap <silent>', '<c-f9>', "<Plug>VimspectorRunToCursor")
 " call g:UTILBindkey('nmap <silent>', '<s-f9>', "")
 
-function s:JavaStartDebug()
-  call system("javac -g " . expand('%:t'))
-  call system("java -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005 " . expand('%:r:t') . " &")
-  execute "CocCommand java.debug.vimspector.start"
-endfunction
-
-autocmd FIleType java nmap <F1> gg:call <sid>JavaStartDebug()<CR>
-
-"--------------------------------
-" test
-"--------------------------------
-" Plug 'vim-test/vim-test'
-
 "----------------------------------------------------------------------
 " 结束插件安装
 "----------------------------------------------------------------------
@@ -797,7 +649,7 @@ if has('nvim') && !g:var_is_win
   lua << EOF
   require'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all"
-  ensure_installed = { "c", "cpp", "javascript", "typescript", "tsx", "svelte","html", "css", "scss", "bash", "dockerfile", "graphql", "java", "jsdoc", "json", "jsonc", "json5", "markdown", "vim", "yaml", "lua" },
+  ensure_installed = { "javascript", "typescript", "vim", "lua" },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -817,7 +669,7 @@ if has('nvim') && !g:var_is_win
     -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
     -- the name of the parser)
     -- list of language that will be disabled
-    -- disable = { "c", "rust" },
+    disable = { "html", "css", "markdown" },
 
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
