@@ -6,7 +6,7 @@ module.exports = {
     commonjs: true,
     es2022: true,
   },
-  extends: 'eslint:recommended',
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
   globals: {
     /* for weixin miniprogram */
     // require: 'readonly',
@@ -28,6 +28,8 @@ module.exports = {
     // setInterval: 'readonly',
     // clearInterval: 'readonly',
   },
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint'],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
@@ -70,7 +72,10 @@ module.exports = {
     // 'no-return-assign': 'error',
     'no-undefined': 'error',
     'no-unneeded-ternary': 'warn',
-    'no-unused-vars': ['error', { varsIgnorePattern: '^_+$', argsIgnorePattern: '^_+|h$' }],
+    'no-unused-vars': [
+      'error',
+      { varsIgnorePattern: '^_+$', argsIgnorePattern: '^_+|h$' },
+    ],
     // 'no-unused-expressions': 'warn',
     'no-useless-call': 'warn',
     'no-useless-computed-key': 'warn',
@@ -119,7 +124,11 @@ module.exports = {
     'no-whitespace-before-property': 'warn',
     'object-curly-newline': 'warn',
     'object-curly-spacing': ['warn', 'always'],
-    quotes: ['warn', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
+    quotes: [
+      'warn',
+      'single',
+      { avoidEscape: true, allowTemplateLiterals: true },
+    ],
     'rest-spread-spacing': 'warn',
     // semi: 'warn',
     semi: 0,
@@ -135,4 +144,4 @@ module.exports = {
     'template-tag-spacing': 'warn',
     'yield-star-spacing': 'warn',
   },
-};
+}
