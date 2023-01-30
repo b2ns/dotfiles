@@ -649,7 +649,7 @@ if has('nvim') && !g:var_is_win
   lua << EOF
   require'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all"
-  ensure_installed = { "javascript", "typescript", "vim", "lua" },
+  ensure_installed = { "javascript", "typescript", "tsx","vim", "lua" },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
