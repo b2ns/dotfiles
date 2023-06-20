@@ -93,6 +93,10 @@ endif
 " 颜色主题：色彩文件位于 colors 目录中
 "----------------------------------------------------------------------
 
+if (has("termguicolors"))
+  set termguicolors
+endif
+
 " 允许 256 色
 set t_Co=256
 

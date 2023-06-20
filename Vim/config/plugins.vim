@@ -220,7 +220,6 @@ inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
-set termguicolors
 
 augroup mygroup
   autocmd!
@@ -434,6 +433,8 @@ let g:everforest_background='medium'
 let g:everforest_enable_italic=1
 
 Plug 'dracula/vim', { 'as': 'dracula' }
+
+Plug 'joshdick/onedark.vim'
 
 Plug 'patstockwell/vim-monokai-tasty'
 let g:vim_monokai_tasty_italic = 1
