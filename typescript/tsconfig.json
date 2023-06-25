@@ -2,36 +2,31 @@
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"],
   "compilerOptions": {
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "strict": true,
+
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+
+    "noEmit": true,
+    "noEmitOnError": true,
     "outDir": "dist",
 
-    "target": "ES5",
-    "module": "commonjs",
-
     "allowJs": true,
-    "checkJs": false,
-    "jsx": "preserve",
-    "isolatedModules": false,
-
-    "removeComments": true,
-    "preserveConstEnums": false,
-    "declaration": true,
-    "declarationDir": "types",
-    "sourceMap": true,
-
-    "strict": true,
-    "alwaysStrict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "noImplicitThis": true,
-    "strictBindCallApply": true,
-    "strictFunctionTypes": true,
 
     "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
 
-    "noEmitOnError": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
+    "jsx": "preserve",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "target": "ESNext",
+
+    "skipLibCheck": true
   }
 }
