@@ -6,11 +6,7 @@ module.exports = {
     commonjs: true,
     es2022: true,
   },
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
-  globals: {
-  },
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
@@ -18,6 +14,15 @@ module.exports = {
       jsx: true,
     },
   },
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
+    'plugin:react-hooks/recommended',
+    'prettier',
+  ],
+  plugins: ['@typescript-eslint', 'react'],
   rules: {
     // Override default rules
     'no-constant-condition': ['error', { checkLoops: false }],
