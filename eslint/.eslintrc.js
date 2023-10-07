@@ -59,7 +59,7 @@ module.exports = {
     'no-undefined': 'error',
     'no-unneeded-ternary': 'warn',
     'no-unused-vars': [
-      'error',
+      'warn',
       { varsIgnorePattern: '^_+$', argsIgnorePattern: '^_+|h$' },
     ],
     // 'no-unused-expressions': 'warn',
