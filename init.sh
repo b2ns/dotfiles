@@ -8,7 +8,6 @@ __dirname="$(Path_dirname "${BASH_SOURCE[0]}")"
 # main logic
 ################################################
 declare -gA configFiles=(
-  ["terminal/.alacritty.yml"]=""
   ["shell/.bash_config"]=""
   ["shell/.zsh_config"]=""
   ["prettier/.prettierrc.js"]=""
@@ -17,9 +16,6 @@ declare -gA configFiles=(
   ["stylelint/.stylelintrc.js"]=""
   ["typescript/tsconfig.json"]=""
   ["Vim/.vimrc"]=""
-  ["Vim/AsyncTasks/.tasks"]=""
-  ["Vim/AsyncTasks/.task.sh"]=""
-  ["Vim/Vimspector/.vimspector.json"]=""
   ["./Vim/init.vim"]="$HOME/.config/nvim/init.vim"
   ["[copy]:git/.gitconfig"]=""
   ["[copy]:npm/.npmrc"]=""

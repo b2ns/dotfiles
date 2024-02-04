@@ -123,45 +123,28 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 let g:coc_config_home = "~/github/b2ns/dotfiles/Vim/coc/"
 
 let g:coc_global_extensions = [
-      \ "coc-clangd",
-      \ "coc-calc",
       \ "coc-css",
-      \ "coc-cssmodules",
       \ "coc-emmet",
       \ "coc-emoji",
       \ "coc-html",
       \ "coc-html-css-support",
       \ "coc-json",
-      \ "coc-lightbulb",
       \ "coc-marketplace",
       \ "coc-prettier",
       \ "coc-sh",
       \ "coc-tsserver",
-      \ "coc-vetur",
       \ "coc-vimlsp",
-      \ "coc-yaml",
       \ "coc-snippets",
       \ "coc-explorer",
       \ "coc-highlight",
-      \ "coc-markdownlint",
-      \ "coc-markmap",
-      \ "coc-tasks",
-      \ "coc-yank",
       \ "coc-floaterm",
       \ "coc-dictionary",
       \ "coc-tag",
       \ "coc-word",
-      \ "@yaegassy/coc-nginx",
       \]
-" \ "@yaegassy/coc-volar",
-" \ "coc-spell-checker",
-" \ "coc-tabnine",
 
 " coc-explorer
 nnoremap <silent> <space>n <Cmd>CocCommand explorer --quit-on-open --position left --width 50<CR>
-
-" coc-markmap
-command! -range=% Markmap CocCommand markmap.create <line1> <line2>
 
 " coc-css
 autocmd FileType scss setl iskeyword+=@-@"
@@ -258,7 +241,6 @@ command! -nargs=0 ORI :call CocActionAsync('runCommand', 'editor.action.organize
 " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-
 " list
 nnoremap <silent><nowait> <space>li :<C-u>CocList<cr>
 nnoremap <silent><nowait> <space>ll :<C-u>CocListResume<cr>
@@ -271,11 +253,6 @@ nnoremap <silent><nowait> <space>ls :<C-u>CocList -I symbols<cr>
 nnoremap <silent><nowait> <space>ly :<C-u>CocList -A --normal yank<cr>
 nnoremap <silent><nowait> <space>lt :<C-u>CocList --normal floaterm<cr>
 nnoremap <silent><nowait> <space>lm :<C-u>ALEPopulateQuickfix<cr>
-
-" Do default action for next item.
-" nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-" nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 
 " nmap <c-a-i> <Plug>(coc-format)
 " nmap <c-a-o> :<c-u>Format<cr>
@@ -325,18 +302,6 @@ let g:user_emmet_install_global=1
 "--------------------------------
 Plug 'honza/vim-snippets'
 
-"--------------------------------
-" 代码格式化
-"--------------------------------
-" noremap <c-a-i> :<c-u>call FormatCode()<cr>
-" function! FormatCode()
-" if &ft ==? 'java'
-" call Formatcode#Run(g:var_formatter_java)
-" else
-" execute "CocCommand prettier.formatFile"
-" endif
-" endfunction
-
 "----------------------------------------------------------------------
 " 类型扩展和语法高亮
 "----------------------------------------------------------------------
@@ -348,41 +313,6 @@ Plug 'nvim-treesitter/nvim-treesitter', Cond(has('nvim') && !g:var_is_win, {'do'
 " 语法高亮优化
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
-
-"--------------------------------
-" markdown
-"--------------------------------
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-let g:mkdp_auto_close = 1
-autocmd FIleType markdown nmap <silent> <space>md <Plug>MarkdownPreviewToggle
-function! g:Open_browser(url)
-  silent exec "silent !google-chrome --app=" . a:url
-endfunction
-let g:mkdp_browserfunc = 'g:Open_browser'
-
-Plug 'mzlogin/vim-markdown-toc'
-let g:vmt_list_item_char="-"
-
-"--------------------------------
-" Lisp
-"--------------------------------
-" Plug 'kovisoft/slimv'
-
-" let g:slimv_swank_cmd=g:var_slimv_swank_cmd
-" let g:slimv_impl='sbcl'
-" let g:slimv_preferred='sbcl'
-" "禁止此功能
-" let g:paredit_electric_return=0
-" " let g:paredit_mode=0
-" " 彩虹括号匹配
-" let g:lisp_rainbow=1
-" let g:lisp_menu=1
-" let g:swank_block_size=65536
-" " 禁止绑定tab键
-" let g:slimv_unmap_tab=1
-" " 竖直分裂窗口
-" let g:slimv_repl_split=4
-" let g:slimv_echolines=1
 
 "----------------------------------------------------------------------
 " 语法检查
@@ -423,23 +353,8 @@ nmap mn <Plug>(ale_next)
 "--------------------------------
 " 主题配色
 "--------------------------------
-Plug 'morhetz/gruvbox'
-let g:gruvbox_contrast_dark='medium'
-let g:gruvbox_contrast_light='soft'
-
-Plug 'sainnhe/everforest'
-let g:everforest_better_performance=1
-let g:everforest_background='medium'
-let g:everforest_enable_italic=1
-
 Plug 'dracula/vim', { 'as': 'dracula' }
-
 Plug 'joshdick/onedark.vim'
-
-Plug 'patstockwell/vim-monokai-tasty'
-let g:vim_monokai_tasty_italic = 1
-
-Plug 'NLKNguyen/papercolor-theme'
 
 nmap <silent> <f3> :call ToggleBackground()<cr>
 call g:UTILBindkey('nmap <silent>', '<c-f3>', ":call ChangeColorscheme('next')<cr>")
@@ -469,10 +384,6 @@ endfunction
 "--------------------------------
 Plug 'vim-airline/vim-airline'
 
-" let g:airline_left_sep = ''
-" let g:airline_left_alt_sep = ''
-" let g:airline_right_sep = ''
-" let g:airline_right_alt_sep = ''
 let g:airline_powerline_fonts = 1
 let g:airline_exclude_preview = 1
 let g:airline_highlighting_cache = 1
@@ -490,29 +401,6 @@ let g:indentLine_char_list=['|', '¦', '┆', '┊']
 autocmd FileType json,markdown let g:indentLine_setConceal=0
 let g:indentLine_fileTypeExclude=['coc-explorer']
 
-"--------------------------------
-" 开始界面
-"--------------------------------
-Plug 'mhinz/vim-startify'
-
-let g:startify_change_to_dir = 1
-let g:startify_session_dir="~/.vim/.sessions"
-let g:startify_session_autoload = 1
-let g:startify_session_sort = 1
-let g:startify_session_persistence = 1
-" 清除无用buffers
-let g:startify_session_savecmds = [
-      \ 'silent Bdelete hidden'
-      \ ]
-let g:startify_lists = [
-      \ { 'type': 'sessions',  'header': ['   Sessions']       },
-      \ { 'type': 'files',     'header': ['   MRU']            },
-      \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
-      \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-      \ { 'type': 'commands',  'header': ['   Commands']       },
-      \ ]
-let g:startify_custom_header = ['']
-
 "----------------------------------------------------------------------
 " Git集成
 "----------------------------------------------------------------------
@@ -524,31 +412,11 @@ if !exists(":DiffOrig")
 endif
 
 "--------------------------------
-" git操作
-"--------------------------------
-Plug 'tpope/vim-fugitive'
-
-"--------------------------------
 " 边栏显示git状态
 "--------------------------------
 Plug 'airblade/vim-gitgutter'
-
 let g:gitgutter_map_keys = 0
 
-"--------------------------------
-" git blame
-"--------------------------------
-Plug 'APZelos/blamer.nvim'
-let g:blamer_enabled = 0
-let g:blamer_delay = 1000
-let g:blamer_show_in_visual_modes = 0
-let g:blamer_show_in_insert_modes = 0
-let g:blamer_date_format = '%Y/%m/%d %H:%M'
-
-"--------------------------------
-" 查看commit
-"--------------------------------
-Plug 'junegunn/gv.vim'
 
 "----------------------------------------------------------------------
 " 其他
@@ -582,61 +450,6 @@ call g:UTILBindkey('nnoremap <silent>', '<s-f4>', ":FloatermPrev<cr>")
 call g:UTILBindkey('tnoremap <silent>', '<s-f4>', ":FloatermPrev<cr>")
 
 autocmd VimLeavePre * FloatermKill!
-
-"--------------------------------
-" task任务执行
-"--------------------------------
-Plug 'skywind3000/asyncrun.vim', { 'on': ['AsyncRun', 'AsyncStop'] }
-Plug 'skywind3000/asynctasks.vim', { 'on': ['AsyncTask', 'AsyncTaskMacro', 'AsyncTaskList', 'AsyncTaskEdit'] }
-
-let g:asyncrun_open = 6
-" let g:asynctasks_term_pos = 'external'
-" let g:asynctasks_term_focus=0
-nnoremap <silent> <f5> :AsyncTask run<cr>
-call g:UTILBindkey('nnoremap <silent>', '<c-f5>', ":AsyncTask build<cr>")
-call g:UTILBindkey('nnoremap <silent>', '<s-f5>', ":AsyncTask test<cr>")
-
-"--------------------------------
-" live server
-"--------------------------------
-Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
-
-"--------------------------------
-" 本地和远程服务器文件同步
-"--------------------------------
-" Plug 'b2ns/vim-syncr'
-
-"--------------------------------
-" debug
-"--------------------------------
-Plug 'puremourning/vimspector'
-let g:vimspector_sign_priority = {
-      \    'vimspectorBP':         999,
-      \    'vimspectorBPCond':     999,
-      \    'vimspectorBPLog':      999,
-      \    'vimspectorBPDisabled': 999,
-      \    'vimspectorPC':         999,
-      \ }
-let g:vimspector_sidebar_width = 30
-let g:vimspector_bottombar_height = 10
-let g:vimspector_terminal_minwidth = 20
-" let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
-
-nmap <silent> <F6> <Plug>VimspectorToggleBreakpoint
-call g:UTILBindkey('nmap <silent>', '<c-f6>', "<Plug>VimspectorToggleConditionalBreakpoint")
-call g:UTILBindkey('nmap <silent>', '<s-f6>', "<Plug>VimspectorAddFunctionBreakpoint")
-
-nmap <silent> <F7> <Plug>VimspectorContinue
-call g:UTILBindkey('nmap <silent>', '<c-f7>', "<Plug>VimspectorRestart")
-call g:UTILBindkey('nmap <silent>', '<s-f7>', "<Plug>VimspectorStop")
-
-nmap <silent> <F8> <Plug>VimspectorStepOver
-call g:UTILBindkey('nmap <silent>', '<c-f8>', "<Plug>VimspectorStepInto")
-call g:UTILBindkey('nmap <silent>', '<s-f8>', "<Plug>VimspectorStepOut")
-
-nmap <silent> <F9> <Plug>VimspectorGoToCurrentLine
-call g:UTILBindkey('nmap <silent>', '<c-f9>', "<Plug>VimspectorRunToCursor")
-" call g:UTILBindkey('nmap <silent>', '<s-f9>', "")
 
 "----------------------------------------------------------------------
 " 结束插件安装

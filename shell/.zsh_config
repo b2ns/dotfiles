@@ -55,10 +55,6 @@ HIST_STAMPS="yyyy-mm-dd"
 plugins=(
   colored-man-pages
   command-not-found
-  copyfile
-  copypath
-  dirhistory
-  history-substring-search
   zsh-z
   last-working-dir
 
@@ -101,10 +97,6 @@ alias gpl="git pull"
 alias gcl="git clone"
 alias gm="git merge"
 
-alias dev="yarn run dev"
-alias start="yarn run start"
-alias build="yarn run build"
-
 ### 其他 ###
 # set neovim as default rather than vim
 export EDITOR="nvim"
@@ -116,19 +108,3 @@ __add_to_path "/home/linuxbrew/.linuxbrew/bin/"
 # nvm
 export NVM_DIR="$HOME/.nvm"
 __source "$NVM_DIR/nvm.sh" # This loads nvm
-
-# java
-export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
-CLASSPATH=$(
-  __join_path \
-    "." \
-    "/usr/share/java/" \
-    "/usr/share/java/junit4.jar" \
-    "/usr/share/java/hamcrest-core.jar" \
-    "$HOME/.build/java/classpath" \
-    "$HOME/.build/java/jar"
-)
-export CLASSPATH
-
-# clangd
-__add_to_path "$HOME/Downloads/clangd_14.0.0/bin"
