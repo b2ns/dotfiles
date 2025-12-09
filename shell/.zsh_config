@@ -70,10 +70,6 @@ alias gm="git merge"
 # set neovim as default rather than vim
 export EDITOR="nvim"
 
-# Homebrew
-export HOMEBREW_NO_AUTO_UPDATE=1
-__add_to_path "/home/linuxbrew/.linuxbrew/bin/"
-
 # nvm
 export NVM_DIR="$HOME/.nvm"
 __source "$NVM_DIR/nvm.sh" # This loads nvm

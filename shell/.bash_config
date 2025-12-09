@@ -10,37 +10,32 @@ alias '..'='cd ..'
 alias '...'='cd ../..'
 
 # alias rm='rm -i'
+alias rm="rm -i"
+alias l="ls"
+alias la="ls -A"
+alias ll="ls -lAh"
 alias q='exit'
 alias sss='shutdown now'
 
-alias v='gvim'
-alias vbig='gvim -n -u NONE -i NONE -N'
+alias v="nvim"
+alias vbig="nvim -n -u NONE -i NONE -N"
 alias f='floaterm'
 alias e='gedit'
 alias c='code'
 
-alias gs='git status'
-alias gb='git branch'
-alias gd='git diff'
-alias gl='git log'
-alias gad='git add'
-alias gco='git checkout'
-alias gci='git commit'
-alias gph='git push'
-alias gpl='git pull'
-alias gcl='git clone'
-alias gm='git merge'
-alias grb='git rebase'
-
-alias hist='history'
-
-alias dev='yarn run dev'
-alias start='yarn run start'
-alias build='yarn run build'
+alias gs="git status"
+alias gb="git branch"
+alias gd="git diff"
+alias gl="git log"
+alias ga="git add"
+alias gc="git commit"
+alias gco="git checkout"
+alias gp="git push"
+alias gpl="git pull"
+alias gcl="git clone"
+alias gm="git merge"
 
 ### 其他 ###
-# Homebrew
-export HOMEBREW_NO_AUTO_UPDATE=1
 
 # bash prompt
 green=$'\e[1;32m'
@@ -49,8 +44,3 @@ blue=$'\e[1;34m'
 purple=$'\e[1;35m'
 normal=$'\e[m'
 PS1='\[$green\]\u@\[$purple\]\h:\[$blue\]\w\[$cyan\]\[$normal\]\\$ '
-
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
