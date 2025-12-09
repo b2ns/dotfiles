@@ -1,32 +1,42 @@
 {
   "compilerOptions": {
-    "exactOptionalPropertyTypes": true,
+    // Type Checking
+    "strict": true,
+    "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
-    "strict": true,
 
-    "module": "ESNext",
-    "moduleResolution": "Node",
+    // Modules
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "paths": {
+      "~/*": ["./src/*"]
+    },
     "resolveJsonModule": true,
 
-    "noEmit": true,
+    // Emit
+    "declaration": true,
+    "declarationDir": "types",
+    // "noEmit": true,
     "noEmitOnError": true,
     "outDir": "dist",
 
+    // JavaScript Support
     "allowJs": true,
 
-    "allowSyntheticDefaultImports": true,
+    // Interop Constraints
     "esModuleInterop": true,
-    "isolatedModules": true,
     "verbatimModuleSyntax": true,
 
-    "jsx": "preserve",
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "target": "ESNext",
+    // Language and Environment
+    "jsx": "react",
+    // "lib": ["ESNext"],
+    "target": "ES2022",
 
+    // Completeness
     "skipLibCheck": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "include": [],
+  "exclude": []
 }

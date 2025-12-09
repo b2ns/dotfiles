@@ -346,8 +346,8 @@ endfunc
 " 标签栏最终设置
 "----------------------------------------------------------------------
 set tabline=%!Vim_NeatTabLine()
-set guitablabel=%{Vim_NeatGuiTabLabel()}
-set guitabtooltip=%{Vim_NeatGuiTabTip()}
+" set guitablabel=%{Vim_NeatGuiTabLabel()}
+" set guitabtooltip=%{Vim_NeatGuiTabTip()}
 
 "----------------------------------------------------------------------
 " 终端下光标切换形态和闪烁

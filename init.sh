@@ -13,7 +13,6 @@ declare -gA configFiles=(
   ["prettier/.prettierrc.js"]=""
   ["editorconfig/.editorconfig"]=""
   ["eslint/.eslintrc.js"]=""
-  ["stylelint/.stylelintrc.js"]=""
   ["typescript/tsconfig.json"]=""
   ["Vim/.vimrc"]=""
   ["./Vim/init.vim"]="$HOME/.config/nvim/init.vim"
