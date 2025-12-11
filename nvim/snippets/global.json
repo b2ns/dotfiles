@@ -1,0 +1,191 @@
+{
+  "jsdoc": {
+    "prefix": "doc",
+    "body": ["${BLOCK_COMMENT_START}*", " * $1", " ${BLOCK_COMMENT_END}"],
+    "description": "jsdoc"
+  },
+  "import": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "imp",
+    "body": ["import $2 from '$1'$0"],
+    "description": "import"
+  },
+  "export default": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "expd",
+    "body": ["export default $0"],
+    "description": "export default"
+  },
+  "export function": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "expf",
+    "body": ["export function $1($2) {", "  $3", "}"],
+    "description": "export function"
+  },
+  "if": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "if",
+    "body": ["if ($1) {", "  $2", "}"],
+    "description": "if"
+  },
+  "else": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "el",
+    "body": [" else {", "  $1", "}"],
+    "description": "else"
+  },
+  "elseif": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "eli",
+    "body": [" else if ($1) {", "  $2", "}"],
+    "description": "else if"
+  },
+  "while": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "whi",
+    "body": ["while($1) {", "  $2", "}"],
+    "description": "while loop"
+  },
+  "for": {
+    "prefix": "for",
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "body": ["for (let ${1:i} = 0; ${1:i} < $2; ${1:i}++) {", "  $3", "}"],
+    "description": "for loop"
+  },
+  "forof": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "foof",
+    "body": ["for (const ${1:item} of $2) {", "  $3", "}"],
+    "description": "for of loop"
+  },
+  "forin": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "foin",
+    "body": ["for (const ${1:key} in $2) {", "  $3", "}"],
+    "description": "for in loop"
+  },
+  "switch": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "swi",
+    "body": [
+      "switch ($1) {",
+      "  case $2: {",
+      "    $3",
+      "    break",
+      "  }",
+      "  default: ",
+      "    break",
+      "}"
+    ],
+    "description": "switch"
+  },
+  "function": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "fun",
+    "body": ["function $1($2) {", "  $3", "}"],
+    "description": "function"
+  },
+  "async function": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "funa",
+    "body": ["async function $1($2) {", "  $3", "}"],
+    "description": "async function"
+  },
+  "arrow function": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "af",
+    "body": ["($1) => $2"],
+    "description": "arrow function"
+  },
+  "arrow function async": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "afa",
+    "body": ["async ($1) => {$2}"],
+    "description": "arrow function"
+  },
+  "arrow function block": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "afb",
+    "body": ["($1) => {$2}"],
+    "description": "arrow function block"
+  },
+  "arrow function object": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "afo",
+    "body": ["($1) => ({$2})"],
+    "description": "arrow function object"
+  },
+  "const o": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "coo",
+    "body": ["const {$0} = $1"],
+    "description": "const {} = data"
+  },
+  "const": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "co",
+    "body": ["const $0"],
+    "description": "const"
+  },
+  "class": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "cla",
+    "body": ["class $1 {", "  constructor() {", "    $2", "  }", "}"],
+    "description": "class"
+  },
+  "extends": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "ext",
+    "body": [
+      "class $1 extends $2 {",
+      "  constructor() {",
+      "    super()",
+      "    $3",
+      "  }",
+      "}"
+    ],
+    "description": "class"
+  },
+  "console.log": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "log",
+    "body": ["console.log($1)$0"],
+    "description": "console.log"
+  },
+  "console.logd": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "logd",
+    "body": ["console.log('dsp', $1)$0"],
+    "description": "console.log"
+  },
+  "console.dir": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "dir",
+    "body": ["console.dir($1)$0"],
+    "description": "console.dir"
+  },
+  "reactFC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "FC",
+    "body": ["export default function ${TM_FILENAME_BASE}(){", "  $0", "}"],
+    "description": "React Function Component"
+  },
+  "useState": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "useS",
+    "body": ["const [$1, set${1/(.*)/${1:/capitalize}/}] = useState($2)$0"],
+    "description": "useState"
+  },
+  "useRef": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "useR",
+    "body": ["const $1 = useRef($2)$0"],
+    "description": "useRef"
+  },
+  "useEffect": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "useE",
+    "body": ["useEffect(() => {", "  $1", "}, [])"],
+    "description": "useEffect"
+  }
+}

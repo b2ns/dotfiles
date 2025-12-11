@@ -4,5 +4,4 @@
 
 local map = LazyVim.safe_keymap_set
 
-map("n", "<C-a>", "ggVG", { desc = "Select all" })
 map("i", "<C-l>", "<right>", { desc = "Move cursor right" })
