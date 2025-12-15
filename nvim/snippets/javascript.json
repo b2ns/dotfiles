@@ -1,0 +1,118 @@
+{
+  "else": {
+    "prefix": "el",
+    "body": [" else {", "  $1", "}"],
+    "description": "else"
+  },
+  "elseif": {
+    "prefix": "eli",
+    "body": [" else if ($1) {", "  $2", "}"],
+    "description": "else if"
+  },
+  "fori": {
+    "prefix": "for",
+    "body": ["for (let ${1:i} = 0; ${1:i} < $2; ${1:i}++) {", "  $3", "}"],
+    "description": "for loop"
+  },
+  "switch": {
+    "prefix": "swi",
+    "body": [
+      "switch ($1) {",
+      "  case $2: {",
+      "    $3",
+      "    break",
+      "  }",
+      "  default: ",
+      "    break",
+      "}"
+    ],
+    "description": "switch"
+  },
+  "function": {
+    "prefix": "fun",
+    "body": ["function $1($2) {", "  $3", "}"],
+    "description": "function"
+  },
+  "async function": {
+    "prefix": "funa",
+    "body": ["async function $1($2) {", "  $3", "}"],
+    "description": "async function"
+  },
+  "arrow function": {
+    "prefix": "af",
+    "body": ["($1) => $2"],
+    "description": "arrow function"
+  },
+  "arrow function async": {
+    "prefix": "afa",
+    "body": ["async ($1) => {$2}"],
+    "description": "arrow function"
+  },
+  "arrow function block": {
+    "prefix": "afb",
+    "body": ["($1) => {$2}"],
+    "description": "arrow function block"
+  },
+  "arrow function object": {
+    "prefix": "afo",
+    "body": ["($1) => ({$2})"],
+    "description": "arrow function object"
+  },
+  "const o": {
+    "prefix": "coo",
+    "body": ["const {$0} = $1"],
+    "description": "const {} = data"
+  },
+  "class": {
+    "prefix": "cla",
+    "body": ["class $1 {", "  constructor() {", "    $2", "  }", "}"],
+    "description": "class"
+  },
+  "extends": {
+    "prefix": "ext",
+    "body": [
+      "class $1 extends $2 {",
+      "  constructor() {",
+      "    super()",
+      "    $3",
+      "  }",
+      "}"
+    ],
+    "description": "class"
+  },
+  "console.logd": {
+    "prefix": "logd",
+    "body": ["console.log('dsp', $1)$0"],
+    "description": "console.log"
+  },
+  "console.dir": {
+    "prefix": "dir",
+    "body": ["console.dir($1)$0"],
+    "description": "console.dir"
+  },
+  "reactFC": {
+    "prefix": "FC",
+    "body": ["export default function ${TM_FILENAME_BASE}(){", "  $0", "}"],
+    "description": "React Function Component"
+  },
+  "useRef": {
+    "prefix": "usere",
+    "body": ["const $1 = useRef($2)$0"],
+    "description": "useRef"
+  },
+  "useCallback": {
+    "prefix": "useca",
+    "body": ["const $1 = useCallback(() => $2, [])"],
+    "description": "useCallback"
+  },
+  "useMemo": {
+    "prefix": "useme",
+    "body": ["const $1 = useMemo(() => $2, [])"],
+    "description": "useMemo"
+  },
+  "useEffect": {
+    "prefix": "useef",
+    "body": ["useEffect(() => {", "  $1", "}, [])"],
+    "description": "useEffect"
+  }
+}
