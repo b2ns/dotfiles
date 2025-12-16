@@ -39,10 +39,25 @@ return {
 
   {
     "snacks.nvim",
+    --- @type snacks.config
     opts = {
       dashboard = {
         preset = {
           header = headers[2],
+        },
+      },
+      picker = {
+        sources = {
+          explorer = {
+            hidden = true,
+            ignored = true,
+          },
+          files = {
+            hidden = true,
+          },
+          grep = {
+            hidden = true,
+          },
         },
       },
     },

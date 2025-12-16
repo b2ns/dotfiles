@@ -1,13 +1,17 @@
 return {
-  -- {
-  --   "neovim/nvim-lspconfig",
-  --   ---@class PluginLspOpts
-  --   opts = {
-  --     inlay_hints = {
-  --       enable = false,
-  --     },
-  --   },
-  -- },
+  {
+    "neovim/nvim-lspconfig",
+    ---@class PluginLspOpts
+    opts = {
+      diagnostics = {
+        virtual_text = false,
+        signs = false,
+      },
+      inlay_hints = {
+        enabled = false,
+      },
+    },
+  },
 
   {
     "nvim-treesitter/nvim-treesitter",
