@@ -25,17 +25,19 @@ local headers = {
 ]],
 }
 
+vim.api.nvim_set_hl(0, "SnacksPickerPathHidden", { link = "Normal" })
+
 return {
-  -- {
-  --   "folke/tokyonight.nvim",
-  --   opts = {
-  --     transparent = true,
-  --     styles = {
-  --       sidebars = "transparent",
-  --       floats = "transparent",
-  --     },
-  --   },
-  -- },
+  {
+    "folke/tokyonight.nvim",
+    opts = {
+      transparent = true,
+      styles = {
+        sidebars = "transparent",
+        floats = "transparent",
+      },
+    },
+  },
 
   {
     "snacks.nvim",

@@ -3,5 +3,5 @@
 -- Add any additional options here
 
 -- vim.g.snacks_animate = false
-vim.undofile = false
+vim.opt.undofile = false
 vim.opt.wrap = true
