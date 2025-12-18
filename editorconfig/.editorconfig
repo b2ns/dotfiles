@@ -3,7 +3,21 @@ root = true
 [*]
 indent_style = space
 indent_size = 2
+max_line_length = 100
 end_of_line = lf
 charset = utf-8
 trim_trailing_whitespace = false
 insert_final_newline = true
+
+[*.{py,go}]
+# Language-specific overrides (e.g., Python uses 4 spaces, Go uses tabs)
+indent_size = 4
+
+[Makefile]
+# Makefiles MUST use real tabs to function
+indent_style = tab
+
+[{package.json,*.yml,*.yaml}]
+# Ensure consistent 2-space indentation for config files
+indent_style = space
+indent_size = 2

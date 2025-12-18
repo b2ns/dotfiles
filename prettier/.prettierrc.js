@@ -1,4 +1,10 @@
-module.exports = {
-  semi: false,
-  singleQuote: true,
+export default {
+  "printWidth": 100,
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "all",
+  // "plugins": [
+  //   "prettier-plugin-organize-imports",
+  //   "prettier-plugin-tailwindcss"
+  // ]
 }

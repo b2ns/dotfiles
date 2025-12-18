@@ -1,42 +1,7 @@
 {
-  "compilerOptions": {
-    // Type Checking
-    "strict": true,
-    "noImplicitOverride": true,
-    "noImplicitReturns": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noUncheckedIndexedAccess": true,
-
-    // Modules
-    "module": "ES2022",
-    "moduleResolution": "bundler",
-    "paths": {
-      "~/*": ["./src/*"]
-    },
-    "resolveJsonModule": true,
-
-    // Emit
-    "declaration": true,
-    "declarationDir": "types",
-    // "noEmit": true,
-    "noEmitOnError": true,
-    "outDir": "dist",
-
-    // JavaScript Support
-    "allowJs": true,
-
-    // Interop Constraints
-    "esModuleInterop": true,
-    "verbatimModuleSyntax": true,
-
-    // Language and Environment
-    "jsx": "react",
-    // "lib": ["ESNext"],
-    "target": "ES2022",
-
-    // Completeness
-    "skipLibCheck": true
-  },
-  "include": [],
-  "exclude": []
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }

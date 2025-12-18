@@ -33,10 +33,10 @@
     "body": ["function $1($2) {", "  $3", "}"],
     "description": "function"
   },
-  "async function": {
+  "define arrow function": {
     "prefix": "funa",
-    "body": ["async function $1($2) {", "  $3", "}"],
-    "description": "async function"
+    "body": ["const ${1} = ($2) => {", "  $3","}"],
+    "description": "arrow function"
   },
   "arrow function": {
     "prefix": "af",
@@ -60,7 +60,7 @@
   },
   "const o": {
     "prefix": "coo",
-    "body": ["const {$0} = $1"],
+    "body": ["const {$2} = $1"],
     "description": "const {} = data"
   },
   "class": {
@@ -82,19 +82,19 @@
   },
   "console.logd": {
     "prefix": "logd",
-    "body": ["console.log('dsp', $1)$0"],
+    "body": ["console.log('dsp', $1)"],
     "description": "console.log"
   },
   "console.dir": {
     "prefix": "dir",
-    "body": ["console.dir($1)$0"],
+    "body": ["console.dir($1)"],
     "description": "console.dir"
   },
   "reactFC": {
     "prefix": "FC",
     "body": [
       "const ${TM_FILENAME_BASE} = () => {",
-      "  return <div>abc$0</div>",
+      "  return <div>abc$1</div>",
       "}",
       "export default ${TM_FILENAME_BASE}"
     ],
@@ -102,7 +102,7 @@
   },
   "useRef": {
     "prefix": "usere",
-    "body": ["const $1 = useRef($2)$0"],
+    "body": ["const $1 = useRef($2)$3"],
     "description": "useRef"
   },
   "useCallback": {
