@@ -5,3 +5,4 @@
 -- vim.g.snacks_animate = false
 vim.opt.undofile = false
 vim.opt.wrap = true
+vim.opt.spell = false
