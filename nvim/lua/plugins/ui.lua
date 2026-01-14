@@ -46,6 +46,15 @@ return {
           },
         },
       },
+      terminal = {
+        win = {
+          position = "float",
+          border = "rounded",
+          height = 0,
+          width = 0,
+          backdrop = false,
+        },
+      },
     },
   },
 }
