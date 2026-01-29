@@ -19,9 +19,6 @@ alias sss='shutdown now'
 
 alias v="nvim"
 alias vbig="nvim -n -u NONE -i NONE -N"
-alias f='floaterm'
-alias e='gedit'
-alias c='code'
 
 alias gs="git status"
 alias gb="git branch"

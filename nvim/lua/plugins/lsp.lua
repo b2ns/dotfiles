@@ -20,6 +20,7 @@ return {
         "css",
         "scss",
         "regex",
+        "rust",
       })
     end,
   },

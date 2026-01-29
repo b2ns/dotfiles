@@ -45,12 +45,8 @@ alias ll="ls -lAh"
 alias q="exit"
 alias sss="shutdown now"
 
-alias cc="code -n ."
-alias ce="code -n"
 alias v="nvim"
 alias vbig="nvim -n -u NONE -i NONE -N"
-alias f="floaterm"
-alias e="gedit"
 alias opn="nautilus --browser"
 alias open="xdg-open"
 
