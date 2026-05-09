@@ -9,7 +9,7 @@ charset = utf-8
 trim_trailing_whitespace = false
 insert_final_newline = true
 
-[*.{py,go}]
+[*.{py,go,rs}]
 # Language-specific overrides (e.g., Python uses 4 spaces, Go uses tabs)
 indent_size = 4
 
