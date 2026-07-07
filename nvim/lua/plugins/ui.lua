@@ -27,6 +27,7 @@ return {
     "snacks.nvim",
     --- @type snacks.config
     opts = {
+      image = { enabled = true },
       dashboard = {
         preset = {
           header = headers[1],
