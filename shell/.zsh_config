@@ -51,6 +51,7 @@ alias opn="nautilus --browser"
 alias open="xdg-open"
 
 alias gs="git status"
+alias gsw="git switch"
 alias gb="git branch"
 alias gd="git diff"
 alias gl="git log"
