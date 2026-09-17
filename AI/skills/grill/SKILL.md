@@ -1,6 +1,6 @@
 ---
 name: grilling
-description: Grill the user relentlessly about a plan, decision, or idea. Use when the user wants to stress-test their thinking, or uses any 'grill' trigger phrases.
+description: Clarify requirements and unresolved planning decisions affecting observable behavior, scope, acceptance criteria, or architectural tradeoffs. Use when these decisions remain unsettled, when the user wants to stress-test a plan, decision, or idea, or uses any 'grill' trigger phrases. Routine implementation details within agreed requirements do not require this skill.
 ---
 
 Interview the user relentlessly until you reach a shared understanding. Map this as a **design tree**: every decision branches into the decisions that hang off it.

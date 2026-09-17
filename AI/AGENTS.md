@@ -21,8 +21,8 @@ All completion gates pass → Done
 - Inspect relevant instructions, code, callers, tests, and reusable utilities. Find discoverable facts yourself.
 - Choose the simplest design that meets the contract. Briefly connect multi-step plans to requirements and checks; explain consequential decisions and tradeoffs.
 - Challenge assumptions and failure cases before coding. Resolve prerequisite decisions first; revisit dependent choices when evidence changes.
-- Ask about unresolved intent or tradeoffs affecting correctness or scope, with a recommendation and consequences. Group independent questions, wait before dependent work, and continue independent work. For routine, reversible choices, state reasonable assumptions and proceed.
-- Use `grilling` for complex planning with unresolved requirements, consequential tradeoffs, or major design decisions, and whenever explicitly requested. Skip it for simple, well-defined tasks.
+- Ask about unresolved intent or tradeoffs affecting correctness or scope, with a recommendation and consequences. Group independent questions, wait before dependent work, and continue independent work. Choose routine implementation details autonomously within the agreed requirements.
+- Before finalizing a nontrivial implementation plan, identify decisions not settled by the user's request or repository evidence. If any affect observable behavior, scope, acceptance criteria, or architectural tradeoffs, you must invoke `grilling` before making those decisions. Do not treat a recommended default or the reversibility of implementation as evidence of user intent. Skip `grilling` only when no such decisions remain, and briefly explain why. Always use it when explicitly requested.
 
 ### 2. Implement and Verify
 
