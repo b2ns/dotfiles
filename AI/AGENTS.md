@@ -37,7 +37,9 @@ All completion gates pass → Done
 ### 3. Adversarial Review and Revision
 
 - You must use `adversarial-review` on the complete task diff, including new files and affected callers, excluding unrelated changes. Follow the skill's review and reporting procedure.
-- When delegation is authorized and a reviewer is available, prefer a fresh context with the task, contract, repository guidance, complete diff, and code access. Let the reviewer assess before reading the implementer's rationale.
+- For every required adversarial review and whenever the user explicitly requests `adversarial-review`, delegate to a new reviewer subagent with no inherited conversation history. This instruction explicitly authorizes that delegation. In Codex, use `spawn_agent` with `fork_turns: "none"` when supported; otherwise use the available equivalent for a fresh context. A fork or resumed implementation session does not qualify.
+- Give the reviewer the user request, agreed contract and constraints, repository and skill instructions, exact review scope/base, and access to the complete task diff (including new files), code, callers, and tests. Do not include the implementer's reasoning, self-review conclusions, or suggested verdict before the reviewer independently assesses the change. The reviewer must use `adversarial-review`, report evidence-backed findings, and leave implementation edits to the implementing agent. A delegated reviewer performs the review itself; it must not recursively delegate this same review.
+- If a fresh reviewer subagent is unavailable, use a separate fresh session if supported. If neither is available, report the limitation and provide a review handoff; do not present same-context self-review as independent review or claim the independent review gate passed.
 - Keep review separate from implementation. For confirmed defects, identify the violated requirement and root cause, make the smallest correction, and add regression coverage when practical. Redesign only when evidence invalidates the design. Verify and review again after changes; do not reopen resolved or disproven findings without new evidence.
 
 ### 4. Completion
